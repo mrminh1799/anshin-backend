@@ -35,4 +35,34 @@ public class AcountServiceImpl implements AcountService {
          });
          return listAcountDTO;
     }
+
+    @Override
+    public Acount findByPhoneNumber(String phoneNumber) {
+        return acountDAO.findAcountByPhoneNumber(phoneNumber);
+    }
+
+    @Override
+    public Acount findById(Integer id){
+        return acountDAO.findById(id).get();
+    }
+
+    @Override
+    public Acount insertAcount(Acount e) {
+        Integer id=  acountDAO.save(e).getId();
+        e.setId(id);
+        e.setIsActive(true);
+        e.setIsDeleted(false);
+        return e;
+    }
+
+    @Override
+    public Acount updateAcount(Acount e) {
+        return  acountDAO.save(e);
+    }
+
+    @Override
+    public Integer delete(Integer id) {
+        acountDAO.deleteAcount(id);
+        return 1;
+    }
 }
