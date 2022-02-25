@@ -28,6 +28,11 @@ public class AdminAcountController {
         return ResponseEntity.ok().body(_service.findById(id));
     }
 
+    @GetMapping("/findByPhoneNumber/{phoneNumber}")
+    public ResponseEntity<Acount> findByPhoneNumber(@PathVariable("phoneNumber") String phonenumber){
+        return ResponseEntity.ok().body(_service.findByPhoneNumber(phonenumber));
+    }
+
     @PostMapping ("/createAcount")
     public ResponseEntity<Acount> createAcount(@RequestBody Acount e){
         return  ResponseEntity.ok().body(_service.insertAcount(e));

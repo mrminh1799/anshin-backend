@@ -1,19 +1,22 @@
 package com.anshinbackend.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "acounts")
 @Entity
 @Data
+@Setter
+@Getter
 public class Acount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "phone_number")
@@ -36,6 +39,10 @@ public class Acount {
 
     @Column(name = "photo")
     private String photo;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "acount" , fetch = FetchType.EAGER)
+    List<RoleAcount> roleAcounts;
 
 
 }

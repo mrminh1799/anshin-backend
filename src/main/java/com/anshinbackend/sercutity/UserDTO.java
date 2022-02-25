@@ -1,22 +1,25 @@
 package com.anshinbackend.sercutity;
 
+import com.anshinbackend.entity.RoleAcount;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Component
 public class UserDTO {
+    private Integer id;
     private String username;
     private String password;
+    private String accessToken;
+    private String fullname;
+    private String photo;
+    private List<RoleAcount> roleAcounts;
+    private  String email;
 
-    public String getUsername() {
-        return username;
-    }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }
