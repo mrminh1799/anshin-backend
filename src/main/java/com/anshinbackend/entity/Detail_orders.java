@@ -8,8 +8,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
-import poly.store.entity.Order;
-import poly.store.entity.Product;
+//import poly.store.entity.Order;
+//import poly.store.entity.Product;
 
 @Table(name = "detail_orders")
 @Entity
@@ -25,17 +25,14 @@ public class Detail_orders {
     @Column(name = "price")
     private Integer price;
 
-    @ManyToOne
-    @JoinColumn(name = "id_product_detail")
+//    @ManyToOne
+//    @JoinColumn(name = "id_product_detail")
 //    @Column(name = "id_product_detail")
 //    private Integer  id_product_detail;
-    Product id_product_detail;
+//    Product id_product_detail;
 
     @ManyToOne
-	@JoinColumn(name = "order_id")
-	
-//    @Column(name = "order_id")
-//    private Integer order_id;
+    @JoinColumn(name = "Orderid")
     Order order;
     
     

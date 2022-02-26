@@ -1,13 +1,13 @@
 package com.anshinbackend.entity;
 
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.type.descriptor.sql.TinyIntTypeDescriptor;
 
 import lombok.Data;
@@ -15,9 +15,10 @@ import lombok.Data;
 @Table(name = "orders")
 @Entity
 @Data
-public class Order {
+public class Order  implements Serializable{
 
-	@Id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "address")
@@ -43,4 +44,11 @@ public class Order {
     
     @Column(name = "id_acount")
     private Integer id_acount;
+
+//    @ManyToOne
+//    @JoinColumn(name = "fullName")
+//    Account account;
+            @JsonIgnore
+            @OneToMany(mappedBy = "order")
+            List<Detail_orders> orderDetails;
 }
