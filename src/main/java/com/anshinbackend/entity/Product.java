@@ -1,11 +1,13 @@
 package com.anshinbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
+
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,5 +27,8 @@ public class Product {
     @Column (name = "is_deleted")
     Boolean isDelete;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "product" , fetch = FetchType.EAGER)
+    List<DetailProduct> listProductDetails;
 
 }

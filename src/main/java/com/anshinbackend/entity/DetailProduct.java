@@ -1,10 +1,12 @@
 package com.anshinbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,8 +28,7 @@ public class DetailProduct {
     @Column(name = "export_price")
     Integer exportPrice;
 
-    @Column(name = "id_product")
-    Integer idProduct;
+
 
     @Column(name = "id_size")
     Integer idSize;
@@ -37,5 +38,15 @@ public class DetailProduct {
 
     @Column(name = "is_deleted")
     Boolean isDeleted;
+
+    @ManyToOne
+    @JoinColumn(name="id_product")
+    Product product;
+
+
+
+
+
+
 
 }
