@@ -21,5 +21,5 @@ public class Cart {
 	private int cartId;
 	@ManyToOne
 	@JoinColumn(name="id")
-	private Account account;
+	private Acount account;
 }

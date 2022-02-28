@@ -22,7 +22,7 @@ public class Comments {
 	private LocalDate timeCreate;
 	@ManyToOne
 	@JoinColumn(name="id")
-	private Account account;
+	private Acount account;
 	@ManyToOne
 	@JoinColumn(name="id")
 	private Product product;

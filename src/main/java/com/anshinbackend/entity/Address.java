@@ -26,5 +26,5 @@ public class Address {
 	private String dressName;
 	@ManyToOne
 	@JoinColumn(name="id")
-	private Account account;
+	private Acount account;
 }
