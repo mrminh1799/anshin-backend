@@ -30,11 +30,6 @@ public class DetailProduct {
 
 
 
-    @Column(name = "id_size")
-    Integer idSize;
-
-    @Column(name= "id_color")
-    Integer idColor;
 
     @Column(name = "is_deleted")
     Boolean isDeleted;
@@ -43,6 +38,29 @@ public class DetailProduct {
     @JoinColumn(name="id_product")
     Product product;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "detailProduct" )
+    List<ProductImage> listProductImage;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "detailProduct")
+    List<Discount> listDiscount;
+
+    @ManyToOne
+    @JoinColumn(name = "id_color")
+    Color color;
+
+    @ManyToOne
+    @JoinColumn(name = "id_size")
+    Size size;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "detailProduct")
+    List<CartItem> listCartItems;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "detailProduct")
+    List<OrderDetail> listOrderDetail;
 
 
 

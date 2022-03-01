@@ -39,8 +39,21 @@ public class Acount {
     private String photo;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "acount" , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "acount")
     List<RoleAcount> roleAcounts;
+
+    @OneToMany(mappedBy = "acount")
+    @JsonIgnore
+    List<Address> listAddress;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "account")
+    List<Favorite> listFavorite;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "account")
+    List<Comment> listComment;
+
 
 
 }

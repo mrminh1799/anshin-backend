@@ -17,10 +17,10 @@ public class AdminProductImageController {
     public ResponseEntity<List<ProductImage>> findAll(){
         return  ResponseEntity.ok().body(_productImageService.findAll());
     }
-    @GetMapping("/findByProductDetailId/{id}")
-    public ResponseEntity<List<ProductImage>> findByProducDetailId(@PathVariable ("id") Integer id){
-        return  ResponseEntity.ok().body(_productImageService.findByProductDetai(id));
-    }
+//    @GetMapping("/findByProductDetailId/{id}")
+//    public ResponseEntity<List<ProductImage>> findByProducDetailId(@PathVariable ("id") Integer id){
+//        return  ResponseEntity.ok().body(_productImageService.findByProductDetai(id));
+//    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id){

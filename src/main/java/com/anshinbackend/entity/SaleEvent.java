@@ -1,11 +1,13 @@
 package com.anshinbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,7 +16,6 @@ import java.util.Date;
 @Table( name = "sale_events")
 public class SaleEvent {
     @Id
-    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
@@ -35,6 +36,12 @@ public class SaleEvent {
 
     @Column(name = "is_deleted")
     Boolean isDeleted;
+
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "saleEvent")
+    List<Discount> listDiscounts;
+
 
 
 }

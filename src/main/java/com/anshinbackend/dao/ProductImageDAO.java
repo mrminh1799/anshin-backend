@@ -21,5 +21,5 @@ public interface ProductImageDAO extends JpaRepository<ProductImage, Integer> {
     @Query("delete from ProductImage p  where p.id = ?1")
     public void deleteProduct(Integer id);
 
-    public List<ProductImage> findProductImageByIdProductDetail(Integer id);
+
 }
