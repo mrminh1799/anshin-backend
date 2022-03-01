@@ -18,8 +18,9 @@ public class UserDTO {
     private String accessToken;
     private String fullname;
     private String photo;
-    private List<RoleAcount> roleAcounts;
+    private List<String> roles;
     private  String email;
+    private  Boolean isActive;
 
 
 }

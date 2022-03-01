@@ -1,15 +1,19 @@
 package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.ProductDAO;
+import com.anshinbackend.dto.Customer.ProductDTO;
 import com.anshinbackend.entity.Product;
 import com.anshinbackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.relational.core.sql.In;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl  implements ProductService {
     @Autowired
     ProductDAO _productDAO;
 
@@ -41,5 +45,25 @@ public class ProductServiceImpl implements ProductService {
     public Integer delete(Integer id) {
         _productDAO.deleteProduct(id);
         return  1;
+    }
+
+    @Override
+    public List<ProductDTO> findAllPage(Integer currentPage, Integer sizePage) {
+
+        Pageable page = PageRequest.of(currentPage, sizePage);
+        List<ProductDTO> list= new ArrayList<>();
+        _productDAO.findByIsDeleteIsFalse(page).forEach(x->{
+            ProductDTO e = new ProductDTO();
+            e.setId(x.getId());
+            e.setName(x.getProductName());
+            try {
+                e.setPrice(x.getListProductDetails().get(0).getExportPrice());
+            }catch (IndexOutOfBoundsException exception){
+                e.setPrice(0);
+            }
+            e.setDescription(x.getDescription());
+            list.add(e);
+        });
+        return list;
     }
 }

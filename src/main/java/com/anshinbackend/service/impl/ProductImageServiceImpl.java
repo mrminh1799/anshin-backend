@@ -22,10 +22,6 @@ public class ProductImageServiceImpl implements ProductImageService {
         return _productImageDAO.findById(id).get();
     }
 
-    @Override
-    public List<ProductImage> findByProductDetai(Integer id) {
-        return _productImageDAO.findProductImageByIdProductDetail(id);
-    }
 
     @Override
     public void delete(Integer id) {

@@ -10,7 +10,7 @@ import javax.sound.sampled.Port;
 import java.util.List;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("admin/product")
 public class AdminProductController {
     @Autowired
     ProductService _productProductService;
@@ -39,6 +39,7 @@ public class AdminProductController {
         _productProductService.delete(id);
         return  ResponseEntity.ok(null);
     }
+
 
 
 }

@@ -13,13 +13,13 @@ import javax.persistence.*;
 @Table( name = "product_images")
 public class ProductImage {
     @Id
-    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
     @Column(name = "name_image")
     String nameImage;
 
-    @Column(name = "id_product_detail")
-    Integer idProductDetail;
+    @ManyToOne
+    @JoinColumn(name = "id_Product_Detail")
+    DetailProduct detailProduct;
 }

@@ -22,13 +22,27 @@ public class Product {
     String productName;
     @Column(name = "description")
     String description;
-    @Column(name = "category_id")
-    Integer categoryId;
+
     @Column (name = "is_deleted")
     Boolean isDelete;
+
+    @Column(name = "image")
+    String image;
 
     @JsonIgnore
     @OneToMany(mappedBy = "product" , fetch = FetchType.EAGER)
     List<DetailProduct> listProductDetails;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "product")
+    List<Favorite> listFavorite;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "product")
+    List<Comment> listComment;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    Category category;
 
 }

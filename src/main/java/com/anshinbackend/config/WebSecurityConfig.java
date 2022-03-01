@@ -63,9 +63,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 antMatchers( "/admin/**").hasAnyRole("Admin", "Supper_Admin").
                 antMatchers( "/superAdmin/**").hasAnyRole("Supper_Admin").
                 anyRequest().permitAll().and().
-                // make sure we use stateless session; session won't be used to
-                // store user's state.
-                        exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+
+                exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.addFilterBefore(jwtRequestFilter,
                 UsernamePasswordAuthenticationFilter.class);

@@ -19,6 +19,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -53,7 +54,12 @@ public class Login {
         String fullName = acount.getFullName();
         String email = acount.getEmail();
         String photo = acount.getPhoto();
-        List<RoleAcount> role =  acount.getRoleAcounts();
+
+        List<String> roles =  new ArrayList<>();
+                acount.getRoleAcounts().stream().forEach(x->roles.add(x.getRole().getRoleName()));
+
+    Boolean isActive = acount.getIsActive();
+
         UserDTO userLoginDTO = new UserDTO();
         userLoginDTO.setId(id);
         userLoginDTO.setFullname(fullName);
@@ -61,7 +67,8 @@ public class Login {
         userLoginDTO.setUsername(phoneNumber);
         userLoginDTO.setEmail(email);
         userLoginDTO.setPhoto(photo);
-        userLoginDTO.setRoleAcounts(role);
+        userLoginDTO.setRoles(roles);
+        userLoginDTO.setIsActive(isActive);
         return ResponseEntity.ok(userLoginDTO );
     }
 
