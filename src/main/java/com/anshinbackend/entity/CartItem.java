@@ -19,8 +19,8 @@ public class CartItem {
     @Column(name = "quantity")
     private Integer quantity;
     @ManyToOne
-    @JoinColumn(name="id_cart")
-    private Cart cart;
+    @JoinColumn(name="acount_id")
+    private Acount account;
     @ManyToOne
     @JoinColumn(name="product_detail_id")
     private DetailProduct detailProduct;

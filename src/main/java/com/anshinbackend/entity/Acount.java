@@ -53,6 +53,10 @@ public class Acount {
     @JsonIgnore
     @OneToMany(mappedBy = "account")
     List<Comment> listComment;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "account")
+    List<CartItem> listCartItem;
 
 
 

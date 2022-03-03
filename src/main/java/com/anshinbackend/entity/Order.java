@@ -20,6 +20,12 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name ="full_name")
+    private String fullName;
+
+    @Column(name ="phone_number")
+    private String phoneNumber;
+
     @Column(name = "address")
     private String address;
 
