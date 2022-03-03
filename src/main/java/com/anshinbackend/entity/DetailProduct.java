@@ -38,9 +38,6 @@ public class DetailProduct {
     @JoinColumn(name="id_product")
     Product product;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "detailProduct" )
-    List<ProductImage> listProductImage;
 
     @JsonIgnore
     @OneToMany(mappedBy = "detailProduct")
