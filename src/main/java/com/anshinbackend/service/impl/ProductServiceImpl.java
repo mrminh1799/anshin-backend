@@ -56,6 +56,7 @@ public class ProductServiceImpl  implements ProductService {
             ProductDTO e = new ProductDTO();
             e.setId(x.getId());
             e.setName(x.getProductName());
+            e.setImage(x.getImage());
             try {
                 e.setPrice(x.getListProductDetails().get(0).getExportPrice());
             }catch (IndexOutOfBoundsException exception){
