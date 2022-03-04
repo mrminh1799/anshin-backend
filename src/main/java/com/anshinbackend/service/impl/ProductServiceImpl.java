@@ -2,6 +2,7 @@ package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.ProductDAO;
 import com.anshinbackend.dto.Customer.ProductDTO;
+import com.anshinbackend.dto.ProductDetailDTO;
 import com.anshinbackend.entity.Product;
 import com.anshinbackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,23 @@ public class ProductServiceImpl  implements ProductService {
     ProductDAO _productDAO;
 
     @Override
-    public List<Product> findAll() {
-        return _productDAO.findByIsDeleteIsFalse();
+    public List<ProductDTO> findAll() {
+
+        List<ProductDTO> list= new ArrayList<>();
+        _productDAO.findByIsDeleteIsFalse().forEach(x->{
+            ProductDTO e = new ProductDTO();
+            e.setId(x.getId());
+            e.setName(x.getProductName());
+            e.setImage(x.getImage());
+            try {
+                e.setPrice(x.getListProductDetails().get(0).getExportPrice());
+            }catch (IndexOutOfBoundsException exception){
+                e.setPrice(0);
+            }
+            e.setDescription(x.getDescription());
+            list.add(e);
+        });
+        return list;
     }
 
     @Override
@@ -56,6 +72,7 @@ public class ProductServiceImpl  implements ProductService {
             ProductDTO e = new ProductDTO();
             e.setId(x.getId());
             e.setName(x.getProductName());
+            e.setImage(x.getImage());
             try {
                 e.setPrice(x.getListProductDetails().get(0).getExportPrice());
             }catch (IndexOutOfBoundsException exception){
@@ -66,4 +83,25 @@ public class ProductServiceImpl  implements ProductService {
         });
         return list;
     }
+
+    @Override
+    public ProductDetailDTO showDetailProduct(Integer id) {
+        Product p =_productDAO.findById(id).get();
+
+        ProductDetailDTO dto = new ProductDetailDTO();
+        dto.setId(p.getId());
+        dto.setName(p.getProductName());
+        dto.setImage(p.getImage());
+        try {
+            dto.setPrice(p.getListProductDetails().get(0).getExportPrice());
+        }catch (IndexOutOfBoundsException exception){
+            dto.setPrice(0);
+        }
+        dto.setListDetailProduct(p.getListProductDetails());
+
+        return  dto;
+
+    }
+
+
 }

@@ -34,6 +34,7 @@ public class DetailProduct {
     @Column(name = "is_deleted")
     Boolean isDeleted;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="id_product")
     Product product;

@@ -1,5 +1,6 @@
 package com.anshinbackend.controller.admin;
 
+import com.anshinbackend.dto.Customer.ProductDTO;
 import com.anshinbackend.entity.Product;
 import com.anshinbackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class AdminProductController {
     @Autowired
     ProductService _productProductService;
     @GetMapping("/findAll")
-    public ResponseEntity<List<Product>> findAll(){
+    public ResponseEntity<List<ProductDTO>> findAll(){
         return  ResponseEntity.ok(_productProductService.findAll());
     }
 

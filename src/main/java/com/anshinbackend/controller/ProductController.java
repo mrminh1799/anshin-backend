@@ -1,6 +1,7 @@
 package com.anshinbackend.controller;
 
 import com.anshinbackend.dto.Customer.ProductDTO;
+import com.anshinbackend.dto.ProductDetailDTO;
 import com.anshinbackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,5 +21,14 @@ public class ProductController {
         return ResponseEntity.ok().body(_productService.findAllPage(currenPage,sizePage));
     }
 
+    @GetMapping("/findAll")
+    public ResponseEntity<List<ProductDTO>> findALl(){
+        return  ResponseEntity.ok().body(_productService.findAll());
+    }
+
+    @GetMapping("/findById/{id}")
+    public  ResponseEntity<ProductDetailDTO> showProductDetail(@PathVariable("id") Integer id){
+        return  ResponseEntity.ok().body(_productService.showDetailProduct(id));
+    }
 
 }
