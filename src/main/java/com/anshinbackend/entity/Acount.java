@@ -57,6 +57,9 @@ public class Acount {
     @JsonIgnore
     @OneToMany(mappedBy = "account")
     List<CartItem> listCartItem;
+    @JsonIgnore
+    @OneToMany(mappedBy = "acount")
+    List<Order> listOrder;
 
 
 

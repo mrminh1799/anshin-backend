@@ -47,8 +47,9 @@ public class Order {
     @Column(name = "status")
     private Integer status;
 
-    @Column(name = "id_acount")
-    private Integer id_acount;
+    @ManyToOne
+    @JoinColumn(name = "id_acount")
+    private Acount acount;
 
     @JsonIgnore
     @OneToMany(mappedBy = "order")
