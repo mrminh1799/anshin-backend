@@ -30,19 +30,19 @@ public class Order {
     private String address;
 
     @Column(name = "address_detail")
-    private String address_detail;
+    private String addressDetail;
 
     @Column(name = "time_create")
-    private Date time_create;
+    private Date timeCreate;
 
     @Column(name = "staff_id")
-    private Integer  staff_id;
+    private Integer  staffId;
 
     @Column(name = "delivery_cost")
-    private String  delivery_cost;
+    private String  deliveryCost;
 
     @Column(name = "return_order")
-    private Boolean return_order;
+    private Boolean returnOrder;
 
     @Column(name = "status")
     private Integer status;

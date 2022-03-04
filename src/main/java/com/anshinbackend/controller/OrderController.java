@@ -44,9 +44,9 @@ public class OrderController {
 
 
         Order order = new Order();
-        order.setReturn_order(false);
+        order.setReturnOrder(false);
         order.setFullName(orderDTO.getFullName());
-        order.setAddress_detail(orderDTO.getDetailAddress());
+        order.setAddressDetail(orderDTO.getDetailAddress());
         order.setAddress(orderDTO.getAddress());
         order.setPhoneNumber(orderDTO.getPhoneNumber());
         order.setListOrderDetail(listOrderDetail);
