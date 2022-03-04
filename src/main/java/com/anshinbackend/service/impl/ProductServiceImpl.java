@@ -98,7 +98,7 @@ public class ProductServiceImpl  implements ProductService {
             dto.setPrice(0);
         }
         dto.setListDetailProduct(p.getListProductDetails());
-
+        dto.setDescription(p.getDescription());
         return  dto;
 
     }
