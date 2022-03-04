@@ -52,6 +52,9 @@ public class DetailProduct {
     @JoinColumn(name = "id_size")
     Size size;
 
+    @Column(name = "image")
+    String image;
+
     @JsonIgnore
     @OneToMany(mappedBy = "detailProduct")
     List<CartItem> listCartItems;
