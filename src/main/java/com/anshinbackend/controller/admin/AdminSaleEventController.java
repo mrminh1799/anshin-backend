@@ -10,6 +10,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("admin/saleEvent")
+@CrossOrigin("*")
+
 public class AdminSaleEventController {
     @Autowired
     SaleEventService _saleEventService;

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 public class Login {
     @Autowired
     AuthenticationManager authenticationManager;

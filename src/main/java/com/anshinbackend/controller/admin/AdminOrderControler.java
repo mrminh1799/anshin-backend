@@ -1,7 +1,7 @@
-package com.anshinbackend.controller;
+package com.anshinbackend.controller.admin;
 
-import com.anshinbackend.entity.CartItem;
-import com.anshinbackend.service.CartItemService;
+import com.anshinbackend.dto.Admin.AdminOrderDTO;
+import com.anshinbackend.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,14 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cart")
+@RequestMapping("/admin/order")
 @CrossOrigin("*")
 
-public class CartController {
+
+public class AdminOrderControler {
     @Autowired
-    CartItemService _cartItemService;
+    OrderService _orderService;
     @GetMapping("/findAll")
-    public ResponseEntity<List<CartItem>> findAll(){
-        return  ResponseEntity.ok(_cartItemService.findAll());
+    public ResponseEntity<List<AdminOrderDTO>> findAllOrder(){
+        return ResponseEntity.ok().body(_orderService.findAllOrder());
     }
+
 }

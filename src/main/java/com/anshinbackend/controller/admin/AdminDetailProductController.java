@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/detailProduct")
+@CrossOrigin("*")
 
 public class AdminDetailProductController {
     @Autowired
