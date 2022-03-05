@@ -1,6 +1,6 @@
 package com.anshinbackend.dao;
 
-import com.anshinbackend.dao.entity.Order;
+import com.anshinbackend.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,31 +1,27 @@
-package com.anshinbackend.dao.entity;
+package com.anshinbackend.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="comments")
-public class Comment {
+@Table(name="cart_items")
+public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "content")
-    private String content;
-    @Column(name = "timeCreate")
-    private Date timeCreate;
-
+    @Column(name = "quantity")
+    private Integer quantity;
     @ManyToOne
-    @JoinColumn(name="id_acount")
+    @JoinColumn(name="acount_id")
     private Acount account;
     @ManyToOne
-    @JoinColumn(name="id_product")
-    private Product product;
-
+    @JoinColumn(name="product_detail_id")
+    private DetailProduct detailProduct;
 }

@@ -1,6 +1,6 @@
 package com.anshinbackend.service;
 
-import com.anshinbackend.dao.entity.SaleEvent;
+import com.anshinbackend.entity.SaleEvent;
 
 import java.util.List;
 

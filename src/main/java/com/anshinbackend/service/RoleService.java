@@ -1,6 +1,6 @@
 package com.anshinbackend.service;
 
-import com.anshinbackend.dao.entity.Role;
+import com.anshinbackend.entity.Role;
 
 import java.util.List;
 

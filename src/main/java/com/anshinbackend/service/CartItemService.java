@@ -1,6 +1,6 @@
 package com.anshinbackend.service;
 
-import com.anshinbackend.dao.entity.CartItem;
+import com.anshinbackend.entity.CartItem;
 
 import java.util.List;
 

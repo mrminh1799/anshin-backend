@@ -1,6 +1,6 @@
 package com.anshinbackend.dao;
 
-import com.anshinbackend.dao.entity.SaleEvent;
+import com.anshinbackend.entity.SaleEvent;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

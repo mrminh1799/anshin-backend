@@ -1,6 +1,6 @@
 package com.anshinbackend.dao;
 
-import com.anshinbackend.dao.entity.DetailProduct;
+import com.anshinbackend.entity.DetailProduct;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

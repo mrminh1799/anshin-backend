@@ -1,6 +1,6 @@
 package com.anshinbackend.controller.admin;
 
-import com.anshinbackend.dao.entity.DetailProduct;
+import com.anshinbackend.entity.DetailProduct;
 import com.anshinbackend.service.DetailProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

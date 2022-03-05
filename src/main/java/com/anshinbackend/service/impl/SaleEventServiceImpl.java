@@ -1,7 +1,7 @@
 package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.SaleEventDAO;
-import com.anshinbackend.dao.entity.SaleEvent;
+import com.anshinbackend.entity.SaleEvent;
 import com.anshinbackend.service.SaleEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
