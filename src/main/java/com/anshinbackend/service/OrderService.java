@@ -1,7 +1,7 @@
 package com.anshinbackend.service;
 
 import com.anshinbackend.dto.Admin.AdminOrderDTO;
-import com.anshinbackend.dao.entity.Order;
+import com.anshinbackend.entity.Order;
 
 import java.util.List;
 

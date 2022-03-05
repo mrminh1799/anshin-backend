@@ -1,6 +1,6 @@
 package com.anshinbackend.dto;
 
-import com.anshinbackend.dao.entity.DetailProduct;
+import com.anshinbackend.entity.DetailProduct;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

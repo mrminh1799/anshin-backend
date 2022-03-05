@@ -1,7 +1,7 @@
 package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.CartItemDAO;
-import com.anshinbackend.dao.entity.CartItem;
+import com.anshinbackend.entity.CartItem;
 import com.anshinbackend.service.CartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

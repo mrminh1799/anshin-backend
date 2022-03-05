@@ -110,6 +110,8 @@
                             <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
                         </env>
                     </image>
+
+
                 </configuration>
             </plugin>
             <plugin>

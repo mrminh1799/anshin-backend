@@ -1,10 +1,11 @@
 package com.anshinbackend.dao;
 
-import com.anshinbackend.entity.Color;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.anshinbackend.entity.Comment;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ColorDAO extends JpaRepository<Color, Integer> {
+public interface CommentProductDAO extends JpaRepository<Comment, Integer> {
 
 }

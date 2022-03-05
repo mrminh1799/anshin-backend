@@ -1,7 +1,7 @@
 package com.anshinbackend.controller.admin;
 
 import com.anshinbackend.dto.Customer.ProductDTO;
-import com.anshinbackend.dao.entity.Product;
+import com.anshinbackend.entity.Product;
 import com.anshinbackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

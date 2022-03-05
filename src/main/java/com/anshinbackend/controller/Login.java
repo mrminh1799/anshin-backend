@@ -1,7 +1,7 @@
 package com.anshinbackend.controller;
 
 import com.anshinbackend.config.JwtTokenUtil;
-import com.anshinbackend.dao.entity.Acount;
+import com.anshinbackend.entity.Acount;
 import com.anshinbackend.sercutity.JwtRequest;
 import com.anshinbackend.sercutity.JwtUserDetailsService;
 import com.anshinbackend.sercutity.UserDTO;

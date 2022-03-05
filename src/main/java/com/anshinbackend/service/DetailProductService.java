@@ -1,6 +1,6 @@
 package com.anshinbackend.service;
 
-import com.anshinbackend.dao.entity.DetailProduct;
+import com.anshinbackend.entity.DetailProduct;
 
 import java.util.List;
 

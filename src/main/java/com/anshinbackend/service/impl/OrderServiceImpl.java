@@ -2,10 +2,10 @@ package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.*;
 import com.anshinbackend.dto.Admin.AdminOrderDTO;
-import com.anshinbackend.dao.entity.Acount;
-import com.anshinbackend.dao.entity.DetailProduct;
-import com.anshinbackend.dao.entity.Order;
-import com.anshinbackend.dao.entity.OrderDetail;
+import com.anshinbackend.entity.Acount;
+import com.anshinbackend.entity.DetailProduct;
+import com.anshinbackend.entity.Order;
+import com.anshinbackend.entity.OrderDetail;
 import com.anshinbackend.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

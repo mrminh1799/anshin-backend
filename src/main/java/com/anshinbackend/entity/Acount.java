@@ -1,4 +1,4 @@
-package com.anshinbackend.dao.entity;
+package com.anshinbackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;

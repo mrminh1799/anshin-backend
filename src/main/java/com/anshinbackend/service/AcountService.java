@@ -1,7 +1,7 @@
 package com.anshinbackend.service;
 
 import com.anshinbackend.dto.AcountDTO;
-import com.anshinbackend.dao.entity.Acount;
+import com.anshinbackend.entity.Acount;
 
 import java.util.List;
 
