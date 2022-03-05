@@ -1,7 +1,7 @@
 package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.RoleDAO;
-import com.anshinbackend.entity.Role;
+import com.anshinbackend.dao.entity.Role;
 import com.anshinbackend.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

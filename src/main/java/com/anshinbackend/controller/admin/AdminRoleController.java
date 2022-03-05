@@ -1,6 +1,6 @@
 package com.anshinbackend.controller.admin;
 
-import com.anshinbackend.entity.Role;
+import com.anshinbackend.dao.entity.Role;
 import com.anshinbackend.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

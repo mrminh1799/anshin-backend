@@ -2,8 +2,7 @@ package com.anshinbackend.service;
 
 import com.anshinbackend.dto.Customer.ProductDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
-import com.anshinbackend.entity.Product;
-import org.springframework.data.domain.Page;
+import com.anshinbackend.dao.entity.Product;
 
 import java.util.List;
 

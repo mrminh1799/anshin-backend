@@ -1,6 +1,6 @@
 package com.anshinbackend.dao;
 
-import com.anshinbackend.entity.Role;
+import com.anshinbackend.dao.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

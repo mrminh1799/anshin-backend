@@ -1,7 +1,6 @@
 package com.anshinbackend.service;
 
-import com.anshinbackend.entity.CartItem;
-import org.springframework.data.relational.core.sql.In;
+import com.anshinbackend.dao.entity.CartItem;
 
 import java.util.List;
 

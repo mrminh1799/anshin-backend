@@ -1,8 +1,7 @@
 package com.anshinbackend.service;
 
 import com.anshinbackend.dto.AcountDTO;
-import com.anshinbackend.entity.Acount;
-import org.springframework.stereotype.Service;
+import com.anshinbackend.dao.entity.Acount;
 
 import java.util.List;
 

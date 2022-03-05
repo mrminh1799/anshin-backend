@@ -1,12 +1,11 @@
 package com.anshinbackend.dao;
 
-import com.anshinbackend.entity.Acount;
+import com.anshinbackend.dao.entity.Acount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;

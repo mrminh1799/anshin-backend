@@ -1,4 +1,4 @@
-package com.anshinbackend.entity;
+package com.anshinbackend.dao.entity;
 
 import javax.persistence.*;
 

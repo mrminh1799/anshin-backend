@@ -1,4 +1,4 @@
-package com.anshinbackend.entity;
+package com.anshinbackend.dao.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,26 +6,22 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
+@Table(name = "favories")
 @Entity
-@Table(name="comments")
-public class Comment {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Favorite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Integer id;
-    @Column(name = "content")
-    private String content;
-    @Column(name = "timeCreate")
-    private Date timeCreate;
-
     @ManyToOne
     @JoinColumn(name="id_acount")
     private Acount account;
+    @Column(name = "time_create")
+    private Date time_create;
     @ManyToOne
     @JoinColumn(name="id_product")
     private Product product;
-
 }

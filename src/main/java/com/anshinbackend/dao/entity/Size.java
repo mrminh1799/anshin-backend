@@ -1,4 +1,4 @@
-package com.anshinbackend.entity;
+package com.anshinbackend.dao.entity;
 
 import javax.persistence.*;
 
@@ -9,21 +9,23 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "colors")
+@Table(name = "sizes")
 @Entity
-public class Color {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Size {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="color_name")
-    private String colorName;
+    @Column(name = "size_name")
+    private String size_name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "color")
+    @OneToMany(mappedBy = "size")
     List<DetailProduct> listProductDetail;
+
+
 
 }

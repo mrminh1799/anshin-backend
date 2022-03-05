@@ -1,6 +1,6 @@
 package com.anshinbackend.controller.admin;
 
-import com.anshinbackend.entity.SaleEvent;
+import com.anshinbackend.dao.entity.SaleEvent;
 import com.anshinbackend.service.SaleEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

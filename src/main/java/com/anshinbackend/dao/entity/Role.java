@@ -1,31 +1,27 @@
-package com.anshinbackend.entity;
-
-import javax.persistence.*;
+package com.anshinbackend.dao.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.List;
 
-@Table(name = "sizes")
-@Entity
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Size {
+@Entity
+@Data
+@Table( name = "roles")
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    Integer id;
 
-    @Column(name = "size_name")
-    private String size_name;
+    @Column(name = "role_name")
+    String roleName;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "size")
-    List<DetailProduct> listProductDetail;
-
-
-
+    @OneToMany(mappedBy = "role")
+    List<RoleAcount> roleAcounts;
 }

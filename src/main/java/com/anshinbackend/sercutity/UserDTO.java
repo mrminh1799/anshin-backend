@@ -1,6 +1,5 @@
 package com.anshinbackend.sercutity;
 
-import com.anshinbackend.entity.RoleAcount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
