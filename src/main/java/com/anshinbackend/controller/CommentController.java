@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.anshinbackend.entity.Comment;
-import com.anshinbackend.service.CommentProductService;
+
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/auth/comment")
@@ -32,8 +34,9 @@ public class CommentController {
 
 	}
 
-	@GetMapping("/findById/{id}")
-	public ResponseEntity<Comment> findById(@PathVariable("id") Integer id) {
-		return ResponseEntity.ok().body(commentService.findById(id));
+
+	@GetMapping("/findById/{id_product}")
+	public ResponseEntity<List<Comment>> findById(@PathVariable("id_product") Integer id) {
+		return ResponseEntity.ok(commentService.getAllByProductId(id));
 	}
 }

@@ -19,12 +19,13 @@ public class ColorServiceImpl implements ColorService {
     }
     @Override
 	public Color create(Color color) {
-    	return colorDAO.save(color);
+
+        return colorDAO.save(color);
     }
     @Override
 	public Color findById(int id) {
     	
-    	return colorDAO.getById(id);
+    	return colorDAO.getOne(id);
     	
     }
 

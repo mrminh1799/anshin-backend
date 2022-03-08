@@ -23,6 +23,7 @@ public class ColorController {
 
 	@GetMapping("/findAll")
 	public ResponseEntity<List<Color>> get() {
+	
 		return ResponseEntity.ok().body(colorService.findAll());
 	}
 
@@ -33,6 +34,6 @@ public class ColorController {
 
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<Color> findByID(@PathVariable("id") Integer id) {
-		return ResponseEntity.ok().body(colorService.findById(id));
+		return ResponseEntity.ok().body(colorService.findAll().get(id));
 	}
 }
