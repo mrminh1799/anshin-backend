@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
                 detailProduct.setQuantity(productLeft);
                 _productDetailDAO.save(detailProduct);
 
-                detailOrder.setPrice(detailProduct.getExportPrice());
+                detailOrder.setPrice(detailProduct.getProduct().getPrice());
                 detailOrder.setOrder(order);
                 detailOrder.setDetailProduct(detailProduct);
                 _orderDetailDAO.save(detailOrder);

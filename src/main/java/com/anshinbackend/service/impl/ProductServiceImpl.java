@@ -26,11 +26,7 @@ public class ProductServiceImpl  implements ProductService {
             e.setId(x.getId());
             e.setName(x.getProductName());
             e.setImage(x.getImage());
-            try {
-                e.setPrice(x.getListProductDetails().get(0).getExportPrice());
-            }catch (IndexOutOfBoundsException exception){
-                e.setPrice(0);
-            }
+            e.setPrice(x.getPrice());
             e.setDescription(x.getDescription());
             list.add(e);
         });
@@ -72,11 +68,7 @@ public class ProductServiceImpl  implements ProductService {
             e.setId(x.getId());
             e.setName(x.getProductName());
             e.setImage(x.getImage());
-            try {
-                e.setPrice(x.getListProductDetails().get(0).getExportPrice());
-            }catch (IndexOutOfBoundsException exception){
-                e.setPrice(0);
-            }
+            e.setPrice(x.getPrice());
             e.setDescription(x.getDescription());
             list.add(e);
         });
@@ -91,11 +83,7 @@ public class ProductServiceImpl  implements ProductService {
         dto.setId(p.getId());
         dto.setName(p.getProductName());
         dto.setImage(p.getImage());
-        try {
-            dto.setPrice(p.getListProductDetails().get(0).getExportPrice());
-        }catch (IndexOutOfBoundsException exception){
-            dto.setPrice(0);
-        }
+        dto.setPrice(p.getPrice());
         dto.setListDetailProduct(p.getListProductDetails());
         dto.setDescription(p.getDescription());
         return  dto;

@@ -39,4 +39,9 @@ public class DetailProductServiceImpl implements DetailProductService {
     public void delete(Integer id) {
         _productDetailDAO.deleteAcount(id);
     }
+
+    @Override
+    public DetailProduct findByProductColorSize(Integer idColor, Integer idSize, Integer idProduct) {
+        return _productDetailDAO.findByColorSizeProduct(idColor, idSize, idProduct);
+    }
 }

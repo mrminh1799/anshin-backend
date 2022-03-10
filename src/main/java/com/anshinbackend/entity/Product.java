@@ -29,6 +29,9 @@ public class Product {
     @Column(name = "image")
     String image;
 
+    @Column(name = "price")
+    Integer price;
+
     @JsonIgnore
     @OneToMany(mappedBy = "product" , fetch = FetchType.EAGER)
     List<DetailProduct> listProductDetails;

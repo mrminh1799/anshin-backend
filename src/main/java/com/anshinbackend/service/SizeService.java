@@ -2,5 +2,8 @@ package com.anshinbackend.service;
 
 import com.anshinbackend.entity.Size;
 
-public interface SizeService extends GenericService<Size, Integer> {
+import java.util.List;
+
+public interface SizeService {
+    public List<Size> findAllByProduct(Integer idProduct);
 }

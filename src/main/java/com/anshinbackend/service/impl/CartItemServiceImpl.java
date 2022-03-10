@@ -1,19 +1,25 @@
 package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.CartItemDAO;
+import com.anshinbackend.dto.CartItemDTO;
 import com.anshinbackend.entity.CartItem;
 import com.anshinbackend.service.CartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class CartItemServiceImpl implements CartItemService {
     @Autowired
     CartItemDAO _cartItemDao;
     @Override
-    public List<CartItem> findByAccountId(Integer id) {
-        return null;
+    public List<CartItemDTO> findByAccountId(Integer id) {
+        List<CartItemDTO> list= new ArrayList<>();
+        _cartItemDao.findByAcountId(id).forEach(x->{
+            list.add(new CartItemDTO(x.getDetailProduct().getId(), x.getQuantity()));
+        });
+        return  list;
     }
 
     @Override
