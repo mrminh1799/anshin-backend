@@ -12,4 +12,5 @@ public interface SizeDAO extends JpaRepository<Size, Integer> {
             "on detail_products.id_size = sizes.id" +
             " where id_product =?1" ,nativeQuery = true)
     List<Size> findListForProudct(Integer idProdcut);
+
 }
