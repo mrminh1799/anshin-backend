@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface OrderDetailDAO extends JpaRepository<OrderDetail, Integer> {
     List<OrderDetail> findByOrder(Order order);
+    List<OrderDetail> findByOrderId(Integer id);
 
 }
