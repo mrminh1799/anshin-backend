@@ -12,9 +12,8 @@ public interface ProductService extends GenericService<Product, Integer> {
     public Product inset(Product p);
     public Product update(Product p);
     public Integer delete(Integer id);
+    public List<ProductDTO> findByTop();
+    public List<ProductDTO> findBySumTop();
     public List<ProductDTO> findAllPage(Integer currentPage, Integer sizePage);
     public ProductDetailDTO showDetailProduct(Integer id);
-
-
-
 }
