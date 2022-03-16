@@ -2,7 +2,7 @@ package com.anshinbackend.controller;
 
 import com.anshinbackend.common.constant.OrderStatus;
 import com.anshinbackend.dao.ProductDetailDAO;
-import com.anshinbackend.dto.OrderDTO;
+import com.anshinbackend.dto.OrderTableForAdmin.OrderDTO;
 import com.anshinbackend.entity.Order;
 import com.anshinbackend.entity.OrderDetail;
 import com.anshinbackend.service.OrderService;
@@ -46,7 +46,7 @@ public class OrderController {
         order.setAddress(orderDTO.getAddress());
         order.setPhoneNumber(orderDTO.getPhoneNumber());
         order.setListOrderDetail(listOrderDetail);
-        order.setStatus(OrderStatus.DANG_XU_LY);
+        order.setStatus(OrderStatus.DANG_CHO_XU_LY);
 
         _orderService.newOrder(order, orderDTO.getIdAcount());
 

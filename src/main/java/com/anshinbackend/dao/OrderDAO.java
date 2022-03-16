@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface OrderDAO extends JpaRepository<Order, Integer> {
     public List<Order> findByReturnOrderIsFalseOrderByTimeCreateDesc();
+    public List<Order> findByStatusAndReturnOrderIsFalseOrderByTimeCreateDesc(Integer status);
 
 }

@@ -1,10 +1,17 @@
 package com.anshinbackend.service;
 
-import com.anshinbackend.dao.ProductDetailDAO;
-import com.anshinbackend.dto.ColorProductDetailDTO;
-
 import java.util.List;
 
+import com.anshinbackend.dto.ColorProductDetailDTO;
+import com.anshinbackend.entity.Color;
+
 public interface ColorService  {
-    public List<ColorProductDetailDTO> findAllForProduct(Integer id);
+
+	Color create(Color color);
+
+	List<Color> findAll();
+
+	Color findById(int id);
+
+	public List<ColorProductDetailDTO> findAllForProduct(Integer id);
 }

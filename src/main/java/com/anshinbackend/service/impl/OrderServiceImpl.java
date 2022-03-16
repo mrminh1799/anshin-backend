@@ -114,4 +114,51 @@ public class OrderServiceImpl implements OrderService {
 
          return  list;
     }
+
+    @Override
+    public List<AdminOrderDTO> findByStatus(Integer status) {
+        List<AdminOrderDTO> list = new ArrayList<>();
+        _orderDAO.findByStatusAndReturnOrderIsFalseOrderByTimeCreateDesc(status).forEach(x->{
+            AdminOrderDTO  dto = new AdminOrderDTO() ;
+            dto.setId(x.getId());
+            dto.setAddress(x.getAddress());
+            dto.setDetailAddress(x.getAddressDetail());
+            dto.setFullName(x.getFullName());
+            dto.setStatus(x.getStatus());
+            dto.setIdAcount(x.getAcount().getId());
+            dto.setIdStaff(x.getStaffId());
+            dto.setPhoneNumber(x.getPhoneNumber());
+            AtomicReference<Integer> sum = new AtomicReference<>(0);
+            _orderDetailDAO.findByOrder(x).forEach(y->
+            {
+                Integer quantity=0;
+                Integer price =0;
+                try {
+                    quantity = y.getQuantity();
+                    if(quantity==null){
+                        quantity=0;
+                    }
+                }catch (NullPointerException ex){
+                    quantity=0;
+                }
+
+                try {
+                    price = y.getPrice();
+                    if(price==null){
+                        price=0;
+                    }
+                }catch (NullPointerException ex){
+                    price = 0;
+                }
+                sum.set(quantity * price);
+            });
+
+            dto.setSumPrice(sum.get());
+            dto.setTimeCreate(x.getTimeCreate());
+            list.add(dto);
+
+        });
+
+        return  list;
+    }
 }
