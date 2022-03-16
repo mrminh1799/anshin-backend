@@ -1,6 +1,9 @@
 package com.anshinbackend.controller;
 
-import com.anshinbackend.service.impl.CommentProductServiceImp;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,16 +14,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.anshinbackend.dto.CommentDTO;
 import com.anshinbackend.entity.Comment;
-
-
-import java.util.List;
+import com.anshinbackend.service.CommentProductService;
 
 @RestController
 @RequestMapping("/auth/comment")
 public class CommentController {
 	@Autowired
-	CommentProductServiceImp commentService;
+	CommentProductService commentService;
+	@Autowired
+	ModelMapper modelMapper;
 
 	@PostMapping("/addNew")
 	public ResponseEntity<Comment> insert(@RequestBody Comment comment) {
@@ -36,7 +40,12 @@ public class CommentController {
 
 
 	@GetMapping("/findById/{id_product}")
-	public ResponseEntity<List<Comment>> findById(@PathVariable("id_product") Integer id) {
-		return ResponseEntity.ok(commentService.getAllByProductId(id));
+	public ResponseEntity<List<CommentDTO>> findById(@PathVariable("id_product") Integer id) {
+		
+		return ResponseEntity.ok(commentService.getAllByProductId(id).stream().map(comment->modelMapper.map(comment,CommentDTO.class)).collect(Collectors.toList()));
 	}
+	
+	
+	
+	
 }
