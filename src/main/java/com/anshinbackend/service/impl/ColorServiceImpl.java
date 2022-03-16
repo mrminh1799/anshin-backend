@@ -1,25 +1,42 @@
 package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.ColorDAO;
-
 import com.anshinbackend.dto.ColorProductDetailDTO;
+import com.anshinbackend.entity.Color;
 import com.anshinbackend.service.ColorService;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.Tuple;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ColorServiceImpl implements ColorService {
     @Autowired
-    ColorDAO _colorDAO;
+    ColorDAO colorDAO;
 
     @Autowired
     EntityManager em;
+    @Override
+	public List<Color> findAll(){
+    	return colorDAO.findAll();
+    }
+    @Override
+	public Color create(Color color) {
+
+        return colorDAO.save(color);
+    }
+    @Override
+	public Color findById(int id) {
+    	
+    	return colorDAO.getOne(id);
+    	
+    }
 
     @Override
     public List<ColorProductDetailDTO> findAllForProduct(Integer id) {
@@ -43,4 +60,8 @@ public class ColorServiceImpl implements ColorService {
         return  listReturn;
 
     }
+
+   
+    
+    
 }
