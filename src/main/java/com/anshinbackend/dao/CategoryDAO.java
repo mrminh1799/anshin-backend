@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CategoryDAO extends JpaRepository<Category, Integer> {
@@ -13,4 +14,8 @@ public interface CategoryDAO extends JpaRepository<Category, Integer> {
     List<Category> findForNavbar();
 
     List<Category> findByCategoryParentId(Integer id);
+
+
+
+
 }
