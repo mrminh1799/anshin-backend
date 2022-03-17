@@ -1,10 +1,9 @@
 package com.anshinbackend.service;
 
-import com.anshinbackend.dto.CommentDTO;
+import java.util.List;
+
 import com.anshinbackend.entity.Acount;
 import com.anshinbackend.entity.Comment;
-
-import java.util.List;
 
 
 public interface CommentProductService {
