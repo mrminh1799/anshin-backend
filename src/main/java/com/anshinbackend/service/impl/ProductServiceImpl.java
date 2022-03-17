@@ -59,6 +59,47 @@ public class ProductServiceImpl  implements ProductService {
     }
 
     @Override
+    public List<ProductDTO> findByTop() {
+       Integer currentPage = 0;
+       Integer sizePage = 10;
+        Pageable page = PageRequest.of(currentPage, sizePage);
+        List<ProductDTO> list= new ArrayList<>();
+
+        _productDAO.findByIsDeleteIsFalse(page).forEach(x->{
+            ProductDTO e = new ProductDTO();
+            e.setId(x.getId());
+            e.setName(x.getProductName());
+            e.setImage(x.getImage());
+            e.setPrice(x.getPrice());
+            e.setDescription(x.getDescription());
+            list.add(e);
+        });
+        return list;
+    }
+
+
+
+    @Override
+    public List<ProductDTO> findBySumTop() {
+        Integer currentPage = 0;
+        Integer sizePage = 10;
+        Pageable page = PageRequest.of(currentPage, sizePage);
+        List<ProductDTO> list= new ArrayList<>();
+        _productDAO.findByIsDeleteIsFalse(page).forEach(x->{
+            ProductDTO e = new ProductDTO();
+            e.setId(x.getId());
+            e.setName(x.getProductName());
+            e.setImage(x.getImage());
+            e.setPrice(x.getPrice());
+            e.setDescription(x.getDescription());
+            list.add(e);
+        });
+        return list;
+
+    }
+
+
+    @Override
     public List<ProductDTO> findAllPage(Integer currentPage, Integer sizePage) {
 
         Pageable page = PageRequest.of(currentPage, sizePage);

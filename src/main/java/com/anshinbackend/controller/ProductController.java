@@ -2,6 +2,7 @@ package com.anshinbackend.controller;
 
 import com.anshinbackend.dto.Customer.ProductDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
+import com.anshinbackend.entity.Product;
 import com.anshinbackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,14 @@ public class ProductController {
     @GetMapping("/findById/{id}")
     public  ResponseEntity<ProductDetailDTO> showProductDetail(@PathVariable("id") Integer id){
         return  ResponseEntity.ok().body(_productService.showDetailProduct(id));
+    }
+    @GetMapping("/findByTop")
+    public  ResponseEntity<List<ProductDTO>> findByTop(){
+        return  ResponseEntity.ok().body(_productService.findByTop());
+    }
+    @GetMapping("/findBySumTop")
+    public  ResponseEntity<List<ProductDTO>> findBySumTop(){
+        return  ResponseEntity.ok().body(_productService.findBySumTop());
     }
 
 }
