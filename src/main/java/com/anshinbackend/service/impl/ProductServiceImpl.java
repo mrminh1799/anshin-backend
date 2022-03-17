@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Service
 public class ProductServiceImpl  implements ProductService {
     @Autowired
@@ -32,6 +33,8 @@ public class ProductServiceImpl  implements ProductService {
         });
         return list;
     }
+
+
 
     @Override
     public Product findById(Integer id) {
@@ -58,14 +61,19 @@ public class ProductServiceImpl  implements ProductService {
         return  1;
     }
 
+
+
     @Override
-    public List<ProductDTO> findByTop() {
+    public List<ProductDTO> findByTop(
+//            Sort sort
+    ) {
        Integer currentPage = 0;
        Integer sizePage = 10;
         Pageable page = PageRequest.of(currentPage, sizePage);
         List<ProductDTO> list= new ArrayList<>();
 
-        _productDAO.findByIsDeleteIsFalse(page).forEach(x->{
+
+        _productDAO.findByTop(page).forEach(x->{
             ProductDTO e = new ProductDTO();
             e.setId(x.getId());
             e.setName(x.getProductName());
@@ -74,8 +82,10 @@ public class ProductServiceImpl  implements ProductService {
             e.setDescription(x.getDescription());
             list.add(e);
         });
-        return list;
-    }
+        return list ;
+//
+        }
+
 
 
 
@@ -85,7 +95,7 @@ public class ProductServiceImpl  implements ProductService {
         Integer sizePage = 10;
         Pageable page = PageRequest.of(currentPage, sizePage);
         List<ProductDTO> list= new ArrayList<>();
-        _productDAO.findByIsDeleteIsFalse(page).forEach(x->{
+        _productDAO.findBySumTop(page).forEach(x->{
             ProductDTO e = new ProductDTO();
             e.setId(x.getId());
             e.setName(x.getProductName());
@@ -94,7 +104,8 @@ public class ProductServiceImpl  implements ProductService {
             e.setDescription(x.getDescription());
             list.add(e);
         });
-        return list;
+        return list ;
+
 
     }
 
@@ -130,6 +141,4 @@ public class ProductServiceImpl  implements ProductService {
         return  dto;
 
     }
-
-
 }
