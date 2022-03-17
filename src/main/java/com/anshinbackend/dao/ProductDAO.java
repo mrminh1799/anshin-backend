@@ -20,8 +20,9 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
     @Query("update Product p set p.isDelete = true where p.id = ?1")
     public void deleteProduct(Integer id);
 
-    @Query("SELECT  p  FROM Product p  ORDER BY p.time_create DESC ")
-    public List<Product> findByTop();
+    @Query("SELECT  p  FROM  Product  p ORDER BY p.time_create DESC")
+    public List<Product> findByTop(Pageable pageable);
+//    Page<Product> findByTop();
 
     @Query("SELECT p1.id, p1.productName , sum(o.quantity) FROM OrderDetail o \n" +
             "INNER join DetailProduct p on o.detailProduct.id = p.id\n" +
