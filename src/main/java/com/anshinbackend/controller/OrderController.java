@@ -55,4 +55,32 @@ public class OrderController {
 
     }
 
+
+    @PutMapping("/updateOrder/{idOrder}")
+    public  ResponseEntity<?> updateOrder(@PathVariable("idOrder") Integer idOrder,@RequestBody OrderDTO orderDTO){
+        List<OrderDetail> listOrderDetail = new ArrayList<>();
+        orderDTO.getListOrderProductDetailDTO().forEach(x->{
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setDetailProduct(_productDetailDAO.findById(x.getIdProductDetail()).get());
+            orderDetail.setQuantity(x.getQuantity());
+            listOrderDetail.add(orderDetail);
+
+        });
+
+            Order order = _orderService.findById(idOrder);
+
+            order.setFullName(orderDTO.getFullName());
+            order.setAddressDetail(orderDTO.getDetailAddress());
+            order.setAddress(orderDTO.getAddress());
+            order.setPhoneNumber(orderDTO.getPhoneNumber());
+            order.setListOrderDetail(listOrderDetail);
+
+
+
+            _orderService.updateOrder(order);
+
+
+        return  ResponseEntity.ok("Cập nhập thành công");
+    }
+
 }

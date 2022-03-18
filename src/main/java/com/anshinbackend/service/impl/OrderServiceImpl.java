@@ -68,6 +68,37 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public void updateOrder(Order order) {
+
+        order.getListOrderDetail().forEach(x->{
+
+            DetailProduct detailProduct= _productDetailDAO.findById(x.getDetailProduct().getId()).get();
+
+            OrderDetail detailOrder = x;
+
+            if(detailProduct.getQuantity()<detailOrder.getQuantity()){
+                try {
+                    throw new Exception("Order false");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }else{
+                Integer productLeft = detailProduct.getQuantity() - detailOrder.getQuantity();
+                detailProduct.setQuantity(productLeft);
+                _productDetailDAO.save(detailProduct);
+
+                detailOrder.setPrice(detailProduct.getProduct().getPrice());
+                detailOrder.setOrder(order);
+                detailOrder.setDetailProduct(detailProduct);
+                _orderDetailDAO.save(detailOrder);
+            }
+
+        });
+
+
+    }
+
+    @Override
     public List<AdminOrderDTO> findAllOrder() {
 
         List<AdminOrderDTO> list = new ArrayList<>();
@@ -160,5 +191,10 @@ public class OrderServiceImpl implements OrderService {
         });
 
         return  list;
+    }
+
+    @Override
+    public Order findById(Integer id) {
+        return _orderDAO.findById(id).get();
     }
 }
