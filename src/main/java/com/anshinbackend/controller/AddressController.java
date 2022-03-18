@@ -20,7 +20,7 @@ public class AddressController {
     public ResponseEntity<Address> createAddress(@RequestBody Address address) {
         return ResponseEntity.ok().body(addressService.createAndUpdateAddress(address));
     }
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<Address> updateAddress(@RequestBody Address address) {
         return ResponseEntity.ok().body(addressService.createAndUpdateAddress(address));
     }
