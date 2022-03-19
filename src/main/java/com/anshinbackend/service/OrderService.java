@@ -11,4 +11,5 @@ public interface OrderService {
     public List<AdminOrderDTO> findAllOrder();
     public List<AdminOrderDTO> findByStatus(Integer status);
     public Order findById(Integer id);
+    public  void changeReturn(Order order, Integer orderIdOld);
 }

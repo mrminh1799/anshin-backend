@@ -7,6 +7,7 @@ import com.anshinbackend.entity.DetailProduct;
 import com.anshinbackend.entity.Order;
 import com.anshinbackend.entity.OrderDetail;
 import com.anshinbackend.service.OrderService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -196,5 +197,60 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order findById(Integer id) {
         return _orderDAO.findById(id).get();
+    }
+
+    @Override
+
+    public void changeReturn(Order order, Integer orderOld) {
+
+
+        order.setTimeCreate(new Date());
+
+        Acount acount = _acountDAO.findById(order.getAcount().getId()).get();
+        order.setAcount(acount);
+        Integer orderId = _orderDAO.save(order).getId();
+
+
+
+
+        Order newOrder = _orderDAO.findById(orderOld).get();
+        Order newOrder2 = new Order();
+
+        BeanUtils.copyProperties(newOrder, newOrder2);
+        newOrder2.setId(null);
+        newOrder2.setId(orderId);
+        System.out.println(0);
+        //newOrder.setId(orderId);
+        _orderDAO.save(newOrder2);
+
+        order.setId(orderOld);
+
+        order.getListOrderDetail().forEach(x->{
+
+            DetailProduct detailProduct= _productDetailDAO.findById(x.getDetailProduct().getId()).get();
+
+            OrderDetail detailOrder = x;
+
+            if(detailProduct.getQuantity()<detailOrder.getQuantity()){
+                try {
+                    throw new Exception("Order false");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }else{
+                Integer productLeft = detailProduct.getQuantity() - detailOrder.getQuantity();
+                detailProduct.setQuantity(productLeft);
+                _productDetailDAO.save(detailProduct);
+
+                detailOrder.setPrice(detailProduct.getProduct().getPrice());
+                detailOrder.setOrder(order);
+                detailOrder.setDetailProduct(detailProduct);
+                _orderDetailDAO.save(detailOrder);
+            }
+
+
+
+        });
+
     }
 }

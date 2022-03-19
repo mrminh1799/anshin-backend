@@ -42,8 +42,8 @@ public class CartController {
         c.setColorName(p.getColor().getColorName());
         c.setSizeName(p.getSize().getSize_name());
         c.setPrice(p.getProduct().getPrice());
-
         return  ResponseEntity.ok(c);
     }
+
 
 }

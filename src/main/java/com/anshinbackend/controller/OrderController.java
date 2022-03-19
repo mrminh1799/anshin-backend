@@ -1,6 +1,7 @@
 package com.anshinbackend.controller;
 
 import com.anshinbackend.common.constant.OrderStatus;
+import com.anshinbackend.dao.AcountDAO;
 import com.anshinbackend.dao.ProductDetailDAO;
 import com.anshinbackend.dto.OrderTableForAdmin.OrderDTO;
 import com.anshinbackend.entity.Order;
@@ -23,6 +24,9 @@ public class OrderController {
 
     @Autowired
     OrderService _orderService;
+
+    @Autowired
+    AcountDAO _acountDAO;
 
     @PostMapping("/newOrder")
     public ResponseEntity<?> newOrder(@RequestBody OrderDTO orderDTO){
@@ -82,5 +86,46 @@ public class OrderController {
 
         return  ResponseEntity.ok("Cập nhập thành công");
     }
+
+
+    @PutMapping("/changeReturn/{idOld}")
+    public ResponseEntity<?> newOrder(@PathVariable Integer idOld, @RequestBody OrderDTO orderDTO){
+
+
+
+        if(orderDTO.getIdAcount() ==null){
+            orderDTO.setIdAcount(5);
+        }
+        List<OrderDetail> listOrderDetail = new ArrayList<>();
+        orderDTO.getListOrderProductDetailDTO().forEach(x->{
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setDetailProduct(_productDetailDAO.findById(x.getIdProductDetail()).get());
+            orderDetail.setQuantity(x.getQuantity());
+            listOrderDetail.add(orderDetail);
+
+        });
+
+
+        Order order = new Order();
+        order.setReturnOrder(false);
+        order.setFullName(orderDTO.getFullName());
+        order.setAddressDetail(orderDTO.getDetailAddress());
+        order.setAddress(orderDTO.getAddress());
+        order.setPhoneNumber(orderDTO.getPhoneNumber());
+        order.setListOrderDetail(listOrderDetail);
+        order.setStatus(OrderStatus.DANG_CHO_XU_LY);
+        order.setAcount(_acountDAO.findById(orderDTO.getIdAcount()).get());
+
+
+
+        _orderService.changeReturn(order, idOld);
+
+
+        return  ResponseEntity.ok("Đổi hàng thành công");
+
+    }
+
+
+
 
 }
