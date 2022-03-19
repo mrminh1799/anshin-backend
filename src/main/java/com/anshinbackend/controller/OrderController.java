@@ -125,6 +125,12 @@ public class OrderController {
 
     }
 
+    @GetMapping("/findByAcountId/{id}")
+    public ResponseEntity<?> findByAcountId(@PathVariable("id") Integer id){
+        return  ResponseEntity.ok(_orderService.findAllOrderForAcountId(id));
+
+    }
+
 
 
 

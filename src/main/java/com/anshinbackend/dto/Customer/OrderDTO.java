@@ -17,7 +17,7 @@ public class OrderDTO {
     String dressDetail;
     Date createDate;
     String phoneNumber;
-    Integer sumPrice;
+    Integer status ;
     List<OrderDetailDTO> listOrderDetailDTO;
 
 

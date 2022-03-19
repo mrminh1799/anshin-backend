@@ -263,7 +263,7 @@ public class OrderServiceImpl implements OrderService {
         _orderDAO.findByAcountId(idAcount).forEach(x->{
 
 
-            AtomicReference<Integer> sumPrice = null;
+
             List<OrderDetailDTO>  listDetail = new ArrayList<>();
             OrderDetailDTO dto= new OrderDetailDTO();
             x.getListOrderDetail().forEach(y->{
@@ -273,8 +273,10 @@ public class OrderServiceImpl implements OrderService {
                 dto.setColorName(y.getDetailProduct().getColor().getColorName());
                 dto.setSizeId(y.getDetailProduct().getSize().getId());
                 dto.setSizeName(y.getDetailProduct().getSize().getSize_name());
+                dto.setPrice(y.getPrice());
 
-                sumPrice.set(sumPrice.get()+  y.getPrice() * y.getPrice());
+
+
                 listDetail.add(dto);
 
             });
@@ -284,7 +286,7 @@ public class OrderServiceImpl implements OrderService {
             orderDTO.setDress(x.getAddress());
             orderDTO.setDressDetail(x.getAddressDetail());
             orderDTO.setPhoneNumber(x.getPhoneNumber());
-            orderDTO.setSumPrice(sumPrice.get());
+            orderDTO.setStatus(x.getStatus());
             orderDTO.setCreateDate(new Date());
 
             list.add(orderDTO);

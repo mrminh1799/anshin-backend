@@ -16,8 +16,9 @@ public class OrderDetailDTO {
 
     Integer sizeId;
     String sizeName;
+    Integer price;
     Integer quantity;
-    String sumPrice;
+
 
 
 }
