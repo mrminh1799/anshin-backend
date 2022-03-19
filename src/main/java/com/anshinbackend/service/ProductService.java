@@ -16,5 +16,5 @@ public interface ProductService extends GenericService<Product, Integer> {
     public ProductDetailDTO showDetailProduct(Integer id);
 
     public List<ProductDTO> findAllByIdCategory(Integer id);
-
+    public List<ProductDTO> findAllByNameCategory(String name);
 }
