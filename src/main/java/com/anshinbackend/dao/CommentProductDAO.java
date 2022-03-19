@@ -1,5 +1,6 @@
 package com.anshinbackend.dao;
 
+import com.anshinbackend.entity.Acount;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.anshinbackend.entity.Comment;

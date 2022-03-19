@@ -3,7 +3,9 @@ package com.anshinbackend.controller;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.modelmapper.ModelMapper;
 
+import com.anshinbackend.dto.CommentDTO;
 import com.anshinbackend.entity.Acount;
 
 import com.anshinbackend.service.impl.CommentProductServiceImp;
@@ -31,6 +33,9 @@ public class CommentController {
 	@Autowired
 	CommentProductServiceImp commentService;
 
+	@Autowired
+	ModelMapper modelMapper;
+
 	@PostMapping("/addNew")
 	public ResponseEntity<Comment> insert(@RequestBody Comment comment) {
 		return ResponseEntity.ok().body(commentService.addNew(comment));
@@ -52,7 +57,7 @@ public class CommentController {
 	@GetMapping("/getByAccountAndProduct/{id_acount}/{id_product}")
 	public ResponseEntity<List<CommentDTO>> findByAccAndProduct(@PathVariable("id_acount")int id_acc, @PathVariable("id_product")int id_pro) {
 		
-		return ResponseEntity.ok(commentService.getAllCommentByAccountAndProduct(id_acc, id_pro).stream().map(comment->modelMapper.map(comment,CommentDTO.class)).collect(Collectors.toList()));
+		return ResponseEntity.ok(commentService.getAllCommentByAccountAndProduct(id_acc, id_pro).stream().map(comment -> modelMapper.map(comment,CommentDTO.class)).collect(Collectors.toList()));
 	
 	}
 	@PutMapping("/update/{id}")
