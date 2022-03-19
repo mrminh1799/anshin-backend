@@ -1,5 +1,6 @@
 package com.anshinbackend.controller.website;
 
+import com.anshinbackend.entity.DetailProduct;
 import com.anshinbackend.service.DetailProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,4 +19,9 @@ public class ProductDetailController {
                                                    ){
     return ResponseEntity.ok(_detailProductService.findByProductColorSize(idColor, idSize, idProduct));
 }
+
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<DetailProduct> findById(@PathVariable("id") Integer id){
+        return ResponseEntity.ok().body(_detailProductService.findById(id));
+    }
 }

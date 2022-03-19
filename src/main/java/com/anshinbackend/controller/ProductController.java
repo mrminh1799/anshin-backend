@@ -54,5 +54,4 @@ public class ProductController {
     public  ResponseEntity<List<ProductDTO>> findBySumTop(){
         return  ResponseEntity.ok().body(_productService.findBySumTop());
     }
-
 }

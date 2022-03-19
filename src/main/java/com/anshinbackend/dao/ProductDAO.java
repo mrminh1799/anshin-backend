@@ -31,8 +31,6 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
             "GROUP BY p1.id, p1.productName \n" +
             "order by sum(o.quantity) DESC ")
     public List<Product> findBySumTop(Pageable pageable);
-
-
     Page<Product> findByIsDeleteIsFalse(Pageable pageable);
 
 
