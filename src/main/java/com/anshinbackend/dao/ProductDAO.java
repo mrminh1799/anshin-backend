@@ -33,7 +33,9 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
     public List<Product> findBySumTop(Pageable pageable);
     Page<Product> findByIsDeleteIsFalse(Pageable pageable);
 
-
+    @Query(value = "select * from products p inner join detail_products dp on p.id=dp.id_product where dp.id_color=?1 and dp.id_size=?2"
+    		+ " and dp.export_price > ?3 and dp.export_price < ?4",nativeQuery = true)
+    public List<Product> findByColorSizePrice(int idColor,int idSize,Double topPrice, Double bottomPrice );
 
 
 

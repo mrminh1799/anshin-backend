@@ -139,4 +139,12 @@ public class ProductServiceImpl  implements ProductService {
         return  dto;
 
     }
+
+    
+    @Override
+	public List<Product> findByColorSizePrice(int idColor, int idSize,double topPrice,double bottomPrice){
+    	return _productDAO.findByColorSizePrice(idColor, idSize, topPrice, bottomPrice);
+    }
+
+
 }
