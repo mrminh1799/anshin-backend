@@ -1,5 +1,7 @@
 package com.anshinbackend.controller;
 
+import com.anshinbackend.dao.AcountDAO;
+import com.anshinbackend.dao.ProductDAO;
 import com.anshinbackend.dto.CartItemDTO;
 import com.anshinbackend.dto.NavBar.CartDetailDTO;
 import com.anshinbackend.entity.CartItem;
@@ -20,6 +22,12 @@ import java.util.Optional;
 public class CartController {
     @Autowired
     CartItemService _cartItemService;
+
+    @Autowired
+    AcountDAO _acountDao;
+
+    @Autowired
+    ProductDAO _productDao;
 
     @Autowired
     DetailProductService _detailProductService;
@@ -44,6 +52,18 @@ public class CartController {
         c.setSizeName(p.getSize().getSize_name());
         c.setPrice(p.getProduct().getPrice());
         return  ResponseEntity.ok(c);
+    }
+
+    @PostMapping("/createForAcount/{idAcount}/{idProductDetail}/{quantity}")
+    public ResponseEntity<?> createCartItem(@PathVariable("idAcount") Integer idAcount,
+                                            @PathVariable("idProductDetail") Integer idProductDetail,
+                                            @PathVariable("quantity")  Integer quantity){
+        CartItem cartItem = new CartItem();
+        cartItem.setQuantity(quantity);
+        cartItem.setAccount(_acountDao.findById(idAcount).get());
+        cartItem.setDetailProduct(_detailProductService.findById(idProductDetail));
+        _cartItemService.Create(cartItem);
+        return  ResponseEntity.ok("Thêm vào cart thành công");
     }
 
 

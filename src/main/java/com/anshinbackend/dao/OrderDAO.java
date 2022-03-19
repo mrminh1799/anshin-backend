@@ -26,4 +26,8 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
     @Query("update  Order  o set o.id = ?1 where  o.id =?2")
     public void updateId (Integer idOld, Integer idNew);
 
+
+    @Query("select o from Order o where o.acount.id=?1")
+    public List<Order> findByAcountId(Integer id);
+
 }

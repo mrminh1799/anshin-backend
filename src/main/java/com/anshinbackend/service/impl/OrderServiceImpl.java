@@ -2,6 +2,8 @@ package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.*;
 import com.anshinbackend.dto.Admin.AdminOrderDTO;
+import com.anshinbackend.dto.Customer.OrderDTO;
+import com.anshinbackend.dto.Customer.OrderDetailDTO;
 import com.anshinbackend.entity.Acount;
 import com.anshinbackend.entity.DetailProduct;
 import com.anshinbackend.entity.Order;
@@ -252,5 +254,48 @@ public class OrderServiceImpl implements OrderService {
 
         });
 
+    }
+
+    @Override
+    public List<OrderDTO> findAllOrderForAcountId(Integer idAcount) {
+        List<OrderDTO> list= new ArrayList<>();
+
+        _orderDAO.findByAcountId(idAcount).forEach(x->{
+
+
+            AtomicReference<Integer> sumPrice = null;
+            List<OrderDetailDTO>  listDetail = new ArrayList<>();
+            OrderDetailDTO dto= new OrderDetailDTO();
+            x.getListOrderDetail().forEach(y->{
+                dto.setIdProduct(y.getDetailProduct().getId());
+                dto.setQuantity(y.getQuantity());
+                dto.setColorId(y.getDetailProduct().getColor().getId());
+                dto.setColorName(y.getDetailProduct().getColor().getColorName());
+                dto.setSizeId(y.getDetailProduct().getSize().getId());
+                dto.setSizeName(y.getDetailProduct().getSize().getSize_name());
+
+                sumPrice.set(sumPrice.get()+  y.getPrice() * y.getPrice());
+                listDetail.add(dto);
+
+            });
+            OrderDTO orderDTO = new OrderDTO();
+            orderDTO.setListOrderDetailDTO(listDetail);
+            orderDTO.setOrderId(x.getId());
+            orderDTO.setDress(x.getAddress());
+            orderDTO.setDressDetail(x.getAddressDetail());
+            orderDTO.setPhoneNumber(x.getPhoneNumber());
+            orderDTO.setSumPrice(sumPrice.get());
+            orderDTO.setCreateDate(new Date());
+
+            list.add(orderDTO);
+
+
+
+
+
+
+
+        });
+        return list;
     }
 }

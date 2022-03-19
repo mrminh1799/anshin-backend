@@ -30,4 +30,9 @@ public class CartItemServiceImpl implements CartItemService {
     public List<CartItem> findAll() {
         return _cartItemDao.findAll();
     }
+
+    @Override
+    public void Create(CartItem cartItem) {
+        _cartItemDao.save(cartItem);
+    }
 }
