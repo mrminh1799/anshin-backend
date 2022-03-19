@@ -90,5 +90,18 @@ public class ProductServiceImpl  implements ProductService {
 
     }
 
-
+    @Override
+    public List<ProductDTO> findAllByIdCategory(Integer id) {
+        List<ProductDTO> list= new ArrayList<>();
+        _productDAO.findAllByIdCategory(id).forEach(x->{
+            ProductDTO e = new ProductDTO();
+            e.setId(x.getId());
+            e.setName(x.getProductName());
+            e.setImage(x.getImage());
+            e.setPrice(x.getPrice());
+            e.setDescription(x.getDescription());
+            list.add(e);
+        });
+        return list ;
+    }
 }

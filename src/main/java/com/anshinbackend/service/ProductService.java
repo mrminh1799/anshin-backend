@@ -15,6 +15,6 @@ public interface ProductService extends GenericService<Product, Integer> {
     public List<ProductDTO> findAllPage(Integer currentPage, Integer sizePage);
     public ProductDetailDTO showDetailProduct(Integer id);
 
-
+    public List<ProductDTO> findAllByIdCategory(Integer id);
 
 }

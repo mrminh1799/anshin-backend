@@ -20,14 +20,11 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
     @Query("update Product p set p.isDelete = true where p.id = ?1")
     public void deleteProduct(Integer id);
 
+    @Query("SELECT p FROM Product p WHERE p.category.id =?1 \n" +
+            "\n" +
+            "ORDER BY p.time_create DESC")
+    public  List<Product> findAllByIdCategory(Integer id);
+
     Page<Product> findByIsDeleteIsFalse(Pageable pageable);
-
-
-
-
-
-
-
-
 
 }

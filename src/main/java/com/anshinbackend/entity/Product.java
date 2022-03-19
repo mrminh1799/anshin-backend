@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -31,6 +32,9 @@ public class Product {
 
     @Column(name = "price")
     Integer price;
+
+    @Column(name="time_create")
+    Date time_create;
 
     @JsonIgnore
     @OneToMany(mappedBy = "product" , fetch = FetchType.EAGER)

@@ -46,4 +46,8 @@ public class CartController {
         return  ResponseEntity.ok(c);
     }
 
+    @DeleteMapping("/deleteAllByIdAccount/{cid}")
+    public void findBy(@PathVariable("cid") Integer id) {
+        _cartItemService.deleteBy(id);
+    }
 }

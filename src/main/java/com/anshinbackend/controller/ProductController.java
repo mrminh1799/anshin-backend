@@ -31,4 +31,8 @@ public class ProductController {
         return  ResponseEntity.ok().body(_productService.showDetailProduct(id));
     }
 
+    @GetMapping("/findAllByIdCategory/{cid}")
+    public  ResponseEntity<List<ProductDTO>> findAllByIdCate(@PathVariable("cid") Integer id){
+        return  ResponseEntity.ok().body((_productService.findAllByIdCategory(id)));
+    }
 }
