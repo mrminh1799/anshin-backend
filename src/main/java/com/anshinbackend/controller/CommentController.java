@@ -5,7 +5,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.anshinbackend.entity.Acount;
-import org.modelmapper.ModelMapper;
+
+import com.anshinbackend.service.impl.CommentProductServiceImp;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,17 +20,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.anshinbackend.dto.CommentDTO;
 import com.anshinbackend.entity.Comment;
-import com.anshinbackend.service.CommentProductService;
+
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/auth/comment")
 public class CommentController {
 	@Autowired
-	CommentProductService commentService;
-	@Autowired
-	ModelMapper modelMapper;
+	CommentProductServiceImp commentService;
 
 	@PostMapping("/addNew")
 	public ResponseEntity<Comment> insert(@RequestBody Comment comment) {
@@ -44,10 +45,10 @@ public class CommentController {
 
 
 	@GetMapping("/findById/{id_product}")
-	public ResponseEntity<List<CommentDTO>> findById(@PathVariable("id_product") Integer id) {
-		
-		return ResponseEntity.ok(commentService.getAllByProductId(id).stream().map(comment->modelMapper.map(comment,CommentDTO.class)).collect(Collectors.toList()));
+	public ResponseEntity<List<Comment>> findById(@PathVariable("id_product") Integer id) {
+		return ResponseEntity.ok(commentService.getAllByProductId(id));
 	}
+
 	@GetMapping("/getByAccountAndProduct/{id_acount}/{id_product}")
 	public ResponseEntity<List<CommentDTO>> findByAccAndProduct(@PathVariable("id_acount")int id_acc, @PathVariable("id_product")int id_pro) {
 		
@@ -63,5 +64,5 @@ public class CommentController {
 
 	}
 	
-	
+
 }

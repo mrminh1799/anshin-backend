@@ -3,12 +3,15 @@ package com.anshinbackend.service.impl;
 import com.anshinbackend.dao.CategoryDAO;
 import com.anshinbackend.dto.NavBar.NavBarChildDTO;
 import com.anshinbackend.dto.NavBar.NavBarDTO;
+import com.anshinbackend.entity.Category;
 import com.anshinbackend.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
@@ -30,5 +33,28 @@ public class CategoryServiceImpl implements CategoryService {
             list.add(e);
         });
         return list;
+    }
+
+    @Override
+    public List<Category> findAll() {
+        return _categoryDAO.findAll();
+    }
+
+
+
+    @Override
+    public Category create(Category category) {
+        return _categoryDAO.save(category);
+    }
+
+    @Override
+    public Category update(Category category) {
+        return _categoryDAO.save(category);
+    }
+
+    @Override
+    public Integer delete(Integer id) {
+        _categoryDAO.deleteCate(id);
+        return  1;
     }
 }

@@ -41,10 +41,12 @@ public class AdminProductController {
         return  ResponseEntity.ok(null);
     }
 
+
     @GetMapping("/findByColorSizePrice/{id_color}/{id_size}/{top_price}/{bottom_price}")
     public ResponseEntity<List<Product>> findByColorSizePrice(@PathVariable("id_color") Integer idColor,@PathVariable("id_size") Integer idSize
     		,@PathVariable("top_price") Double topPrice,@PathVariable("bottom_price") Double bottomPrice){
         return  ResponseEntity.ok(_productProductService.findByColorSizePrice(idColor, idSize, topPrice, bottomPrice));
     }
+
 
 }

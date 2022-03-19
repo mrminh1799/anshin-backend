@@ -18,4 +18,9 @@ public interface ProductDetailDAO  extends JpaRepository<DetailProduct, Integer>
     @Modifying
     @Query("update DetailProduct p set p.isDeleted = true where p.id = ?1")
     public void deleteAcount(Integer id);
+    @Query("select p from DetailProduct p where p.color.id =?1 and p.size.id =?2 and p.product.id =?3")
+    public DetailProduct findByColorSizeProduct(Integer idColor, Integer idSize, Integer idProduct);
+
+    @Query("SELECT p FROM DetailProduct p WHERE p.product.id =?1")
+    public List<DetailProduct> findAllByid(Integer id);
 }

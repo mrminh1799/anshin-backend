@@ -1,6 +1,7 @@
 package com.anshinbackend.dao;
 
 import com.anshinbackend.entity.Acount;
+import com.anshinbackend.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,5 +20,7 @@ public interface AcountDAO extends JpaRepository<Acount, Integer> {
     @Modifying
     @Query("update Acount a set a.isDeleted = true where a.id = ?1")
     public void deleteAcount(Integer id);
+
+
 
 }

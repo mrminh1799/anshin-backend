@@ -5,18 +5,14 @@ import java.util.List;
 import com.anshinbackend.service.impl.ColorServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.anshinbackend.entity.Color;
 
 
 @RestController
 @RequestMapping("/color")
+@CrossOrigin("*")
 public class ColorController {
 	@Autowired
 	ColorServiceImpl colorService;
@@ -35,5 +31,9 @@ public class ColorController {
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<Color> findByID(@PathVariable("id") Integer id) {
 		return ResponseEntity.ok().body(colorService.findAll().get(id));
+	}
+	@GetMapping("/findByProductId/{idProduct}")
+	public ResponseEntity<List<?>> findForProduct(@PathVariable("idProduct") Integer id){
+		return ResponseEntity.ok(colorService.findAllForProduct(id));
 	}
 }

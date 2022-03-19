@@ -27,7 +27,7 @@ public class OrderDetail {
     @JoinColumn(name = "id_product_detail")
     DetailProduct detailProduct;
 
-    @ManyToOne
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE}, fetch=FetchType.EAGER)
     @JoinColumn(name = "order_id")
     Order order;
 }

@@ -30,8 +30,8 @@ public class AdminDetailProductController {
         return ResponseEntity.ok().body(_detaiProductService.insert(p));
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<DetailProduct> update(@RequestBody DetailProduct p){
+    @PutMapping("/update/{id}")
+    public ResponseEntity<DetailProduct> update(@PathVariable("id") Integer id, @RequestBody DetailProduct p){
         return ResponseEntity.ok().body(_detaiProductService.update(p));
     }
 
@@ -40,6 +40,11 @@ public class AdminDetailProductController {
         _detaiProductService.delete(id);
          return ResponseEntity.ok().body(null);
 
+    }
+
+    @GetMapping("/findAllById/{id}")
+    public ResponseEntity<List<DetailProduct>> findAllby(@PathVariable("id") Integer id){
+        return ResponseEntity.ok().body(_detaiProductService.findAllByid(id));
     }
 
 }

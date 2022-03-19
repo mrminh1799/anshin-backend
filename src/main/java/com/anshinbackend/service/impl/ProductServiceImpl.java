@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Service
 public class ProductServiceImpl  implements ProductService {
     @Autowired
@@ -26,16 +27,14 @@ public class ProductServiceImpl  implements ProductService {
             e.setId(x.getId());
             e.setName(x.getProductName());
             e.setImage(x.getImage());
-            try {
-                e.setPrice(x.getListProductDetails().get(0).getExportPrice());
-            }catch (IndexOutOfBoundsException exception){
-                e.setPrice(0);
-            }
+            e.setPrice(x.getPrice());
             e.setDescription(x.getDescription());
             list.add(e);
         });
         return list;
     }
+
+
 
     @Override
     public Product findById(Integer id) {
@@ -62,6 +61,53 @@ public class ProductServiceImpl  implements ProductService {
         return  1;
     }
 
+
+
+    @Override
+    public List<ProductDTO> findByTop(
+//            Sort sort
+    ) {
+       Integer currentPage = 0;
+       Integer sizePage = 10;
+        Pageable page = PageRequest.of(currentPage, sizePage);
+        List<ProductDTO> list= new ArrayList<>();
+
+
+        _productDAO.findByTop(page).forEach(x->{
+            ProductDTO e = new ProductDTO();
+            e.setId(x.getId());
+            e.setName(x.getProductName());
+            e.setImage(x.getImage());
+            e.setPrice(x.getPrice());
+            e.setDescription(x.getDescription());
+            list.add(e);
+        });
+        return list ;
+//
+        }
+
+
+
+
+    @Override
+    public List<ProductDTO> findBySumTop() {
+        Integer currentPage = 0;
+        Integer sizePage = 10;
+        Pageable page = PageRequest.of(currentPage, sizePage);
+        List<ProductDTO> list= new ArrayList<>();
+        _productDAO.findBySumTop(page).forEach(x->{
+            ProductDTO e = new ProductDTO();
+            e.setId(x.getId());
+            e.setName(x.getProductName());
+            e.setImage(x.getImage());
+            e.setPrice(x.getPrice());
+            e.setDescription(x.getDescription());
+            list.add(e);
+        });
+        return list ;
+
+
+    }
     @Override
     public List<ProductDTO> findAllPage(Integer currentPage, Integer sizePage) {
 
@@ -72,11 +118,7 @@ public class ProductServiceImpl  implements ProductService {
             e.setId(x.getId());
             e.setName(x.getProductName());
             e.setImage(x.getImage());
-            try {
-                e.setPrice(x.getListProductDetails().get(0).getExportPrice());
-            }catch (IndexOutOfBoundsException exception){
-                e.setPrice(0);
-            }
+            e.setPrice(x.getPrice());
             e.setDescription(x.getDescription());
             list.add(e);
         });
@@ -91,16 +133,13 @@ public class ProductServiceImpl  implements ProductService {
         dto.setId(p.getId());
         dto.setName(p.getProductName());
         dto.setImage(p.getImage());
-        try {
-            dto.setPrice(p.getListProductDetails().get(0).getExportPrice());
-        }catch (IndexOutOfBoundsException exception){
-            dto.setPrice(0);
-        }
+        dto.setPrice(p.getPrice());
         dto.setListDetailProduct(p.getListProductDetails());
         dto.setDescription(p.getDescription());
         return  dto;
 
     }
+
     
     @Override
 	public List<Product> findByColorSizePrice(int idColor, int idSize,double topPrice,double bottomPrice){
