@@ -1,7 +1,6 @@
 package com.anshinbackend.service;
 
 import com.anshinbackend.dto.CartItemDTO;
-import com.anshinbackend.dto.NavBar.CartDetailDTO;
 import com.anshinbackend.entity.CartItem;
 
 import java.util.List;

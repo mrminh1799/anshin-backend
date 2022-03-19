@@ -1,8 +1,10 @@
 package com.anshinbackend.controller.admin;
 
 import com.anshinbackend.entity.Category;
+import com.anshinbackend.entity.Product;
 import com.anshinbackend.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -31,7 +33,8 @@ public class AdminCategoryController {
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable("id")Integer id) {
+    public ResponseEntity<Category> delete(@PathVariable("id")Integer id) {
         categoryService.delete(id);
+        return  ResponseEntity.ok(null);
     }
 }

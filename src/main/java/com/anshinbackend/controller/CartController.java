@@ -1,16 +1,17 @@
 package com.anshinbackend.controller;
 
+import com.anshinbackend.dto.CartItemDTO;
 import com.anshinbackend.dto.NavBar.CartDetailDTO;
 import com.anshinbackend.entity.CartItem;
 import com.anshinbackend.entity.DetailProduct;
 import com.anshinbackend.service.CartItemService;
 import com.anshinbackend.service.DetailProductService;
-import com.anshinbackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/cart")
