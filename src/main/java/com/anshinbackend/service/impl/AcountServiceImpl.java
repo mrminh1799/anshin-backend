@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -64,4 +65,10 @@ public class AcountServiceImpl implements AcountService {
         acountDAO.deleteAcount(id);
         return 1;
     }
+
+    @Override
+    public Optional<Acount> findBy(Integer id) {
+        return Optional.of(acountDAO.findBy(id).get());
+    }
+
 }
