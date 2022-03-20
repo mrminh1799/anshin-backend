@@ -56,5 +56,9 @@ public class Order {
 
     List<OrderDetail> listOrderDetail = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "order")
+    List<HistoryOrder> listHistoryOrder;
+
 
 }

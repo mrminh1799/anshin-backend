@@ -4,10 +4,7 @@ import com.anshinbackend.dao.*;
 import com.anshinbackend.dto.Admin.AdminOrderDTO;
 import com.anshinbackend.dto.Customer.OrderDTO;
 import com.anshinbackend.dto.Customer.OrderDetailDTO;
-import com.anshinbackend.entity.Acount;
-import com.anshinbackend.entity.DetailProduct;
-import com.anshinbackend.entity.Order;
-import com.anshinbackend.entity.OrderDetail;
+import com.anshinbackend.entity.*;
 import com.anshinbackend.service.OrderService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +27,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     ProductDetailDAO _productDetailDAO;
+
+    @Autowired
+    HistoryOrderDAO _historyOrderDAO;
 
     @Override
     public void newOrder(Order order, Integer idAcount) {
@@ -203,36 +203,40 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
 
-    public void changeReturn(Order order, Integer orderOld) {
-
-
-        order.setTimeCreate(new Date());
-
-        Acount acount = _acountDAO.findById(order.getAcount().getId()).get();
-        order.setAcount(acount);
-        Integer orderId = _orderDAO.save(order).getId();
-
-
-
+    public void changeReturn(Order order, Integer orderOld, String reason) {
 
         Order newOrder = _orderDAO.findById(orderOld).get();
-        Order newOrder2 = new Order();
+        Order oldOrder = new Order();
 
-        BeanUtils.copyProperties(newOrder, newOrder2);
-        newOrder2.setId(null);
-        newOrder2.setId(orderId);
-        System.out.println(0);
-        //newOrder.setId(orderId);
-        _orderDAO.save(newOrder2);
+       List<OrderDetail> listOld =  newOrder.getListOrderDetail();
+        String fullName = newOrder.getFullName();
+        oldOrder.setAcount(newOrder.getAcount());
+        oldOrder.setFullName(fullName);
+        oldOrder.setPhoneNumber(newOrder.getPhoneNumber());
+        oldOrder.setAddress(newOrder.getAddress());
+        oldOrder.setAddressDetail(newOrder.getAddressDetail());
+        oldOrder.setReturnOrder(true);
+        oldOrder.setStatus(2);
+        oldOrder.setTimeCreate(newOrder.getTimeCreate());
+       listOld.forEach(x->{
+           OrderDetail orderDetailOld = new OrderDetail();
+           orderDetailOld.setQuantity(x.getQuantity());
+           orderDetailOld.setOrder(oldOrder);
+           orderDetailOld.setPrice(x.getPrice());
+           orderDetailOld.setDetailProduct(x.getDetailProduct());
+           _orderDetailDAO.save(orderDetailOld);
+       });
 
-        order.setId(orderOld);
 
+
+
+
+        newOrder.setAddress(order.getAddress());
+        newOrder.setTimeCreate(new Date());
+        _orderDetailDAO.deleteAllByOrderId(orderOld);
         order.getListOrderDetail().forEach(x->{
-
             DetailProduct detailProduct= _productDetailDAO.findById(x.getDetailProduct().getId()).get();
-
             OrderDetail detailOrder = x;
-
             if(detailProduct.getQuantity()<detailOrder.getQuantity()){
                 try {
                     throw new Exception("Order false");
@@ -243,16 +247,21 @@ public class OrderServiceImpl implements OrderService {
                 Integer productLeft = detailProduct.getQuantity() - detailOrder.getQuantity();
                 detailProduct.setQuantity(productLeft);
                 _productDetailDAO.save(detailProduct);
-
                 detailOrder.setPrice(detailProduct.getProduct().getPrice());
-                detailOrder.setOrder(order);
                 detailOrder.setDetailProduct(detailProduct);
-                _orderDetailDAO.save(detailOrder);
+                detailOrder.setOrder(newOrder);
+               _orderDetailDAO.save(detailOrder);
             }
-
-
-
         });
+
+        HistoryOrder historoyOrder = new HistoryOrder();
+        historoyOrder.setOrder(newOrder);
+        historoyOrder.setDateCreate(new Date());
+        historoyOrder.setReason(reason);
+        _historyOrderDAO.save(historoyOrder);
+
+
+
 
     }
 

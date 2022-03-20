@@ -3,6 +3,7 @@ package com.anshinbackend.controller;
 import com.anshinbackend.common.constant.OrderStatus;
 import com.anshinbackend.dao.AcountDAO;
 import com.anshinbackend.dao.ProductDetailDAO;
+import com.anshinbackend.dto.Customer.OrderChangeReturnDTO;
 import com.anshinbackend.dto.OrderTableForAdmin.OrderDTO;
 import com.anshinbackend.entity.Order;
 import com.anshinbackend.entity.OrderDetail;
@@ -89,15 +90,15 @@ public class OrderController {
 
 
     @PutMapping("/changeReturn/{idOld}")
-    public ResponseEntity<?> newOrder(@PathVariable Integer idOld, @RequestBody OrderDTO orderDTO){
+    public ResponseEntity<?> newOrder(@PathVariable Integer idOld, @RequestBody OrderChangeReturnDTO orderChangeReturnDTO){
 
 
 
-        if(orderDTO.getIdAcount() ==null){
-            orderDTO.setIdAcount(5);
+        if(orderChangeReturnDTO.getIdAcount() ==null){
+            orderChangeReturnDTO.setIdAcount(5);
         }
         List<OrderDetail> listOrderDetail = new ArrayList<>();
-        orderDTO.getListOrderProductDetailDTO().forEach(x->{
+        orderChangeReturnDTO.getListOrderProductDetailDTO().forEach(x->{
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setDetailProduct(_productDetailDAO.findById(x.getIdProductDetail()).get());
             orderDetail.setQuantity(x.getQuantity());
@@ -108,17 +109,17 @@ public class OrderController {
 
         Order order = new Order();
         order.setReturnOrder(false);
-        order.setFullName(orderDTO.getFullName());
-        order.setAddressDetail(orderDTO.getDetailAddress());
-        order.setAddress(orderDTO.getAddress());
-        order.setPhoneNumber(orderDTO.getPhoneNumber());
+        order.setFullName(orderChangeReturnDTO.getFullName());
+        order.setAddressDetail(orderChangeReturnDTO.getDetailAddress());
+        order.setAddress(orderChangeReturnDTO.getAddress());
+        order.setPhoneNumber(orderChangeReturnDTO.getPhoneNumber());
         order.setListOrderDetail(listOrderDetail);
         order.setStatus(OrderStatus.DANG_CHO_XU_LY);
-        order.setAcount(_acountDAO.findById(orderDTO.getIdAcount()).get());
+        order.setAcount(_acountDAO.findById(orderChangeReturnDTO.getIdAcount()).get());
 
 
 
-        _orderService.changeReturn(order, idOld);
+        _orderService.changeReturn(order, idOld, orderChangeReturnDTO.getReason());
 
 
         return  ResponseEntity.ok("Đổi hàng thành công");
