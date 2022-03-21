@@ -3,6 +3,7 @@ package com.anshinbackend.controller;
 import com.anshinbackend.dao.ProductDAO;
 import com.anshinbackend.dto.Customer.ProductDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
+import com.anshinbackend.entity.Product;
 import com.anshinbackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;

@@ -19,8 +19,8 @@ public class Discount {
 
 
     @ManyToOne
-    @JoinColumn(name = "product_detail_id")
-    private DetailProduct detailProduct;
+    @JoinColumn(name = "product_id")
+    private Product product;
 
 
     @ManyToOne
