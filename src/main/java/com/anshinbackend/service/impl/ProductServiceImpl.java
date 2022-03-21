@@ -1,6 +1,7 @@
 package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.ProductDAO;
+import com.anshinbackend.dto.ColorProductDetailDTO;
 import com.anshinbackend.dto.Customer.ProductDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
 import com.anshinbackend.entity.Product;
@@ -10,6 +11,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.Tuple;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +21,9 @@ import java.util.List;
 public class ProductServiceImpl  implements ProductService {
     @Autowired
     ProductDAO _productDAO;
+
+    @Autowired
+    EntityManager em;
 
     @Override
     public List<ProductDTO> findAll() {
@@ -142,8 +149,48 @@ public class ProductServiceImpl  implements ProductService {
 
     
     @Override
-	public List<Product> findByColorSizePrice(int idColor, int idSize,double topPrice,double bottomPrice){
-    	return _productDAO.findByColorSizePrice(idColor, idSize, topPrice, bottomPrice);
+        public List<ProductDTO> findByColorSizePrice(Integer idColor, Integer idSize,Integer bottomPrice ,Integer topPrice){
+
+        String sql ="SELECT products.id, product_name, price, products.image, description FROM products join detail_products on products.id = detail_products.id " +
+                "WHERE id_color="+idColor+" and id_size= "+ idSize;
+                if(idColor==0){
+                     sql ="SELECT products.id, product_name, price, products.image, description FROM products join detail_products on products.id = detail_products.id " +
+                            "WHERE  id_size="+ idSize;
+                }
+                if(idSize==0){
+                     sql ="SELECT products.id, product_name, price, products.image, description FROM products join detail_products on products.id = detail_products.id " +
+                            "WHERE id_color="+idColor;
+                }
+                if(idColor ==0  && idSize ==0){
+                    sql ="SELECT products.id, product_name, price, products.image, description FROM products join detail_products on products.id = detail_products.id ";
+                }
+
+        Query query = em.createNativeQuery(sql, Tuple.class);
+        List<Tuple> listResult = query.getResultList();
+        System.out.println(listResult.size());
+        List<ProductDTO> list = new ArrayList<>();
+        for(Tuple x: listResult){
+            Integer id = x.get("id", Integer.class);
+            String productName  = x.get("product_name", String.class);
+            Integer price =x.get("price", Integer.class);
+            String image = x.get("image", String.class);
+            String description = x.get("description", String.class);
+           // listReturn.add(new ColorProductDetailDTO(id, nameColor, image));
+            list.add(new ProductDTO(id, productName, price, image, description));
+        }
+
+        List<ProductDTO> listFilter = new ArrayList<>();
+        list.forEach(x->{
+            if(x.getPrice()<=topPrice && x.getPrice()>=bottomPrice){
+                listFilter.add(x);
+            }
+            if(topPrice==0){
+                listFilter.add(x);
+            }
+
+        });
+
+        return listFilter;
     }
 
 
