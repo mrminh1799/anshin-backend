@@ -277,6 +277,7 @@ public class OrderServiceImpl implements OrderService {
             OrderDetailDTO dto= new OrderDetailDTO();
             x.getListOrderDetail().forEach(y->{
                 dto.setIdProduct(y.getDetailProduct().getId());
+                dto.setNameProduct(y.getDetailProduct().getProduct().getProductName());
                 dto.setQuantity(y.getQuantity());
                 dto.setColorId(y.getDetailProduct().getColor().getId());
                 dto.setColorName(y.getDetailProduct().getColor().getColorName());
@@ -308,5 +309,12 @@ public class OrderServiceImpl implements OrderService {
 
         });
         return list;
+    }
+
+
+    public void updateStatus(Integer id, Integer status){
+        _orderDAO.updateStatus(status, id);
+
+
     }
 }

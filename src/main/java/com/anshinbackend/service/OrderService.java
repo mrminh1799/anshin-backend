@@ -15,4 +15,5 @@ public interface OrderService {
     public  void changeReturn(Order order, Integer orderIdOld, String reason);
 
     public List<OrderDTO> findAllOrderForAcountId(Integer idAcount);
+    public void updateStatus(Integer id, Integer status);
 }

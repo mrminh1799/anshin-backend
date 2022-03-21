@@ -133,6 +133,13 @@ public class OrderController {
     }
 
 
+    @GetMapping("/updateStatus/{id}/{status}")
+    public ResponseEntity<?> updateStatus(@PathVariable("id")Integer id, @PathVariable("status") Integer status){
+        _orderService.updateStatus(id, status);
+        return ResponseEntity.ok("Cap nhap status order thanh cong");
+    }
+
+
 
 
 

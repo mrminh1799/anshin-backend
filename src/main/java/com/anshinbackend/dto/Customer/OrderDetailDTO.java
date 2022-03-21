@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDetailDTO {
+    String nameProduct;
     Integer idProduct;
     Integer colorId;
     String colorName;

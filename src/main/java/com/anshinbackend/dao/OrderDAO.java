@@ -23,8 +23,8 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 //    public void swat(Integer idOld, Integer idNew);
 @Transactional
 @Modifying
-    @Query("update  Order  o set o.id = ?1 where  o.id =?2")
-    public void updateId (Integer idOld, Integer idNew);
+    @Query("update  Order  o set o.status = ?1 where  o.id =?2")
+    public void updateStatus (Integer status, Integer idOrder);
 
 
     @Query("select o from Order o where o.acount.id=?1")
