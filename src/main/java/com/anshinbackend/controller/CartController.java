@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +42,26 @@ public class CartController {
         return  ResponseEntity.ok(_cartItemService.findByAccountId(id));
     }
 
+
+    @GetMapping("/findByIdAcount2/{id}")
+    public ResponseEntity<?> findByIDAcount2(@PathVariable("id") Integer id){
+        List<CartDetailDTO> list = new ArrayList<>();
+        _cartItemService.findByAccountId(id).forEach(x->{
+            DetailProduct p =  _detailProductService.findById(x.getIdProduct());
+            CartDetailDTO c = new CartDetailDTO();
+            c.setIdProduct(p.getId());
+            c.setProductName(p.getProduct().getProductName());
+            c.setColorImage(p.getImage());
+            c.setColorName(p.getColor().getColorName());
+            c.setSizeName(p.getSize().getSize_name());
+            c.setPrice(p.getProduct().getPrice());
+            c.setQuantity(x.getQuantity());
+            list.add(c);
+        });
+        return  ResponseEntity.ok(list);
+    }
+
+
     @GetMapping("/findDetailCartItem/{idProductDetail}")
     public ResponseEntity<?> findProductDetaiForCart(@PathVariable("idProductDetail") Integer id){
         DetailProduct p =  _detailProductService.findById(id);
@@ -54,6 +75,12 @@ public class CartController {
         return  ResponseEntity.ok(c);
     }
 
+
+    @DeleteMapping("/deleteAllByIdAccount/{cid}")
+    public void findBy(@PathVariable("cid") Integer id) {
+        _cartItemService.deleteBy(id);
+    }
+
     @PostMapping("/createForAcount/{idAcount}/{idProductDetail}/{quantity}")
     public ResponseEntity<?> createCartItem(@PathVariable("idAcount") Integer idAcount,
                                             @PathVariable("idProductDetail") Integer idProductDetail,
@@ -65,6 +92,5 @@ public class CartController {
         _cartItemService.Create(cartItem);
         return  ResponseEntity.ok("Thêm vào cart thành công");
     }
-
 
 }

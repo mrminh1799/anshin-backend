@@ -32,7 +32,13 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
+
+    public void deleteBy(Integer id) {
+        _cartItemDao.deleteBy(id);
+    }
+
     public void Create(CartItem cartItem) {
         _cartItemDao.save(cartItem);
     }
+
 }

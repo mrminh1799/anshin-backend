@@ -21,6 +21,12 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
     @Query("update Product p set p.isDelete = true where p.id = ?1")
     public void deleteProduct(Integer id);
 
+
+    @Query("SELECT p FROM Product p WHERE p.category.id =?1 \n" +
+            "\n" +
+            "ORDER BY p.time_create DESC")
+    public  List<Product> findAllByIdCategory(Integer id);
+
     @Query("SELECT  p  FROM  Product  p ORDER BY p.time_create DESC")
     public List<Product> findByTop(Pageable pageable);
 //    Page<Product> findByTop();
@@ -33,14 +39,12 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
     public List<Product> findBySumTop(Pageable pageable);
     Page<Product> findByIsDeleteIsFalse(Pageable pageable);
 
-//    @Query(value = "select * from products p inner join detail_products dp on p.id=dp.id_product where dp.id_color=?1 and dp.id_size=?2"
-//    		+ " and dp.export_price > ?3 and dp.export_price < ?4",nativeQuery = true)
-//    public List<Product> findByColorSizePrice(int idColor,int idSize,Double topPrice, Double bottomPrice );
 
+    @Query("SELECT p FROM Product p WHERE p.productName like ?1% \n" +
+            "\n" +
+            "ORDER BY p.time_create DESC")
+    public  List<Product> findAllByNameCategory(String name);
 
-
-
-
-
+    Page<Product> findByIsDeleteIsFalse(Pageable pageable);
 
 }

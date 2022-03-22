@@ -147,6 +147,22 @@ public class ProductServiceImpl  implements ProductService {
 
     }
 
+
+    @Override
+    public List<ProductDTO> findAllByIdCategory(Integer id) {
+        List<ProductDTO> list= new ArrayList<>();
+        _productDAO.findAllByIdCategory(id).forEach(x->{
+            ProductDTO e = new ProductDTO();
+            e.setId(x.getId());
+            e.setName(x.getProductName());
+            e.setImage(x.getImage());
+            e.setPrice(x.getPrice());
+            e.setDescription(x.getDescription());
+            list.add(e);
+        });
+        return list ;
+    }
+
     
     @Override
         public List<ProductDTO> findByColorSizePrice(Integer idColor, Integer idSize,Integer bottomPrice ,Integer topPrice){
@@ -194,4 +210,19 @@ public class ProductServiceImpl  implements ProductService {
     }
 
 
+
+    @Override
+    public List<ProductDTO> findAllByNameCategory(String name) {
+        List<ProductDTO> list = new ArrayList<>();
+        _productDAO.findAllByNameCategory(name).forEach(x -> {
+            ProductDTO e = new ProductDTO();
+            e.setId(x.getId());
+            e.setName(x.getProductName());
+            e.setImage(x.getImage());
+            e.setPrice(x.getPrice());
+            e.setDescription(x.getDescription());
+            list.add(e);
+        });
+        return list;
+    }
 }

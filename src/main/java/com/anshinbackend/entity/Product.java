@@ -35,6 +35,7 @@ public class Product {
 
     @Column(name="time_create")
     Date time_create;
+
     @JsonIgnore
     @OneToMany(mappedBy = "product" , fetch = FetchType.EAGER)
     List<DetailProduct> listProductDetails;
