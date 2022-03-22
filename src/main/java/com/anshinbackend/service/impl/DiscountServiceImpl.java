@@ -6,6 +6,7 @@ import com.anshinbackend.service.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,9 +26,10 @@ public class DiscountServiceImpl  implements DiscountService {
     }
 
     @Override
-    public List<Discount> findAllBySaleEvent(Integer year) {
+    public List<Discount> findAllBySaleEven(Date year) {
         return _ddao.findAllBySaleEvent(year);
     }
+
 
     @Override
     public Discount insert(Discount discount) {

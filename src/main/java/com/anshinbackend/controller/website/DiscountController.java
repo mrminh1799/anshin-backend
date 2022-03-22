@@ -4,9 +4,11 @@ package com.anshinbackend.controller.website;
 import com.anshinbackend.entity.Discount;
 import com.anshinbackend.service.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +30,9 @@ public class DiscountController {
     }
 
     @GetMapping("/findAllBySaleEvent/{year}")
-    public  ResponseEntity<List<Discount>> findAllBySaleEvent(@PathVariable("year")Integer year){
-        return  ResponseEntity.ok().body(discountService.findAllBySaleEvent(year));
+    public  ResponseEntity<List<Discount>> findAllBySaleEvent(
+            @PathVariable("year") @DateTimeFormat(pattern = "yyyy-MM-dd") Date year
+            ){
+        return  ResponseEntity.ok().body(discountService.findAllBySaleEven(year));
     }
 }
