@@ -1,6 +1,7 @@
 package com.anshinbackend.controller;
 
 import com.anshinbackend.dao.AcountDAO;
+import com.anshinbackend.dao.CartItemDAO;
 import com.anshinbackend.dao.ProductDAO;
 import com.anshinbackend.dto.CartItemDTO;
 import com.anshinbackend.dto.NavBar.CartDetailDTO;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @RestController
 @RequestMapping("/cart")
@@ -29,6 +30,9 @@ public class CartController {
 
     @Autowired
     ProductDAO _productDao;
+
+    @Autowired
+    CartItemDAO _cartItemDao;
 
     @Autowired
     DetailProductService _detailProductService;
@@ -85,11 +89,24 @@ public class CartController {
     public ResponseEntity<?> createCartItem(@PathVariable("idAcount") Integer idAcount,
                                             @PathVariable("idProductDetail") Integer idProductDetail,
                                             @PathVariable("quantity")  Integer quantity){
-        CartItem cartItem = new CartItem();
-        cartItem.setQuantity(quantity);
-        cartItem.setAccount(_acountDao.findById(idAcount).get());
-        cartItem.setDetailProduct(_detailProductService.findById(idProductDetail));
-        _cartItemService.Create(cartItem);
+        List<CartItem> listCart =  _cartItemDao.findByAcountId(idAcount);
+        AtomicReference<Boolean> check = new AtomicReference<>(false);
+        listCart.forEach(x->{
+            if(x.getDetailProduct().getId()== idProductDetail){
+                x.setQuantity(quantity);
+                _cartItemDao.save(x);
+                check.set(true);
+
+            }
+        });
+
+        if(check.get() == false) {
+            CartItem cartItem = new CartItem();
+            cartItem.setQuantity(quantity);
+            cartItem.setAccount(_acountDao.findById(idAcount).get());
+            cartItem.setDetailProduct(_detailProductService.findById(idProductDetail));
+            _cartItemService.Create(cartItem);
+        }
         return  ResponseEntity.ok("Thêm vào cart thành công");
     }
 

@@ -18,9 +18,17 @@ public class Discount {
     private Integer id;
 
 
+    @Column(name = "stye_discount")
+    Integer styleDiscount;
+
+    @Column(name = "discount")
+    Integer discount;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
+
 
 
     @ManyToOne
