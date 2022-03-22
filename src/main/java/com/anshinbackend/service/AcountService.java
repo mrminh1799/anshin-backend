@@ -13,4 +13,6 @@ public interface AcountService {
     public Acount insertAcount(Acount e);
     public Acount updateAcount(Acount e);
     public Integer delete(Integer id);
+
+    public Optional<Acount> findBy(Integer id);
 }

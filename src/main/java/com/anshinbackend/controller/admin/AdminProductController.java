@@ -40,10 +40,9 @@ public class AdminProductController {
         _productProductService.delete(id);
         return  ResponseEntity.ok(null);
     }
-//    @GetMapping("/findByTop")
-//    public  ResponseEntity<List<ProductDTO>> findByTop(){
-//        return  ResponseEntity.ok().body(_productProductService.findByTop());
-//    }
+
+
+
 
 
 }

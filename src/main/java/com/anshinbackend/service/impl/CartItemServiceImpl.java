@@ -30,4 +30,15 @@ public class CartItemServiceImpl implements CartItemService {
     public List<CartItem> findAll() {
         return _cartItemDao.findAll();
     }
+
+    @Override
+
+    public void deleteBy(Integer id) {
+        _cartItemDao.deleteBy(id);
+    }
+
+    public void Create(CartItem cartItem) {
+        _cartItemDao.save(cartItem);
+    }
+
 }

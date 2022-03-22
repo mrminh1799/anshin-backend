@@ -19,4 +19,11 @@ public interface ProductService extends GenericService<Product, Integer> {
     public List<ProductDTO> findBySumTop();
     public List<ProductDTO> findAllPage(Integer currentPage, Integer sizePage);
     public ProductDetailDTO showDetailProduct(Integer id);
+
+
+    public List<ProductDTO> findAllByIdCategory(Integer id);
+    public List<ProductDTO> findAllByNameCategory(String name);
+
+    List<ProductDTO> findByColorSizePrice(Integer idColor, Integer idSize, Integer topPrice, Integer bottomPrice);
+
 }

@@ -65,4 +65,10 @@ public class AcountServiceImpl implements AcountService {
         acountDAO.deleteAcount(id);
         return 1;
     }
+
+    @Override
+    public Optional<Acount> findBy(Integer id) {
+        return Optional.of(acountDAO.findBy(id).get());
+    }
+
 }

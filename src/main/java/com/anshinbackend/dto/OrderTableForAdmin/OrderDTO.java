@@ -1,5 +1,6 @@
-package com.anshinbackend.dto;
+package com.anshinbackend.dto.OrderTableForAdmin;
 
+import com.anshinbackend.dto.OrderProductDetailDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
