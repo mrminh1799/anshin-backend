@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,6 +32,26 @@ public class CartController {
     public ResponseEntity<?> findByIDAcount(@PathVariable("id") Integer id){
         return  ResponseEntity.ok(_cartItemService.findByAccountId(id));
     }
+
+
+    @GetMapping("/findByIdAcount2/{id}")
+    public ResponseEntity<?> findByIDAcount2(@PathVariable("id") Integer id){
+        List<CartDetailDTO> list = new ArrayList<>();
+        _cartItemService.findByAccountId(id).forEach(x->{
+            DetailProduct p =  _detailProductService.findById(x.getIdProduct());
+            CartDetailDTO c = new CartDetailDTO();
+            c.setIdProduct(p.getId());
+            c.setProductName(p.getProduct().getProductName());
+            c.setColorImage(p.getImage());
+            c.setColorName(p.getColor().getColorName());
+            c.setSizeName(p.getSize().getSize_name());
+            c.setPrice(p.getProduct().getPrice());
+            c.setQuantity(x.getQuantity());
+            list.add(c);
+        });
+        return  ResponseEntity.ok(list);
+    }
+
 
     @GetMapping("/findDetailCartItem/{idProductDetail}")
     public ResponseEntity<?> findProductDetaiForCart(@PathVariable("idProductDetail") Integer id){

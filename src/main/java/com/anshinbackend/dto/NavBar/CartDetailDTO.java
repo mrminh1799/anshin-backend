@@ -14,6 +14,7 @@ public class CartDetailDTO {
     String colorName;
     String colorImage;
     Integer price;
+    Integer quantity;
 
 
 }
