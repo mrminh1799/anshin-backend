@@ -57,9 +57,9 @@ public class ProductController {
     }
 
     @GetMapping("/findAllByNameCategory/{cid}")
-    public ResponseEntity<List<ProductDTO>> findAllByNameCate(@PathVariable("cid") String name){
+    public ResponseEntity<List<ProductDTO>> findAllByNameCate(@PathVariable("cid") String name) {
         return ResponseEntity.ok().body((_productService.findAllByNameCategory(name)));
-
+    }
     @GetMapping("/findBySumTop")
     public  ResponseEntity<List<ProductDTO>> findBySumTop(){
         return  ResponseEntity.ok().body(_productService.findBySumTop());
