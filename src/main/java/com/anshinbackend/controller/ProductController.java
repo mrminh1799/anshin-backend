@@ -65,4 +65,10 @@ public class ProductController {
         return  ResponseEntity.ok().body(_productService.findBySumTop());
 
     }
+
+    @GetMapping("/findByColorSizePrice/{id_color}/{id_size}/{top_price}/{bottom_price}")
+    public ResponseEntity<List<?>> findByColorSizePrice(@PathVariable("id_color") Integer idColor,@PathVariable("id_size") Integer idSize
+            ,@PathVariable("top_price") Integer topPrice,@PathVariable("bottom_price") Integer bottomPrice){
+        return  ResponseEntity.ok(_productService.findByColorSizePrice(idColor, idSize, topPrice, bottomPrice));
+    }
 }
