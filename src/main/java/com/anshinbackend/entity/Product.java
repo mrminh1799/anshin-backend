@@ -52,5 +52,9 @@ public class Product {
     @JoinColumn(name = "category_id")
     Category category;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "product")
+    List<Discount> listDiscount;
+
 
 }

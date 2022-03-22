@@ -40,9 +40,7 @@ public class DetailProduct {
     Product product;
 
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "detailProduct")
-    List<Discount> listDiscount;
+
 
     @ManyToOne
     @JoinColumn(name = "id_color")

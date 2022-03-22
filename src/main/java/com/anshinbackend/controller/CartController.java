@@ -38,7 +38,7 @@ public class CartController {
     }
 
     @GetMapping("/findByIdAcount/{id}")
-    public ResponseEntity<?> findByIDAcount(@PathVariable("id") Integer id){
+    public ResponseEntity<List<CartItemDTO>> findByIDAcount(@PathVariable("id") Integer id){
         return  ResponseEntity.ok(_cartItemService.findByAccountId(id));
     }
 
