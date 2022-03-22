@@ -36,8 +36,13 @@ public class DetailProductServiceImpl implements DetailProductService {
     }
 
     @Override
+    public List<DetailProduct> findAllByid(Integer id) {
+        return _productDetailDAO.findAllByid(id);
+    }
+
+    @Override
     public void delete(Integer id) {
-        _productDetailDAO.deleteAcount(id);
+        _productDetailDAO.softDelete(id);
     }
 
     @Override

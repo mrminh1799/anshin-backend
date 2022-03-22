@@ -1,6 +1,7 @@
 package com.anshinbackend.dao;
 
 import com.anshinbackend.entity.Acount;
+import com.anshinbackend.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,4 +23,5 @@ public interface AcountDAO extends JpaRepository<Acount, Integer> {
 
     @Query("select a from Acount a where a.id=?1")
     public Optional<Acount> findBy(Integer id);
+
 }
