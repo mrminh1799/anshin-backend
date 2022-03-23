@@ -20,7 +20,7 @@ import java.util.Optional;
 public interface AcountDAO extends JpaRepository<Acount, Integer> {
     public List<Acount> findByIsDeletedIsFalse();
     public Acount findAcountByPhoneNumber(String phoneNumber);
-    public Optional<Acount> findById(Integer id);
+
     @Transactional
     @Modifying
     @Query("update Acount a set a.isDeleted = true where a.id = ?1")
