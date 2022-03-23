@@ -1,8 +1,11 @@
 package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.CategoryDAO;
+import com.anshinbackend.dto.Admin.CategoryDTO;
+import com.anshinbackend.dto.Customer.ProductDTO;
 import com.anshinbackend.dto.NavBar.NavBarChildDTO;
 import com.anshinbackend.dto.NavBar.NavBarDTO;
+import com.anshinbackend.entity.Category;
 import com.anshinbackend.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,18 @@ public class CategoryServiceImpl implements CategoryService {
                 listChild.add(navBarChildDTO);
             });
             e.setListChild(listChild);
+            list.add(e);
+        });
+        return list;
+    }
+
+    @Override
+    public List<CategoryDTO> findAllByCategoryParentId() {
+        List<CategoryDTO> list= new ArrayList<>();
+        _categoryDAO.findAllByCategoryParentId().forEach(x->{
+            CategoryDTO e = new CategoryDTO();
+            e.setId(x.getId());
+            e.setName(x.getCategoryName());
             list.add(e);
         });
         return list;

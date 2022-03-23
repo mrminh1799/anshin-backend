@@ -49,7 +49,6 @@ public class ProductServiceImpl  implements ProductService {
     @Override
     public Product update(Product p) {
         return _productDAO.save(p);
-
     }
 
     @Override
