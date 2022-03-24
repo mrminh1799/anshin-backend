@@ -1,5 +1,6 @@
 package com.anshinbackend.controller.admin;
 
+import com.anshinbackend.dto.Admin.CategoriDTO;
 import com.anshinbackend.entity.Category;
 import com.anshinbackend.entity.Product;
 import com.anshinbackend.service.CategoryService;
@@ -37,4 +38,24 @@ public class AdminCategoryController {
         categoryService.delete(id);
         return  ResponseEntity.ok(null);
     }
+
+    //Code việt anh
+    @GetMapping("/findByCategoryParentId/{id}")
+    public  ResponseEntity<List<Category>> findByCategoryParentId(@PathVariable("id")Integer id){
+        return  ResponseEntity.ok().body(categoryService.findByCategoryParentId(id));
+    }
+
+    @GetMapping("/findByCon")
+    public  ResponseEntity<List<Category>> findByCon(){
+        return  ResponseEntity.ok().body(categoryService.findByCon());
+    }
+
+    @GetMapping("/findAllBacon/{id}")
+    public  ResponseEntity<List<CategoriDTO>> findForNavbar1(
+//            @PathVariable("fid")Integer fid,
+            @PathVariable("id")Integer id){
+        return  ResponseEntity.ok().body(categoryService.findForNavbar1(id));
+    }
+
+
 }

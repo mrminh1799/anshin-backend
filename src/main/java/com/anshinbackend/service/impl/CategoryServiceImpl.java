@@ -1,6 +1,7 @@
 package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.CategoryDAO;
+import com.anshinbackend.dto.Admin.CategoriDTO;
 import com.anshinbackend.dto.NavBar.NavBarChildDTO;
 import com.anshinbackend.dto.NavBar.NavBarDTO;
 import com.anshinbackend.entity.Category;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -40,6 +40,38 @@ public class CategoryServiceImpl implements CategoryService {
         return _categoryDAO.findAll();
     }
 
+
+
+    @Override
+    public List<Category> findByCategoryParentId(Integer id) {
+        return _categoryDAO.findByCategoryParentId(id);
+    }
+
+    //code viet anh
+
+    @Override
+    public List<CategoriDTO> findForNavbar1(Integer id) {
+        List<CategoriDTO> list = new ArrayList<>();
+        _categoryDAO.findForNavbar1(id).forEach(x->{
+            CategoriDTO e = new CategoriDTO();
+            e.setIdCategory(x.getId());
+            e.setNameCategory(x.getCategoryName());
+
+            List<NavBarChildDTO> listChild = new ArrayList<>();
+            _categoryDAO.findByCategoryParentId(x.getId()).forEach(y->{
+                NavBarChildDTO navBarChildDTO = new NavBarChildDTO(y.getId(), y.getCategoryName());
+                listChild.add(navBarChildDTO);
+            });
+            e.setListChild(listChild);
+            list.add(e);
+        });
+        return list;
+    }
+
+    @Override
+    public List<Category> findByCon() {
+        return _categoryDAO.findByCon();
+    }
 
 
     @Override

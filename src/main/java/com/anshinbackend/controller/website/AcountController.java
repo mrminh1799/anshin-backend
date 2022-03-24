@@ -25,10 +25,7 @@ public class AcountController {
         return   acountService.findBy(id);
     }
 
-    @PutMapping("/updateAcountUser")
-    public ResponseEntity<Acount> updateAcount(@RequestBody Acount e){
-        return ResponseEntity.ok().body(acountService.updateAcount(e));
-    }
+  
 
     @GetMapping("/confirmPassword/{acountid}/{password}")
     public ResponseEntity<Boolean> confirmPassword(@PathVariable("acountid") Integer id,@PathVariable("password") String password){

@@ -1,8 +1,11 @@
 package com.anshinbackend.controller.admin;
 
+import com.anshinbackend.entity.CartItem;
 import com.anshinbackend.entity.Discount;
 import com.anshinbackend.entity.Product;
 import com.anshinbackend.service.DiscountService;
+import com.anshinbackend.service.ProductService;
+import com.anshinbackend.service.SaleEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +19,10 @@ import java.util.Optional;
 public class AdminDiscountController {
     @Autowired
     DiscountService discountService;
+    @Autowired
+    ProductService productService;
+    @Autowired
+    SaleEventService service;
 
     @GetMapping("/findAll")
     public ResponseEntity<List<Discount>> findAll(){
@@ -26,12 +33,24 @@ public class AdminDiscountController {
     public ResponseEntity<Optional<Discount>> getOne(@PathVariable("id")Integer id){
         return  ResponseEntity.ok().body(discountService.findById(id));
     }
-    @PostMapping("/create")
-    public ResponseEntity<Discount> insert(@RequestBody Discount discount){
-        return ResponseEntity.ok().body(discountService.insert(discount));
+    @PostMapping("/create/{idProduct}/{idSaleEvent}")
+
+
+    public ResponseEntity<?> insert(@PathVariable("idProduct") Integer idProduct,
+                                    @PathVariable("idSaleEvent")  Integer  idSaleEvent){
+        Discount discount = new Discount();
+        discount.setProduct(productService.findById(idProduct));
+        discount.setSaleEvent(service.findById(idSaleEvent));
+        discountService.insert(discount);
+        return  ResponseEntity.ok("Thêm vào discount thành công");
     }
-    @PostMapping("/update")
-    public ResponseEntity<Discount> update(@RequestBody Discount discount){
+
+    @PutMapping("/update/{idProduct}/{idSaleEvent}")
+    public ResponseEntity<Discount> update(@PathVariable("idProduct") Integer idProduct,
+                                           @PathVariable("idSaleEvent")  Integer  idSaleEvent,
+                                           @RequestBody Discount discount){
+        discount.setProduct(productService.findById(idProduct));
+        discount.setSaleEvent(service.findById(idSaleEvent));
         return ResponseEntity.ok().body(discountService.update(discount));
     }
     @DeleteMapping("/delete/{id}")

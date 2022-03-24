@@ -11,7 +11,7 @@ public interface AcountService {
     public Acount findByPhoneNumber(String phoneNumber);
     public Acount findById(Integer id);
     public Acount insertAcount(Acount e);
-    public Acount updateAcount(Acount e);
+    public Acount UpdateAcount(Acount e);
     public Integer delete(Integer id);
 
     public Optional<Acount> findBy(Integer id);

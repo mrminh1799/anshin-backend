@@ -42,7 +42,7 @@ public class AdminAcountController {
 
     @PutMapping("/updateAcount")
     public ResponseEntity<Acount> updateAcount( @RequestBody Acount e){
-        return ResponseEntity.ok().body(_service.updateAcount(e));
+        return ResponseEntity.ok().body(_service.UpdateAcount(e));
     }
 
     @DeleteMapping("/deleteAcount/{id}")

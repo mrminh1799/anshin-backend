@@ -1,5 +1,6 @@
 package com.anshinbackend.dao;
 
+import com.anshinbackend.entity.Discount;
 import com.anshinbackend.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,4 +46,12 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
             "ORDER BY p.time_create DESC")
     public  List<Product> findAllByNameCategory(String name);
 
+
+
+    @Query(nativeQuery = false, value = "SELECT p, s FROM Discount  d\n" +
+            "     JOIN Product p on p.id = d.product.id \n" +
+            "     JOIN SaleEvent  s on s.id = d.saleEvent.id \n" +
+            "    WHERE   s.startTime <= current_date and s.endTime >= CURRENT_DATE \n" +
+            "    GROUP BY p.id")
+    List<Product> findAllBySaleEvent();
 }

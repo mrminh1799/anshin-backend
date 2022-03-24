@@ -1,15 +1,21 @@
 package com.anshinbackend.service;
 
+import com.anshinbackend.dto.Admin.CategoriDTO;
 import com.anshinbackend.dto.NavBar.NavBarDTO;
 import com.anshinbackend.entity.Category;
-import com.anshinbackend.entity.Size;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CategoryService {
     List<NavBarDTO> findForNavBar();
     List<Category> findAll();
+
+    //Việt anh
+    List<CategoriDTO> findForNavbar1(Integer id);
+
+    List<Category> findByCon();
+
+    List<Category> findByCategoryParentId(Integer id);
 
 
     Category create(Category category);

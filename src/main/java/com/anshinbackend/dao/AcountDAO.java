@@ -26,6 +26,12 @@ public interface AcountDAO extends JpaRepository<Acount, Integer> {
     @Query("update Acount a set a.isDeleted = true where a.id = ?1")
     public void deleteAcount(Integer id);
 
+
+//    @Query("select a from Acount a where a.id=?1")
+//    public Acount UpdateAcount(Acount e);
+
+
+
     @Query("select a from Acount a where a.id=?1")
     public Optional<Acount> findBy(Integer id);
 
