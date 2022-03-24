@@ -44,6 +44,12 @@ public class AdminCategoryController {
     public  ResponseEntity<List<Category>> findByCategoryParentId(@PathVariable("id")Integer id){
         return  ResponseEntity.ok().body(categoryService.findByCategoryParentId(id));
     }
+
+    @GetMapping("/findByCon")
+    public  ResponseEntity<List<Category>> findByCon(){
+        return  ResponseEntity.ok().body(categoryService.findByCon());
+    }
+
     @GetMapping("/findAllBacon/{id}")
     public  ResponseEntity<List<CategoriDTO>> findForNavbar1(
 //            @PathVariable("fid")Integer fid,

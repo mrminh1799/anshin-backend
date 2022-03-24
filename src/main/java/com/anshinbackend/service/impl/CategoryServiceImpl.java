@@ -68,6 +68,11 @@ public class CategoryServiceImpl implements CategoryService {
         return list;
     }
 
+    @Override
+    public List<Category> findByCon() {
+        return _categoryDAO.findByCon();
+    }
+
 
     @Override
     public Category create(Category category) {

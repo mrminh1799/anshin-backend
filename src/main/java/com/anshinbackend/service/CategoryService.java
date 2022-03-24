@@ -13,6 +13,8 @@ public interface CategoryService {
     //Việt anh
     List<CategoriDTO> findForNavbar1(Integer id);
 
+    List<Category> findByCon();
+
     List<Category> findByCategoryParentId(Integer id);
 
 
