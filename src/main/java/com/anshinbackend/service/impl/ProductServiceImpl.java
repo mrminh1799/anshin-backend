@@ -209,6 +209,20 @@ public class ProductServiceImpl  implements ProductService {
         return listFilter;
     }
 
+    @Override
+    public List<ProductDTO> findAllBySaleEvent() {
+        List<ProductDTO> list= new ArrayList<>();
+        _productDAO.findAllBySaleEvent().forEach(x->{
+            ProductDTO e = new ProductDTO();
+            e.setId(x.getId());
+            e.setName(x.getProductName());
+            e.setImage(x.getImage());
+            e.setPrice(x.getPrice());
+            e.setDescription(x.getDescription());
+            list.add(e);
+        });
+        return list ;
+    }
 
 
     @Override

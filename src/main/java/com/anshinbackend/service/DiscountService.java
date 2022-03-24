@@ -1,5 +1,6 @@
 package com.anshinbackend.service;
 
+import com.anshinbackend.dto.DiscountDTO;
 import com.anshinbackend.entity.Discount;
 import com.anshinbackend.entity.Size;
 import org.springframework.data.relational.core.sql.In;
@@ -14,7 +15,7 @@ public interface DiscountService {
 
     Optional<Discount> findById(Integer id);
 
-    List<Discount> findAllBySaleEven(Date year);
+//    List<DiscountDTO> findAllBySaleEven();
 
     Discount insert(Discount discount);
 

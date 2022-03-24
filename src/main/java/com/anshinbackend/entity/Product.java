@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -56,5 +58,17 @@ public class Product {
     @OneToMany(mappedBy = "product")
     List<Discount> listDiscount;
 
+//    @Override
+//    public String toString(){
+//        return "Product{"+
+//                "id=" + id +
+//                ", product_name=" + productName + '\'' +
+//                ", description=" +  description + '\'' +
+//                ", is_deleted="  + isDelete + '\'' +
+//                ", image="  + image + '\'' +
+//                ", price="  + price + '\'' +
+//                ", time_create=" + time_create + '\''+
+//                '}';
+//    }
 
 }

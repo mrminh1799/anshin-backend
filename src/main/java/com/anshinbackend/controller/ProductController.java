@@ -72,4 +72,9 @@ public class ProductController {
             ,@PathVariable("top_price") Integer topPrice,@PathVariable("bottom_price") Integer bottomPrice){
         return  ResponseEntity.ok(_productService.findByColorSizePrice(idColor, idSize, topPrice, bottomPrice));
     }
+
+    @GetMapping("/findAllBySaleEvent")
+    public  ResponseEntity<List<ProductDTO>> findAllBySaleEvent() {
+        return ResponseEntity.ok().body(_productService.findAllBySaleEvent());
+    }
 }

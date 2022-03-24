@@ -19,7 +19,6 @@ public class AcountServiceImpl implements AcountService {
     private AcountDAO acountDAO;
 
 
-
     @Override
     public List<AcountDTO> findAllAcount() {
         List<AcountDTO> listAcountDTO = new ArrayList<>();
@@ -55,8 +54,9 @@ public class AcountServiceImpl implements AcountService {
         return e;
     }
 
+
     @Override
-    public Acount updateAcount(Acount e) {
+    public Acount UpdateAcount(Acount e) {
         return  acountDAO.save(e);
     }
 

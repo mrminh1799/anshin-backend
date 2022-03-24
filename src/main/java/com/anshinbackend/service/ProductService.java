@@ -1,6 +1,7 @@
 package com.anshinbackend.service;
 
 import com.anshinbackend.dto.Customer.ProductDTO;
+import com.anshinbackend.dto.DiscountDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
 import com.anshinbackend.entity.Product;
 import org.springframework.data.domain.Sort;
@@ -26,4 +27,5 @@ public interface ProductService extends GenericService<Product, Integer> {
 
     List<ProductDTO> findByColorSizePrice(Integer idColor, Integer idSize, Integer topPrice, Integer bottomPrice);
 
+    List<ProductDTO> findAllBySaleEvent();
 }

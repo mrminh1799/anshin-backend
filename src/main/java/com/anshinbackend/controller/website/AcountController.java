@@ -22,9 +22,6 @@ public class AcountController {
         return   acountService.findBy(id);
     }
 
-    @PutMapping("/updateAcountUser")
-    public ResponseEntity<Acount> updateAcount(@RequestBody Acount e){
-        return ResponseEntity.ok().body(acountService.updateAcount(e));
-    }
+  
 
 }
