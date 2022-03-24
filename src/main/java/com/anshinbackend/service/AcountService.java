@@ -18,5 +18,5 @@ public interface AcountService {
     public Acount updateAcount(Acount acount);
 
     public Optional<Acount> findBy(Integer id);
-    public Page<Acount> findByExample(PageInfo page, Acount a);
+    public Page<Acount> findBySample(PageInfo page, Acount a);
 }

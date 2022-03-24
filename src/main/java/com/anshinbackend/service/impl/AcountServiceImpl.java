@@ -86,12 +86,12 @@ public class AcountServiceImpl implements AcountService {
     }
 
     @Override
-    public Page<Acount> findByExample(PageInfo page, Acount a) {
+    public Page<Acount> findBySample(PageInfo page, Acount a) {
         Pageable pageable = PageRequest.of(page.getIndex(), page.getSize());
 
-        //Pageable page = PageRequest.of(currentPage, sizePage);
-       // return acountDAO.findAll(Example.of(a), pageable);
-        return null;
+
+        return acountDAO.findAll(Example.of(a), pageable);
+
     }
 
 }

@@ -1,10 +1,13 @@
 package com.anshinbackend.controller.admin;
 
 import com.anshinbackend.dto.AcountDTO;
+import com.anshinbackend.dto.PageInfo;
 import com.anshinbackend.entity.Acount;
 import com.anshinbackend.service.AcountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,6 +56,17 @@ public class AdminAcountController {
         return ResponseEntity.ok().body(null);
     }
 
+
+    @PostMapping("/findByExample/{pageCurent}/{sizePage}")
+    public ResponseEntity<?> findBySample(@PathVariable("pageCurent") Integer pageCurent,
+                                          @PathVariable("sizePage")Integer sizePage,
+                                          @RequestBody Acount sample) {
+        PageInfo pageInfo = new PageInfo(pageCurent, sizePage);
+        return ResponseEntity.ok(_service.findBySample(pageInfo, sample));
+
+
+
+    }
 
 
 
