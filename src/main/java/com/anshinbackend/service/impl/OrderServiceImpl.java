@@ -317,4 +317,38 @@ public class OrderServiceImpl implements OrderService {
 
 
     }
+
+    @Override
+    public List<com.anshinbackend.dto.OrderTableForAdmin.OrderDetailDTO> findByOrderId(Integer orderId) {
+
+        List<com.anshinbackend.dto.OrderTableForAdmin.OrderDetailDTO> list = new ArrayList<>();
+        _orderDetailDAO.findByOrderDetailId(orderId).forEach(x->{
+            com.anshinbackend.dto.OrderTableForAdmin.OrderDetailDTO dto =
+                    new com.anshinbackend.dto.OrderTableForAdmin.OrderDetailDTO();
+            dto.setIdOrderDetail(x.getId());
+            dto.setSizeName(x.getDetailProduct().getSize().getSize_name());
+            dto.setColoName(x.getDetailProduct().getColor().getColorName());
+            dto.setPrice(x.getPrice());
+            dto.setQuantity(x.getQuantity());
+            dto.setNameProduct(x.getDetailProduct().getProduct().getProductName());
+            list.add(dto);
+        });
+        return list;
+    }
+
+    @Override
+    public void updateQuantity(Integer idOrderDetail, Integer quantity) {
+        OrderDetail orderDetail = _orderDetailDAO.findById(idOrderDetail).get();
+        DetailProduct detailProduct = _productDetailDAO.findById(orderDetail.getDetailProduct().getId()).get();
+        orderDetail.setPrice(detailProduct.getProduct().getPrice());
+        orderDetail.setQuantity(quantity);
+        _orderDetailDAO.save(orderDetail);
+
+    }
+
+    @Override
+    public void deleteOrderDetail(Integer idOrderDetailId) {
+        _orderDetailDAO.deleteById(idOrderDetailId);
+
+    }
 }
