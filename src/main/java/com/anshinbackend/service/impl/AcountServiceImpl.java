@@ -90,7 +90,8 @@ public class AcountServiceImpl implements AcountService {
         Pageable pageable = PageRequest.of(page.getIndex(), page.getSize());
 
         //Pageable page = PageRequest.of(currentPage, sizePage);
-        return acountDAO.findAll(Example.of(a), pageable);
+       // return acountDAO.findAll(Example.of(a), pageable);
+        return null;
     }
 
 }

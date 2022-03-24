@@ -36,7 +36,7 @@ public interface AcountDAO extends JpaRepository<Acount, Integer> {
     public Optional<Acount> findBy(Integer id);
 
 
-    public Page<Acount> findAllBy(Acount a);
+   // public Page<Acount> findAllBy(Acount a);
 
 
 }
