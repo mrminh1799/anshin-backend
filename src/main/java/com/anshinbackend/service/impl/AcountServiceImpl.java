@@ -2,9 +2,14 @@ package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.AcountDAO;
 import com.anshinbackend.dto.AcountDTO;
+import com.anshinbackend.dto.PageInfo;
 import com.anshinbackend.entity.Acount;
 import com.anshinbackend.service.AcountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -69,6 +74,14 @@ public class AcountServiceImpl implements AcountService {
     @Override
     public Optional<Acount> findBy(Integer id) {
         return Optional.of(acountDAO.findBy(id).get());
+    }
+
+    @Override
+    public Page<Acount> findByExample(PageInfo page, Acount a) {
+        Pageable pageable = PageRequest.of(page.getIndex(), page.getSize());
+
+        //Pageable page = PageRequest.of(currentPage, sizePage);
+        return acountDAO.findAll(Example.of(a), pageable);
     }
 
 }
