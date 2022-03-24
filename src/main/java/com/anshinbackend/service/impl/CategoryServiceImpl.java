@@ -43,11 +43,16 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
 
     public List<CategoryDTO> findAllByCategoryParentId() {
-        List<CategoryDTO> list= new ArrayList<>();
-        _categoryDAO.findAllByCategoryParentId().forEach(x->{
+        List<CategoryDTO> list = new ArrayList<>();
+        _categoryDAO.findAllByCategoryParentId().forEach(x -> {
             CategoryDTO e = new CategoryDTO();
             e.setId(x.getId());
             e.setName(x.getCategoryName());
+            list.add(e);
+        });
+return  list;
+    }
+
 
     public List<Category> findAll() {
         return _categoryDAO.findAll();

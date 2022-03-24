@@ -15,6 +15,7 @@ public interface AcountService {
     public Acount insertAcount(Acount e);
     public Acount UpdateAcount(Acount e);
     public Integer delete(Integer id);
+    public Acount updateAcount(Acount acount);
 
     public Optional<Acount> findBy(Integer id);
     public Page<Acount> findByExample(PageInfo page, Acount a);

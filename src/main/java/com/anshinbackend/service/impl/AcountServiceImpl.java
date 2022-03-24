@@ -62,7 +62,6 @@ public class AcountServiceImpl implements AcountService {
 
 
     @Override
-
     public Acount updateAcount(Acount e) {
         Acount acount = acountDAO.findById(e.getId()).get();
         acount.setId(e.getId());
