@@ -2,8 +2,10 @@ package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.AcountDAO;
 import com.anshinbackend.dto.AcountDTO;
+import com.anshinbackend.dto.Admin.PageAcount.PageDTO;
 import com.anshinbackend.dto.PageInfo;
 import com.anshinbackend.entity.Acount;
+import com.anshinbackend.entity.Role;
 import com.anshinbackend.service.AcountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -86,11 +88,33 @@ public class AcountServiceImpl implements AcountService {
     }
 
     @Override
-    public Page<Acount> findBySample(PageInfo page, Acount a) {
+    public PageDTO findBySample(PageInfo page, Acount a) {
         Pageable pageable = PageRequest.of(page.getIndex(), page.getSize());
+        PageDTO pagedto = new PageDTO();
+        com.anshinbackend.dto.Admin.PageAcount.AcountDTO dto = new com.anshinbackend.dto.Admin.PageAcount.AcountDTO();
+        List<com.anshinbackend.dto.Admin.PageAcount.AcountDTO> contents = new ArrayList<>();
+        Page <Acount> queryPage =acountDAO.findAll(Example.of(a), pageable);
+        queryPage.getContent().forEach(x->{
+            dto.setId(x.getId());
+            dto.setPhoto(x.getPhoto());
+            dto.setEmail(x.getEmail());
+            dto.setPhoneNumber(x.getPhoneNumber());
+
+            dto.setFullName(x.getFullName());
+            dto.setIsActive(x.getIsActive());
+            contents.add(dto);
+        });
+
+        pagedto.setContent(contents);
+        pagedto.setCurrentPage(queryPage.getNumber());
+        pagedto.setTotalPage(queryPage.getTotalPages());
+        pagedto.setNumRec(queryPage.getSize());
+        pagedto.setTotalPage(queryPage.getTotalPages());
+        pagedto.setTotalRecord(queryPage.getTotalElements());
 
 
-        return acountDAO.findAll(Example.of(a), pageable);
+
+        return pagedto;
 
     }
 

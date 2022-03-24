@@ -1,6 +1,7 @@
 package com.anshinbackend.service;
 
 import com.anshinbackend.dto.AcountDTO;
+import com.anshinbackend.dto.Admin.PageAcount.PageDTO;
 import com.anshinbackend.dto.PageInfo;
 import com.anshinbackend.entity.Acount;
 import org.springframework.data.domain.Page;
@@ -18,5 +19,5 @@ public interface AcountService {
     public Acount updateAcount(Acount acount);
 
     public Optional<Acount> findBy(Integer id);
-    public Page<Acount> findBySample(PageInfo page, Acount a);
+    public PageDTO findBySample(PageInfo page, Acount a);
 }

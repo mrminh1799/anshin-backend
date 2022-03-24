@@ -57,7 +57,7 @@ public class AdminAcountController {
     }
 
 
-    @PostMapping("/findByExample/{pageCurent}/{sizePage}")
+    @PostMapping("/findBySample/{pageCurent}/{sizePage}")
     public ResponseEntity<?> findBySample(@PathVariable("pageCurent") Integer pageCurent,
                                           @PathVariable("sizePage")Integer sizePage,
                                           @RequestBody Acount sample) {
