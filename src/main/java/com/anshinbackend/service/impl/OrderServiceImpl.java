@@ -2,11 +2,11 @@ package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.*;
 import com.anshinbackend.dto.Admin.AdminOrderDTO;
-import com.anshinbackend.entity.Acount;
-import com.anshinbackend.entity.DetailProduct;
-import com.anshinbackend.entity.Order;
-import com.anshinbackend.entity.OrderDetail;
+import com.anshinbackend.dto.Customer.OrderDTO;
+import com.anshinbackend.dto.Customer.OrderDetailDTO;
+import com.anshinbackend.entity.*;
 import com.anshinbackend.service.OrderService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +27,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     ProductDetailDAO _productDetailDAO;
+
+    @Autowired
+    HistoryOrderDAO _historyOrderDAO;
 
     @Override
     public void newOrder(Order order, Integer idAcount) {
@@ -63,6 +66,37 @@ public class OrderServiceImpl implements OrderService {
         });
 
 
+
+
+    }
+
+    @Override
+    public void updateOrder(Order order) {
+
+        order.getListOrderDetail().forEach(x->{
+
+            DetailProduct detailProduct= _productDetailDAO.findById(x.getDetailProduct().getId()).get();
+
+            OrderDetail detailOrder = x;
+
+            if(detailProduct.getQuantity()<detailOrder.getQuantity()){
+                try {
+                    throw new Exception("Order false");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }else{
+                Integer productLeft = detailProduct.getQuantity() - detailOrder.getQuantity();
+                detailProduct.setQuantity(productLeft);
+                _productDetailDAO.save(detailProduct);
+
+                detailOrder.setPrice(detailProduct.getProduct().getPrice());
+                detailOrder.setOrder(order);
+                detailOrder.setDetailProduct(detailProduct);
+                _orderDetailDAO.save(detailOrder);
+            }
+
+        });
 
 
     }
@@ -160,5 +194,161 @@ public class OrderServiceImpl implements OrderService {
         });
 
         return  list;
+    }
+
+    @Override
+    public Order findById(Integer id) {
+        return _orderDAO.findById(id).get();
+    }
+
+    @Override
+
+    public void changeReturn(Order order, Integer orderOld, String reason) {
+
+        Order newOrder = _orderDAO.findById(orderOld).get();
+        Order oldOrder = new Order();
+
+       List<OrderDetail> listOld =  newOrder.getListOrderDetail();
+        String fullName = newOrder.getFullName();
+        oldOrder.setAcount(newOrder.getAcount());
+        oldOrder.setFullName(fullName);
+        oldOrder.setPhoneNumber(newOrder.getPhoneNumber());
+        oldOrder.setAddress(newOrder.getAddress());
+        oldOrder.setAddressDetail(newOrder.getAddressDetail());
+        oldOrder.setReturnOrder(true);
+        oldOrder.setStatus(2);
+        oldOrder.setTimeCreate(newOrder.getTimeCreate());
+       listOld.forEach(x->{
+           OrderDetail orderDetailOld = new OrderDetail();
+           orderDetailOld.setQuantity(x.getQuantity());
+           orderDetailOld.setOrder(oldOrder);
+           orderDetailOld.setPrice(x.getPrice());
+           orderDetailOld.setDetailProduct(x.getDetailProduct());
+           _orderDetailDAO.save(orderDetailOld);
+       });
+
+
+
+
+
+        newOrder.setAddress(order.getAddress());
+        newOrder.setTimeCreate(new Date());
+        _orderDetailDAO.deleteAllByOrderId(orderOld);
+        order.getListOrderDetail().forEach(x->{
+            DetailProduct detailProduct= _productDetailDAO.findById(x.getDetailProduct().getId()).get();
+            OrderDetail detailOrder = x;
+            if(detailProduct.getQuantity()<detailOrder.getQuantity()){
+                try {
+                    throw new Exception("Order false");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }else{
+                Integer productLeft = detailProduct.getQuantity() - detailOrder.getQuantity();
+                detailProduct.setQuantity(productLeft);
+                _productDetailDAO.save(detailProduct);
+                detailOrder.setPrice(detailProduct.getProduct().getPrice());
+                detailOrder.setDetailProduct(detailProduct);
+                detailOrder.setOrder(newOrder);
+               _orderDetailDAO.save(detailOrder);
+            }
+        });
+
+        HistoryOrder historoyOrder = new HistoryOrder();
+        historoyOrder.setOrder(newOrder);
+        historoyOrder.setDateCreate(new Date());
+        historoyOrder.setReason(reason);
+        _historyOrderDAO.save(historoyOrder);
+
+
+
+
+    }
+
+    @Override
+    public List<OrderDTO> findAllOrderForAcountId(Integer idAcount) {
+        List<OrderDTO> list= new ArrayList<>();
+
+        _orderDAO.findByAcountId(idAcount).forEach(x->{
+
+
+
+            List<OrderDetailDTO>  listDetail = new ArrayList<>();
+            OrderDetailDTO dto= new OrderDetailDTO();
+            x.getListOrderDetail().forEach(y->{
+                dto.setIdProduct(y.getDetailProduct().getId());
+                dto.setNameProduct(y.getDetailProduct().getProduct().getProductName());
+                dto.setQuantity(y.getQuantity());
+                dto.setColorId(y.getDetailProduct().getColor().getId());
+                dto.setColorName(y.getDetailProduct().getColor().getColorName());
+                dto.setSizeId(y.getDetailProduct().getSize().getId());
+                dto.setSizeName(y.getDetailProduct().getSize().getSize_name());
+                dto.setPrice(y.getPrice());
+
+
+
+                listDetail.add(dto);
+
+            });
+            OrderDTO orderDTO = new OrderDTO();
+            orderDTO.setListOrderDetailDTO(listDetail);
+            orderDTO.setOrderId(x.getId());
+            orderDTO.setDress(x.getAddress());
+            orderDTO.setDressDetail(x.getAddressDetail());
+            orderDTO.setPhoneNumber(x.getPhoneNumber());
+            orderDTO.setStatus(x.getStatus());
+            orderDTO.setCreateDate(new Date());
+
+            list.add(orderDTO);
+
+
+
+
+
+
+
+        });
+        return list;
+    }
+
+
+    public void updateStatus(Integer id, Integer status){
+        _orderDAO.updateStatus(status, id);
+
+
+    }
+
+    @Override
+    public List<com.anshinbackend.dto.OrderTableForAdmin.OrderDetailDTO> findByOrderId(Integer orderId) {
+
+        List<com.anshinbackend.dto.OrderTableForAdmin.OrderDetailDTO> list = new ArrayList<>();
+        _orderDetailDAO.findByOrderDetailId(orderId).forEach(x->{
+            com.anshinbackend.dto.OrderTableForAdmin.OrderDetailDTO dto =
+                    new com.anshinbackend.dto.OrderTableForAdmin.OrderDetailDTO();
+            dto.setIdOrderDetail(x.getId());
+            dto.setSizeName(x.getDetailProduct().getSize().getSize_name());
+            dto.setColoName(x.getDetailProduct().getColor().getColorName());
+            dto.setPrice(x.getPrice());
+            dto.setQuantity(x.getQuantity());
+            dto.setNameProduct(x.getDetailProduct().getProduct().getProductName());
+            list.add(dto);
+        });
+        return list;
+    }
+
+    @Override
+    public void updateQuantity(Integer idOrderDetail, Integer quantity) {
+        OrderDetail orderDetail = _orderDetailDAO.findById(idOrderDetail).get();
+        DetailProduct detailProduct = _productDetailDAO.findById(orderDetail.getDetailProduct().getId()).get();
+        orderDetail.setPrice(detailProduct.getProduct().getPrice());
+        orderDetail.setQuantity(quantity);
+        _orderDetailDAO.save(orderDetail);
+
+    }
+
+    @Override
+    public void deleteOrderDetail(Integer idOrderDetailId) {
+        _orderDetailDAO.deleteById(idOrderDetailId);
+
     }
 }

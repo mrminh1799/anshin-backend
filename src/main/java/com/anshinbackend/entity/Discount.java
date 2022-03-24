@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Discount {
 
     @Id
@@ -18,9 +19,18 @@ public class Discount {
     private Integer id;
 
 
+
+    @Column(name = "stye_discount")
+    Integer styleDiscount;
+
+    @Column(name = "discount")
+    Integer discount;
+
     @ManyToOne
-    @JoinColumn(name = "product_detail_id")
-    private DetailProduct detailProduct;
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+
 
 
     @ManyToOne

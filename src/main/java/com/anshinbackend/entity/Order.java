@@ -1,17 +1,17 @@
 package com.anshinbackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Table(name = "orders")
 @Entity
 @Data
+
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order {
@@ -52,7 +52,13 @@ public class Order {
     private Acount acount;
 
     @JsonIgnore
+    @OneToMany(mappedBy = "order", cascade= {CascadeType.PERSIST, CascadeType.REMOVE}, fetch=FetchType.EAGER)
+
+    List<OrderDetail> listOrderDetail = new ArrayList<>();
+
+    @JsonIgnore
     @OneToMany(mappedBy = "order")
-    List<OrderDetail> listOrderDetail;
+    List<HistoryOrder> listHistoryOrder;
+
 
 }

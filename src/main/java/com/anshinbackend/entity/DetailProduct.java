@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -40,9 +42,7 @@ public class DetailProduct {
     Product product;
 
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "detailProduct")
-    List<Discount> listDiscount;
+
 
     @ManyToOne
     @JoinColumn(name = "id_color")

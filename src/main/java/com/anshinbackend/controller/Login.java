@@ -73,11 +73,12 @@ public class Login {
 
     private void authenticate(String username, String password) throws Exception {
         try {
-            System.out.println("4");
+
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 
+
         }catch (DisabledException e){
-            System.out.println("5");
+
             throw new Exception("USER_DISABLED", e);
         }catch (BadCredentialsException e){
             e.printStackTrace();

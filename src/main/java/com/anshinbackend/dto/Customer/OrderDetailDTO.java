@@ -1,20 +1,25 @@
-package com.anshinbackend.dto.NavBar;
+package com.anshinbackend.dto.Customer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class CartDetailDTO {
+@AllArgsConstructor
+public class OrderDetailDTO {
+    String nameProduct;
     Integer idProduct;
-    String productName;
-    String sizeName;
+    Integer colorId;
     String colorName;
-    String colorImage;
+
+    Integer sizeId;
+    String sizeName;
     Integer price;
     Integer quantity;
+
 
 
 }

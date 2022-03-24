@@ -1,13 +1,12 @@
 package com.anshinbackend.controller;
 
+import com.anshinbackend.dto.Admin.CategoriDTO;
 import com.anshinbackend.dto.NavBar.NavBarDTO;
+import com.anshinbackend.entity.Category;
 import com.anshinbackend.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +20,18 @@ public class CategoryController {
     @GetMapping("/getNavBar")
     public ResponseEntity<List<NavBarDTO>> getNavBar(){
         return ResponseEntity.ok(_categoryService.findForNavBar());
+    }
+
+
+    @GetMapping("/findByCon")
+    public  ResponseEntity<List<Category>> findByCon(){
+        return  ResponseEntity.ok().body(_categoryService.findByCon());
+    }
+
+    @GetMapping("/findAllBacon/{id}")
+    public  ResponseEntity<List<CategoriDTO>> findForNavbar1(
+//            @PathVariable("fid")Integer fid,
+            @PathVariable("id")Integer id){
+        return  ResponseEntity.ok().body(_categoryService.findForNavbar1(id));
     }
 }

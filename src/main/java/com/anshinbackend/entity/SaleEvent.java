@@ -1,5 +1,6 @@
 package com.anshinbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,11 +23,13 @@ public class SaleEvent {
     @Column(name = "name_event")
     String nameEvent;
 
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     @Column(name = "start_time")
-    Date startTime;
+    String startTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     @Column(name = "end_time")
-    Date endTime;
+    String endTime;
 
     @Column(name = "sale_style")
     Integer saleStyle;

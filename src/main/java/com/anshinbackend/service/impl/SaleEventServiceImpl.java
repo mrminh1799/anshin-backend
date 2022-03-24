@@ -1,11 +1,13 @@
 package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.SaleEventDAO;
+import com.anshinbackend.dto.Customer.ProductDTO;
 import com.anshinbackend.entity.SaleEvent;
 import com.anshinbackend.service.SaleEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,7 +17,19 @@ public class SaleEventServiceImpl implements SaleEventService {
     SaleEventDAO _saleEventDAO;
     @Override
     public List<SaleEvent> findAll() {
-        return _saleEventDAO.findAll();
+        List<SaleEvent> list= new ArrayList<>();
+        _saleEventDAO.findByIsDeletedIsFalse().forEach(x->{
+            SaleEvent e = new SaleEvent();
+            e.setId(x.getId());
+            e.setNameEvent(x.getNameEvent());
+            e.setIsDeleted(x.getIsDeleted());
+            e.setStartTime(x.getStartTime());
+            e.setEndTime(x.getEndTime());
+            e.setStatus(x.getStatus());
+            list.add(e);
+        });
+        return list;
+
     }
 
     @Override
