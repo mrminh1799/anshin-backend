@@ -29,14 +29,14 @@ public interface AcountDAO extends JpaRepository<Acount, Integer> {
     public void deleteAcount(Integer id);
 
 
-//    @Query("select a from Acount a where a.id=?1")
-//    public Acount UpdateAcount(Acount e);
 
 
 
     @Query("select a from Acount a where a.id=?1")
     public Optional<Acount> findBy(Integer id);
 
+
     public Page<Acount> findAllBy(Acount a);
+
 
 }

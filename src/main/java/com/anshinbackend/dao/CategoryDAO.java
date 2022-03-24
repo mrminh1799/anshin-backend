@@ -15,12 +15,16 @@ public interface CategoryDAO extends JpaRepository<Category, Integer> {
     @Query("select  c from Category c where  c.categoryParentId= 0  and c.isDeleted =false ")
     List<Category> findForNavbar();
 
+    @Query("SELECT c from Category c where c.categoryParentId = 0 and c.isDeleted = false")
+    List<Category> findAllByCategoryParentId();
+
     //Việt anh
     @Query("select  c from Category c where  c.id= ?1  and c.isDeleted =false ")
     List<Category> findForNavbar1(Integer id);
 
     @Query("select  c from Category c where  c.categoryParentId > 0  and c.isDeleted =false ")
     List<Category> findByCon();
+
 
     List<Category> findByCategoryParentId(Integer id);
 

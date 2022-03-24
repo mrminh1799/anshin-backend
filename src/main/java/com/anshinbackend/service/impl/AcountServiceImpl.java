@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,17 +28,17 @@ public class AcountServiceImpl implements AcountService {
     @Override
     public List<AcountDTO> findAllAcount() {
         List<AcountDTO> listAcountDTO = new ArrayList<>();
-         acountDAO.findByIsDeletedIsFalse().forEach(e->{
-             AcountDTO dto = new AcountDTO();
-             dto.setId(e.getId());
-             dto.setPhoneNumber(e.getPhoneNumber());
-             dto.setEmail(e.getEmail());
-             dto.setPassword(e.getPassword());
-             dto.setFullName(e.getFullName());
-             dto.setIsActive(e.getIsActive());
-             listAcountDTO.add(dto);
-         });
-         return listAcountDTO;
+        acountDAO.findByIsDeletedIsFalse().forEach(e -> {
+            AcountDTO dto = new AcountDTO();
+            dto.setId(e.getId());
+            dto.setPhoneNumber(e.getPhoneNumber());
+            dto.setEmail(e.getEmail());
+            dto.setPassword(e.getPassword());
+            dto.setFullName(e.getFullName());
+            dto.setIsActive(e.getIsActive());
+            listAcountDTO.add(dto);
+        });
+        return listAcountDTO;
     }
 
     @Override
@@ -46,13 +47,13 @@ public class AcountServiceImpl implements AcountService {
     }
 
     @Override
-    public Acount findById(Integer id){
+    public Acount findById(Integer id) {
         return acountDAO.findById(id).get();
     }
 
     @Override
     public Acount insertAcount(Acount e) {
-        Integer id=  acountDAO.save(e).getId();
+        Integer id = acountDAO.save(e).getId();
         e.setId(id);
         e.setIsActive(true);
         e.setIsDeleted(false);
@@ -61,8 +62,17 @@ public class AcountServiceImpl implements AcountService {
 
 
     @Override
+
+    public Acount updateAcount(Acount e) {
+        Acount acount = acountDAO.findById(e.getId()).get();
+        acount.setId(e.getId());
+        acount.setFullName(e.getFullName());
+        acount.setPhoto(e.getPhoto());
+        return acountDAO.save(acount);
+    }
     public Acount UpdateAcount(Acount e) {
         return  acountDAO.save(e);
+
     }
 
     @Override

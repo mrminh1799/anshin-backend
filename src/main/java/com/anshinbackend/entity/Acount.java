@@ -61,6 +61,4 @@ public class Acount {
     @OneToMany(mappedBy = "acount")
     List<Order> listOrder;
 
-
-
 }

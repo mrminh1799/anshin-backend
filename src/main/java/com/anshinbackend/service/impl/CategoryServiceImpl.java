@@ -1,7 +1,12 @@
 package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.CategoryDAO;
+
+import com.anshinbackend.dto.Admin.CategoryDTO;
+import com.anshinbackend.dto.Customer.ProductDTO;
+
 import com.anshinbackend.dto.Admin.CategoriDTO;
+
 import com.anshinbackend.dto.NavBar.NavBarChildDTO;
 import com.anshinbackend.dto.NavBar.NavBarDTO;
 import com.anshinbackend.entity.Category;
@@ -36,6 +41,14 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+
+    public List<CategoryDTO> findAllByCategoryParentId() {
+        List<CategoryDTO> list= new ArrayList<>();
+        _categoryDAO.findAllByCategoryParentId().forEach(x->{
+            CategoryDTO e = new CategoryDTO();
+            e.setId(x.getId());
+            e.setName(x.getCategoryName());
+
     public List<Category> findAll() {
         return _categoryDAO.findAll();
     }
@@ -63,10 +76,12 @@ public class CategoryServiceImpl implements CategoryService {
                 listChild.add(navBarChildDTO);
             });
             e.setListChild(listChild);
+
             list.add(e);
         });
         return list;
     }
+
 
     @Override
     public List<Category> findByCon() {
@@ -89,4 +104,5 @@ public class CategoryServiceImpl implements CategoryService {
         _categoryDAO.deleteCate(id);
         return  1;
     }
+
 }
