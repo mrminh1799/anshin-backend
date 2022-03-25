@@ -28,4 +28,6 @@ public interface ProductService extends GenericService<Product, Integer> {
     List<ProductDTO> findByColorSizePrice(Integer idColor, Integer idSize, Integer topPrice, Integer bottomPrice);
 
     List<ProductDTO> findAllBySaleEvent();
+    List<ProductDTO> findByCartegoryParentID(Integer id);
+
 }

@@ -182,7 +182,6 @@ public class ProductServiceImpl  implements ProductService {
 
         Query query = em.createNativeQuery(sql, Tuple.class);
         List<Tuple> listResult = query.getResultList();
-        System.out.println(listResult.size());
         List<ProductDTO> list = new ArrayList<>();
         for(Tuple x: listResult){
             Integer id = x.get("id", Integer.class);
@@ -224,6 +223,7 @@ public class ProductServiceImpl  implements ProductService {
     }
 
 
+
     @Override
     public List<ProductDTO> findAllByNameCategory(String name) {
         List<ProductDTO> list = new ArrayList<>();
@@ -238,4 +238,29 @@ public class ProductServiceImpl  implements ProductService {
         });
         return list;
     }
+
+    @Override
+    public List<ProductDTO> findByCartegoryParentID(Integer id) {
+        String sql = "SELECT id, product_name, price, image, description from products \n" +
+                "WHERE category_id in (\n" +
+                "SELECT id from categories where category_parent_id ="+id+")";
+        Query query = em.createNativeQuery(sql, Tuple.class);
+        List<Tuple> listResualt = query.getResultList();
+        List<ProductDTO> list = new ArrayList<>();
+        listResualt.forEach(x->{
+            Integer idProduct = x.get("id", Integer.class);
+            String productName  = x.get("product_name", String.class);
+            Integer price =x.get("price", Integer.class);
+            String image = x.get("image", String.class);
+            String description = x.get("description", String.class);
+            // listReturn.add(new ColorProductDetailDTO(id, nameColor, image));
+            list.add(new ProductDTO(idProduct, productName, price, image, description));
+        });
+
+        return list;
+    }
+
+
+
+
 }

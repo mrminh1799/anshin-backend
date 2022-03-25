@@ -17,7 +17,7 @@ public class AcountDTO {
 
     private String fullName;
 
-    private String password;
+    private List<String> roles;
 
     private String email;
 

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -25,4 +26,6 @@ public class AcountDTO {
     private Boolean isActive;
 
     private String photo;
+
+    private List<String> roles;
 }
