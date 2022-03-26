@@ -37,7 +37,12 @@ public class AcountServiceImpl implements AcountService {
             dto.setEmail(e.getEmail());
             dto.setPassword(e.getPassword());
             dto.setFullName(e.getFullName());
+            List<String> roles = new ArrayList<>();
+            e.getRoleAcounts().forEach(x->{
+                roles.add(x.getRole().getRoleName());
+            });
             dto.setIsActive(e.getIsActive());
+            dto.setRoles(roles);
             listAcountDTO.add(dto);
         });
         return listAcountDTO;
@@ -69,6 +74,7 @@ public class AcountServiceImpl implements AcountService {
         acount.setId(e.getId());
         acount.setFullName(e.getFullName());
         acount.setPhoto(e.getPhoto());
+        acount.setPhoneNumber(e.getPhoneNumber());
         return acountDAO.save(acount);
     }
     public Acount UpdateAcount(Acount e) {
@@ -95,11 +101,16 @@ public class AcountServiceImpl implements AcountService {
         List<com.anshinbackend.dto.Admin.PageAcount.AcountDTO> contents = new ArrayList<>();
         Page <Acount> queryPage =acountDAO.findAll(Example.of(a), pageable);
         queryPage.getContent().forEach(x->{
+           // System.out.println(x.getRoleAcounts().get(0).getRole().getRoleName());
             dto.setId(x.getId());
             dto.setPhoto(x.getPhoto());
             dto.setEmail(x.getEmail());
             dto.setPhoneNumber(x.getPhoneNumber());
-
+            List<String> listRoles = new ArrayList<>();
+            x.getRoleAcounts().forEach(y->{
+                listRoles.add(y.getRole().getRoleName());
+            });
+            dto.setRoles(listRoles);
             dto.setFullName(x.getFullName());
             dto.setIsActive(x.getIsActive());
             contents.add(dto);
