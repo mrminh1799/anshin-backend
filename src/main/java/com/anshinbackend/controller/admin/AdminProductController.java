@@ -1,5 +1,6 @@
 package com.anshinbackend.controller.admin;
 
+import com.anshinbackend.dto.Admin.ProductAndProductDetailDTO;
 import com.anshinbackend.dto.Customer.ProductDTO;
 import com.anshinbackend.entity.Product;
 import com.anshinbackend.service.ProductService;
@@ -39,6 +40,12 @@ public class AdminProductController {
     public ResponseEntity<Product> delete(@PathVariable("id") Integer id){
         _productProductService.delete(id);
         return  ResponseEntity.ok(null);
+    }
+
+    @PostMapping("/insertProductandListProductDetail")
+    public ResponseEntity<?> insertProductandListProductDetail(@RequestBody ProductAndProductDetailDTO dto){
+        _productProductService.insertProductAndProductDetail(dto);
+        return ResponseEntity.ok("Thêm mới thành công");
     }
 
 

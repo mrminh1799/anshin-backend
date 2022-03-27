@@ -1,5 +1,6 @@
 package com.anshinbackend.service;
 
+import com.anshinbackend.dto.Admin.ProductAndProductDetailDTO;
 import com.anshinbackend.dto.Customer.ProductDTO;
 import com.anshinbackend.dto.DiscountDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
@@ -29,5 +30,8 @@ public interface ProductService extends GenericService<Product, Integer> {
 
     List<ProductDTO> findAllBySaleEvent();
     List<ProductDTO> findByCartegoryParentID(Integer id);
+
+
+    public void insertProductAndProductDetail(ProductAndProductDetailDTO dto);
 
 }

@@ -1,10 +1,12 @@
 package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.ProductDAO;
+import com.anshinbackend.dao.ProductDetailDAO;
+import com.anshinbackend.dto.Admin.ProductAndProductDetailDTO;
 import com.anshinbackend.dto.ColorProductDetailDTO;
 import com.anshinbackend.dto.Customer.ProductDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
-import com.anshinbackend.entity.Product;
+import com.anshinbackend.entity.*;
 import com.anshinbackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -15,15 +17,20 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.Tuple;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class ProductServiceImpl  implements ProductService {
+
     @Autowired
     ProductDAO _productDAO;
 
     @Autowired
     EntityManager em;
+
+    @Autowired
+    ProductDetailDAO _productDetailDAO;
 
     @Override
     public List<ProductDTO> findAll() {
@@ -260,7 +267,52 @@ public class ProductServiceImpl  implements ProductService {
         return list;
     }
 
+    @Override
+    public void insertProductAndProductDetail(ProductAndProductDetailDTO dto) {
+        String name = dto.getName();
+        String description = dto.getDescription();
+        Integer price  = dto.getPrice();
+        Integer categoryId = dto.getCategoryId();
+        Integer id = dto.getId();
+        List<com.anshinbackend.dto.Admin.ProductDetailDTO> listDetail = dto.getListDetail();
+        String image = dto.getImage();
+        Product p = new Product();
+        p.setProductName(name);
+        p.setDescription(description);
+        p.setPrice(price);
+        Category c = new Category();
+        c.setId(categoryId);
+        p.setCategory(c);
+        p.setImage(image);
+        p.setIsDelete(false);
+        p.setTime_create(new Date());
 
+        Product  product =  _productDAO.save(p);
+        listDetail.forEach(x->{
+            Integer idSize = x.getIdSize();
+            Integer idColor = x.getIdColor();
+            String imageProductDetail = x.getImage();
+            Integer quantity = x.getQuantity();
+            Size size = new Size();
+            size.setId(idSize);
+            Color color = new Color();
+            color.setId(idColor);
+            DetailProduct productDetail = new DetailProduct();
+            productDetail.setImage(imageProductDetail);
+            productDetail.setIsDeleted(false);
+            productDetail.setSize(size);
+            productDetail.setColor(color);
+            productDetail.setImage(image);
+            productDetail.setQuantity(quantity);
+            productDetail.setProduct(product);
+            _productDetailDAO.save(productDetail);
+
+        });
+
+
+
+
+    }
 
 
 }
