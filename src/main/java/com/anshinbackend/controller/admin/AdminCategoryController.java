@@ -48,7 +48,7 @@ import com.anshinbackend.dto.Admin.CategoryDTO;
         }
 
         @GetMapping("/findByCon")
-        public  ResponseEntity<List<Category>> findByCon(){
+        public  ResponseEntity<?> findByCon(){
             return  ResponseEntity.ok().body(categoryService.findByCon());
         }
 

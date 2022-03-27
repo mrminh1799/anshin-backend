@@ -89,8 +89,13 @@ return  list;
 
 
     @Override
-    public List<Category> findByCon() {
-        return _categoryDAO.findByCon();
+    public List<CategoryDTO> findByCon() {
+        List<CategoryDTO> list = new ArrayList<>();
+        _categoryDAO.findByCon().forEach(x->{
+            list.add(new CategoryDTO(x.getId(),x.getCategoryName(),_categoryDAO.findById(x.getCategoryParentId()).get().getCategoryName()));
+        });
+            return  list;
+
     }
 
 
