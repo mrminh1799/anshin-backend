@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -37,6 +39,9 @@ public class Acount {
 
     @Column(name = "photo")
     private String photo;
+    private String token;
+	@Column(columnDefinition = "TIMESTAMP")
+	private LocalDateTime tokenCreationDate;
 
     @JsonIgnore
     @OneToMany(mappedBy = "acount")

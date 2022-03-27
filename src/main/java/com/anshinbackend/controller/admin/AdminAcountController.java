@@ -67,6 +67,16 @@ public class AdminAcountController {
 
 
     }
+    @GetMapping("/findByRoleAdminAndSuperAdmin")
+    public ResponseEntity<List<Acount>> findAllByRoleAdminAndSuperAdmin(){
+        return ResponseEntity.ok().body(_service.findByRole());
+    }
+    @GetMapping("/findByFullNamePhoneNumberAndRole")
+    public ResponseEntity<List<Acount>> findByFullNamePhoneNumberAndRole(@RequestParam("fullName")String fullName
+    ,@RequestParam("phoneNumber") String phoneNumber,@RequestParam("role") String role
+    ){
+        return ResponseEntity.ok().body(_service.findByFullNamePhoneAndRole(fullName,phoneNumber,role));
+    }
 
 
 

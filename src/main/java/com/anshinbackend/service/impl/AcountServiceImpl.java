@@ -1,12 +1,12 @@
 package com.anshinbackend.service.impl;
 
-import com.anshinbackend.dao.AcountDAO;
-import com.anshinbackend.dto.AcountDTO;
-import com.anshinbackend.dto.Admin.PageAcount.PageDTO;
-import com.anshinbackend.dto.PageInfo;
-import com.anshinbackend.entity.Acount;
-import com.anshinbackend.entity.Role;
-import com.anshinbackend.service.AcountService;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -14,11 +14,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import com.anshinbackend.dao.AcountDAO;
+import com.anshinbackend.dto.AcountDTO;
+import com.anshinbackend.dto.PageInfo;
+import com.anshinbackend.dto.Admin.PageAcount.PageDTO;
+import com.anshinbackend.entity.Acount;
+import com.anshinbackend.service.AcountService;
 
 
 @Service
@@ -128,5 +129,80 @@ public class AcountServiceImpl implements AcountService {
         return pagedto;
 
     }
+    
+    private static final long EXPIRE_TOKEN_AFTER_MINUTES = 30;
 
+	
+	@Override
+	public String forgotPassword(String email) {
+
+		Optional<Acount> accountOptiontal = Optional
+				.ofNullable(acountDAO.findByEmail(email));
+
+		if (!accountOptiontal.isPresent()) {
+			return "Invalid email ";
+		}
+
+		Acount acc = accountOptiontal.get();
+		acc.setToken(generateToken());
+		acc.setTokenCreationDate(LocalDateTime.now());
+
+		acc = acountDAO.save(acc);
+
+		return acc.getToken();
+	}
+
+	@Override
+	public String resetPassword(String token, String password) {
+
+		Optional<Acount> accountOptiontal = Optional
+				.ofNullable(acountDAO.findByToken(token));
+
+		if (!accountOptiontal.isPresent()) {
+			return "Invalid token.";
+		}
+
+		LocalDateTime tokenCreationDate = accountOptiontal.get().getTokenCreationDate();
+
+		if (isTokenExpired(tokenCreationDate)) {
+			return "Token expired.";
+
+		}
+
+		Acount acc = accountOptiontal.get();
+
+		acc.setPassword(password);
+		acc.setToken(null);
+		acc.setTokenCreationDate(null);
+
+		acountDAO.save(acc);
+
+		return "Your password successfully updated.";
+	}
+	@Override
+	public String generateToken() {
+		StringBuilder token = new StringBuilder();
+
+		return token.append(UUID.randomUUID().toString())
+				.append(UUID.randomUUID().toString()).toString();
+	}
+
+	 
+	@Override
+	public boolean isTokenExpired(final LocalDateTime tokenCreationDate) {
+
+		LocalDateTime now = LocalDateTime.now();
+		Duration diff = Duration.between(tokenCreationDate, now);
+
+		return diff.toMinutes() >= EXPIRE_TOKEN_AFTER_MINUTES;
+	}
+    @Override
+    public List<Acount> findByRole(){
+        return acountDAO.findByRole();
+    }
+
+    @Override
+    public List<Acount> findByFullNamePhoneAndRole(String fullName, String phoneNumber, String role){
+        return acountDAO.findByFullNamePhoneNumberRole(fullName,phoneNumber,role);
+    }
 }
