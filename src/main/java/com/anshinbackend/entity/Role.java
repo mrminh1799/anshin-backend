@@ -24,4 +24,9 @@ public class Role {
     @JsonIgnore
     @OneToMany(mappedBy = "role")
     List<RoleAcount> roleAcounts;
+    public Role(int id,String roleName){
+        this.roleName=roleName;
+        this.id=id;
+    }
+
 }

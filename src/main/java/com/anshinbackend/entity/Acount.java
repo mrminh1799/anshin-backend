@@ -27,7 +27,8 @@ public class Acount {
 
     @Column(name = "password")
     private String password;
-
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
     @Column(name = "email")
     private String email;
 

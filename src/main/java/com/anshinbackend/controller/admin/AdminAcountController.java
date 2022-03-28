@@ -1,28 +1,33 @@
 package com.anshinbackend.controller.admin;
 
+import com.anshinbackend.dao.RoleAcountDAO;
 import com.anshinbackend.dto.AcountDTO;
 import com.anshinbackend.dto.PageInfo;
 import com.anshinbackend.entity.Acount;
+import com.anshinbackend.entity.Role;
+import com.anshinbackend.entity.RoleAcount;
 import com.anshinbackend.service.AcountService;
+import com.anshinbackend.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
 @RequestMapping("/admin/acount")
 @CrossOrigin("*")
 
-
-
-
 public class AdminAcountController {
 
     @Autowired
     AcountService _service;
+    @Autowired
+    RoleAcountDAO roleAcountDAO;
 
     @GetMapping("/findAll")
     public ResponseEntity<List<AcountDTO>> get(){
@@ -44,8 +49,26 @@ public class AdminAcountController {
         return  ResponseEntity.ok().body(_service.insertAcount(e));
     }
 
+
+    @PostMapping ("/createAdminAcount/{id_role}/{role_name}")
+    public ResponseEntity<Acount> createAdminAcount(@RequestBody Acount e,@PathVariable("id_role")Integer id
+    ,@PathVariable("role_name")String roleName){
+        Acount acc=_service.insertAcount(e);
+        Role role= new Role(id,roleName);
+        RoleAcount roleAcount= new RoleAcount(role,e);
+        roleAcountDAO.save(roleAcount);
+        List<RoleAcount> list= new ArrayList<>();
+        list.add(roleAcount);
+        e.setRoleAcounts(list);
+        return  ResponseEntity.ok().body(acc);
+    }
     @PutMapping("/updateAcount")
     public ResponseEntity<Acount> updateAcount( @RequestBody Acount e){
+        return ResponseEntity.ok().body(_service.UpdateAcount(e));
+    }
+    @PutMapping("/updateAcount/{is_active}")
+    public ResponseEntity<Acount> updateAcountIsActive( @RequestBody Acount e,@PathVariable("is_active")Boolean check){
+        e.setIsActive(check);
         return ResponseEntity.ok().body(_service.UpdateAcount(e));
     }
 
@@ -73,9 +96,10 @@ public class AdminAcountController {
     }
     @GetMapping("/findByFullNamePhoneNumberAndRole")
     public ResponseEntity<List<Acount>> findByFullNamePhoneNumberAndRole(@RequestParam("fullName")String fullName
-    ,@RequestParam("phoneNumber") String phoneNumber,@RequestParam("role") String role
+    ,@RequestParam("phoneNumber") String phoneNumber,@RequestParam("role") String role,@RequestParam("is_active")
+     boolean check
     ){
-        return ResponseEntity.ok().body(_service.findByFullNamePhoneAndRole(fullName,phoneNumber,role));
+        return ResponseEntity.ok().body(_service.findByFullNamePhoneAndRole(fullName,phoneNumber,role,check));
     }
 
 

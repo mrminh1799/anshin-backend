@@ -44,8 +44,11 @@ public interface AcountDAO extends JpaRepository<Acount, Integer> {
     public List<Acount> findByRole();
 
     @Query(value = "select * from acounts a join role_acount ra on a.id=ra.acount_id join roles r on r.id=ra.role_id  "
-    +"where a.full_name=?1 and a.phone_number=?2 and r.role_name=?3 and is_active=1",nativeQuery = true)
-    public List<Acount> findByFullNamePhoneNumberRole(String fullName, String phoneNumber, String role);
+    +"where a.full_name=?1 and a.phone_number=?2 and r.role_name=?3 and is_active=?4",nativeQuery = true)
+    public List<Acount> findByFullNamePhoneNumberRole(String fullName, String phoneNumber, String role,boolean check);
+
+    @Query("SELECT a FROM Acount a WHERE a.verificationCode = ?1")
+    public Acount findByVerificationCode(String code);
 
 
    // public Page<Acount> findAllBy(Acount a);
