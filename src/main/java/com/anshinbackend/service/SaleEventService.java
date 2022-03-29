@@ -9,6 +9,8 @@ public interface SaleEventService {
     public SaleEvent findById(Integer id);
     public SaleEvent insert(SaleEvent e);
     public SaleEvent update(SaleEvent e);
+
+    public SaleEvent update1(SaleEvent e);
     public void delete(Integer id);
 
 }

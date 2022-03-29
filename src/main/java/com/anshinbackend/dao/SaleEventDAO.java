@@ -19,4 +19,5 @@ public interface SaleEventDAO extends JpaRepository<SaleEvent, Integer> {
     @Modifying
     @Query("update SaleEvent s set s.isDeleted = true where s.id = ?1")
     public void deleteSaleEventById(Integer id);
+
 }

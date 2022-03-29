@@ -36,6 +36,11 @@ public class AdminSaleEventController {
         return  ResponseEntity.ok().body(_saleEventService.update(e));
     }
 
+    @PostMapping ("/updateStatus")
+    public  ResponseEntity<SaleEvent> update1(@RequestBody SaleEvent e){
+        return  ResponseEntity.ok().body(_saleEventService.update1(e));
+    }
+
     @DeleteMapping("/delete/{id}")
     public  ResponseEntity<?> delete(@PathVariable("id") Integer id){
         _saleEventService.delete(id);

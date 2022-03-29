@@ -1,6 +1,7 @@
 package com.anshinbackend.dto;
 
 import com.anshinbackend.entity.Product;
+import com.anshinbackend.entity.SaleEvent;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 public class DiscountDTO {
     Integer id;
-    List<Product> product;
+    String discount;
+    Product product;
+    SaleEvent saleEvent;
 
 }
