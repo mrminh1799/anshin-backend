@@ -41,7 +41,7 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
 
 
 
-    @Query("SELECT p FROM Product p WHERE p.productName like %?1% \n" +
+    @Query("SELECT p FROM Product p WHERE p.productName like ?1% \n" +
             "\n" +
             "ORDER BY p.time_create DESC")
     public  List<Product> findAllByNameCategory(String name);
