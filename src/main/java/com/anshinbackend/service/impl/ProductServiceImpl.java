@@ -268,7 +268,7 @@ public class ProductServiceImpl  implements ProductService {
     }
 
     @Override
-    public void insertProductAndProductDetail(ProductAndProductDetailDTO dto) {
+    public Integer insertProductAndProductDetail(ProductAndProductDetailDTO dto) {
         String name = dto.getName();
         String description = dto.getDescription();
         Integer price  = dto.getPrice();
@@ -311,7 +311,7 @@ public class ProductServiceImpl  implements ProductService {
 
 
 
-
+return  product.getId();
     }
 
 

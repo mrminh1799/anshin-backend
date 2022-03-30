@@ -44,8 +44,7 @@ public class AdminProductController {
 
     @PostMapping("/insertProductandListProductDetail")
     public ResponseEntity<?> insertProductandListProductDetail(@RequestBody ProductAndProductDetailDTO dto){
-        _productProductService.insertProductAndProductDetail(dto);
-        return ResponseEntity.ok("Thêm mới thành công");
+        return ResponseEntity.ok(_productProductService.insertProductAndProductDetail(dto));
     }
 
 

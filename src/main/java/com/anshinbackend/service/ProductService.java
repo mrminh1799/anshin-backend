@@ -32,6 +32,6 @@ public interface ProductService extends GenericService<Product, Integer> {
     List<ProductDTO> findByCartegoryParentID(Integer id);
 
 
-    public void insertProductAndProductDetail(ProductAndProductDetailDTO dto);
+    public Integer insertProductAndProductDetail(ProductAndProductDetailDTO dto);
 
 }
