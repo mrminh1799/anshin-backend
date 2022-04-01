@@ -1,11 +1,15 @@
 package com.anshinbackend.service.impl;
 
+import com.anshinbackend.dao.ColorDAO;
 import com.anshinbackend.dao.ProductDAO;
 import com.anshinbackend.dao.ProductDetailDAO;
+import com.anshinbackend.dao.SizeDAO;
 import com.anshinbackend.dto.Admin.ProductAndProductDetailDTO;
+import com.anshinbackend.dto.ColorDTO;
 import com.anshinbackend.dto.ColorProductDetailDTO;
 import com.anshinbackend.dto.Customer.ProductDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
+import com.anshinbackend.dto.SizeDTO;
 import com.anshinbackend.entity.*;
 import com.anshinbackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +35,13 @@ public class ProductServiceImpl  implements ProductService {
 
     @Autowired
     ProductDetailDAO _productDetailDAO;
+
+    @Autowired
+    ColorDAO _colorDAO;
+
+    @Autowired
+    SizeDAO _sizeDAO;
+
 
     @Override
     public List<ProductDTO> findAll() {
@@ -147,8 +158,55 @@ public class ProductServiceImpl  implements ProductService {
         dto.setName(p.getProductName());
         dto.setImage(p.getImage());
         dto.setPrice(p.getPrice());
-        dto.setListDetailProduct(p.getListProductDetails());
+        dto.setCategoryId(p.getCategory().getId());
+        dto.setCategoryName(p.getCategory().getCategoryName());
+
+        List<DetailProduct> listNotDelete = new ArrayList<>();
+        p.getListProductDetails().forEach(e->{
+            if(!e.getIsDeleted()){
+                listNotDelete.add(e);
+            }
+        });
+
+
+
+
         dto.setDescription(p.getDescription());
+        List<Size> listSize = _sizeDAO.findAll();
+        List<Color> listColor = _colorDAO.findAll();
+        List<SizeDTO> listSizeDTO = new ArrayList<>();
+        List<ColorDTO> listColorDTO = new ArrayList<>();
+        dto.setListDetailProduct(listNotDelete);
+
+        listSize.forEach(s->{
+            SizeDTO sizeDTO = new SizeDTO();
+            sizeDTO.setIsSelected(false);
+            sizeDTO.setNameSize(s.getSize_name());
+            sizeDTO.setIdSize(s.getId());
+            listNotDelete.forEach(pr->{
+                if (pr.getSize().getId() == s.getId()) {
+                    sizeDTO.setIsSelected(true);
+                }
+            });
+            listSizeDTO.add(sizeDTO);
+        });
+
+
+        listColor.forEach(c->{
+            ColorDTO colorDTO = new ColorDTO();
+            colorDTO.setIsSelected(false);
+            colorDTO.setNameColor(c.getColorName());
+            colorDTO.setIdColor(c.getId());
+            listNotDelete.forEach(pr->{
+                if (pr.getColor().getId() == c.getId()) {
+                    colorDTO.setIsSelected(true);
+                }
+            });
+            listColorDTO.add(colorDTO);
+        });
+
+        dto.setListSize(listSizeDTO);
+        dto.setListColor(listColorDTO);
         return  dto;
 
     }
