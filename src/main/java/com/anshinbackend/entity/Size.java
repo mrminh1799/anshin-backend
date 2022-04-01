@@ -22,10 +22,12 @@ public class Size {
     @Column(name = "size_name")
     private String size_name;
 
+    @Column(name = "is_delete")
+    private Boolean isDelete;
+
     @JsonIgnore
     @OneToMany(mappedBy = "size")
     List<DetailProduct> listProductDetail;
-
 
 
 }

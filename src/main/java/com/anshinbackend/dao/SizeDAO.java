@@ -13,4 +13,7 @@ public interface SizeDAO extends JpaRepository<Size, Integer> {
             " where id_product =?1" ,nativeQuery = true)
     List<Size> findListForProudct(Integer idProdcut);
 
+    @Query("SELECT s FROM Size s WHERE s.isDelete = false")
+    List<Size> findByIsdeleteSize();
+
 }

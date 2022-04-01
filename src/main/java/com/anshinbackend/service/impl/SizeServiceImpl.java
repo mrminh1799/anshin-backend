@@ -43,5 +43,8 @@ public class SizeServiceImpl implements SizeService {
         _sizeDAO.deleteById(id);
     }
 
-
+    @Override
+    public List<Size> findByIsdeleteSize() {
+        return  _sizeDAO.findByIsdeleteSize();
+    }
 }

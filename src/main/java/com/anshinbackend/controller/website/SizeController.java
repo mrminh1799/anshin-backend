@@ -43,4 +43,9 @@ public class SizeController {
     public void delete(@PathVariable("id")Integer id) {
         _sizeService.delete(id);
     }
+
+    @GetMapping("/findByIsdeleteSize")
+    public List<Size> findByIsdeleteSize(){
+        return _sizeService.findByIsdeleteSize();
+    }
 }
