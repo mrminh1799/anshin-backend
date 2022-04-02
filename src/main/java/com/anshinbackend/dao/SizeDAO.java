@@ -2,8 +2,10 @@ package com.anshinbackend.dao;
 
 import com.anshinbackend.entity.Size;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 public interface SizeDAO extends JpaRepository<Size, Integer> {
@@ -15,5 +17,10 @@ public interface SizeDAO extends JpaRepository<Size, Integer> {
 
     @Query("SELECT s FROM Size s WHERE s.isDelete = false")
     List<Size> findByIsdeleteSize();
+
+    @Transactional
+    @Modifying
+    @Query("update Size s set s.isDelete = true where s.id = ?1")
+    void deleteSize(Integer id);
 
 }

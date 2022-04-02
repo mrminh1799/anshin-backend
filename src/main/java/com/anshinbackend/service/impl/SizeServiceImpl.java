@@ -30,7 +30,10 @@ public class SizeServiceImpl implements SizeService {
 
     @Override
     public Size create(Size size) {
-        return  _sizeDAO.save(size);
+        Integer id =  _sizeDAO.save(size).getId();
+        size.setId(id);
+        size.setIsDelete(false);
+        return size;
     }
 
     @Override
@@ -39,12 +42,15 @@ public class SizeServiceImpl implements SizeService {
     }
 
     @Override
-    public void delete(Integer id) {
-        _sizeDAO.deleteById(id);
+    public Integer delete(Integer id) {
+        _sizeDAO.deleteSize(id);
+        return 1;
     }
 
     @Override
     public List<Size> findByIsdeleteSize() {
         return  _sizeDAO.findByIsdeleteSize();
     }
+
+
 }

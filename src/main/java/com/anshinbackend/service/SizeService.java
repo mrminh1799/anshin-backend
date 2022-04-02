@@ -15,7 +15,9 @@ public interface SizeService {
 
     Size update(Size size);
 
-    void delete(Integer id);
+    Integer delete(Integer id);
 
     List<Size> findByIsdeleteSize();
+
+
 }

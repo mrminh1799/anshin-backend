@@ -40,8 +40,9 @@ public class SizeController {
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable("id")Integer id) {
+    public ResponseEntity<Size> deleteByID(@PathVariable Integer id) {
         _sizeService.delete(id);
+        return ResponseEntity.ok().body(null);
     }
 
     @GetMapping("/findByIsdeleteSize")
