@@ -81,4 +81,12 @@ public class ProductController {
     public  ResponseEntity<?> findByCategoryParentId(@PathVariable("id") Integer id){
         return ResponseEntity.ok(_productService.findByCartegoryParentID(id));
     }
+
+    @GetMapping("/updateStatus/{id}")
+        public ResponseEntity<?> updateStatus(@PathVariable("id") Integer id){
+
+            _productService.updateStatusProduct(id);
+            return ResponseEntity.ok("Update stt thành công");
+
+        }
 }

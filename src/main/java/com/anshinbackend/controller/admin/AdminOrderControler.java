@@ -35,4 +35,9 @@ public class AdminOrderControler {
         return ResponseEntity.ok().body(_orOrderDetailService.finByOrderId(idOrder));
     }
 
+    @GetMapping("/findOrderForCreateAdmin")
+    public ResponseEntity<List<AdminOrderDTO>> findOrderForCreateAdmin(){
+        return ResponseEntity.ok().body(_orderService.findOrderForAdminCreate());
+    }
+
 }

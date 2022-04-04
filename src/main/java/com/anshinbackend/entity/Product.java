@@ -38,6 +38,8 @@ public class Product {
     @Column(name="time_create")
     Date time_create;
 
+    @Column(name="status")
+    Integer status;
     @JsonIgnore
     @OneToMany(mappedBy = "product" , fetch = FetchType.EAGER)
     List<DetailProduct> listProductDetails;

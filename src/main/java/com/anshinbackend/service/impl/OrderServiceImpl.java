@@ -2,6 +2,7 @@ package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.*;
 import com.anshinbackend.dto.Admin.AdminOrderDTO;
+import com.anshinbackend.dto.Admin.OrderDetailForCreateOrderDTO;
 import com.anshinbackend.dto.Customer.OrderDTO;
 import com.anshinbackend.dto.Customer.OrderDetailDTO;
 import com.anshinbackend.entity.*;
@@ -350,5 +351,62 @@ public class OrderServiceImpl implements OrderService {
     public void deleteOrderDetail(Integer idOrderDetailId) {
         _orderDetailDAO.deleteById(idOrderDetailId);
 
+    }
+
+    @Override
+    public List<AdminOrderDTO> findOrderForAdminCreate() {
+        List<AdminOrderDTO> list = new ArrayList<>();
+        _orderDAO.findByStatusAndReturnOrderIsFalseOrderByTimeCreateDesc(7).forEach(x->{
+            AdminOrderDTO  dto = new AdminOrderDTO() ;
+            dto.setId(x.getId());
+            dto.setAddress(x.getAddress());
+            dto.setDetailAddress(x.getAddressDetail());
+            dto.setFullName(x.getFullName());
+            dto.setStatus(x.getStatus());
+            dto.setIdAcount(x.getAcount().getId());
+            dto.setIdStaff(x.getStaffId());
+            dto.setPhoneNumber(x.getPhoneNumber());
+
+
+            List<OrderDetailForCreateOrderDTO>  newList= new ArrayList<>();
+
+           // OrderDetailForCreateOrderDTO detail = new OrderDetailForCreateOrderDTO("sdf",x.getListOrderDetail());
+            x.getListOrderDetail().forEach(detail->{
+                newList.add(new OrderDetailForCreateOrderDTO(detail.getDetailProduct().getProduct().getProductName(),detail.getDetailProduct().getProduct().getPrice(), detail));
+            });
+
+            dto.setListOrderDetail(newList);
+            AtomicReference<Integer> sum = new AtomicReference<>(0);
+            _orderDetailDAO.findByOrder(x).forEach(y->
+            {
+                Integer quantity=0;
+                Integer price =0;
+                try {
+                    quantity = y.getQuantity();
+                    if(quantity==null){
+                        quantity=0;
+                    }
+                }catch (NullPointerException ex){
+                    quantity=0;
+                }
+
+                try {
+                    price = y.getPrice();
+                    if(price==null){
+                        price=0;
+                    }
+                }catch (NullPointerException ex){
+                    price = 0;
+                }
+                sum.set(quantity * price);
+            });
+
+            dto.setSumPrice(sum.get());
+            dto.setTimeCreate(x.getTimeCreate());
+            list.add(dto);
+
+        });
+
+        return  list;
     }
 }

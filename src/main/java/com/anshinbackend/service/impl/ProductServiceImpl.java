@@ -15,6 +15,7 @@ import com.anshinbackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -54,6 +55,7 @@ public class ProductServiceImpl  implements ProductService {
             e.setImage(x.getImage());
             e.setPrice(x.getPrice());
             e.setDescription(x.getDescription());
+            e.setStatus(x.getStatus());
             list.add(e);
         });
         return list;
@@ -255,7 +257,7 @@ public class ProductServiceImpl  implements ProductService {
             String image = x.get("image", String.class);
             String description = x.get("description", String.class);
            // listReturn.add(new ColorProductDetailDTO(id, nameColor, image));
-            list.add(new ProductDTO(id, productName, price, image, description));
+            list.add(new ProductDTO(id, productName, price, image, null, description));
         }
 
         List<ProductDTO> listFilter = new ArrayList<>();
@@ -319,7 +321,7 @@ public class ProductServiceImpl  implements ProductService {
             String image = x.get("image", String.class);
             String description = x.get("description", String.class);
             // listReturn.add(new ColorProductDetailDTO(id, nameColor, image));
-            list.add(new ProductDTO(idProduct, productName, price, image, description));
+            list.add(new ProductDTO(idProduct, productName, price, image, null, description));
         });
 
         return list;
@@ -370,6 +372,26 @@ public class ProductServiceImpl  implements ProductService {
 
 
 return  product.getId();
+    }
+
+    @Override
+    public void updateStatusProduct(Integer id) {
+
+
+        Product p = _productDAO.findById(id).get();
+        Integer status = p.getStatus();
+        Integer statusUpdate=null;
+        if(status==1){
+            statusUpdate=0;
+        }else {
+            statusUpdate=1;
+        }
+        System.out.println(status);
+        System.out.println(statusUpdate);
+
+
+        _productDAO.updateStatus(statusUpdate, id);
+
     }
 
 
