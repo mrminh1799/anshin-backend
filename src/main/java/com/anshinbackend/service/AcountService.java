@@ -26,19 +26,20 @@ public interface AcountService {
     public Optional<Acount> findBy(Integer id);
     public PageDTO findBySample(PageInfo page, Acount a);
 
-	
-	boolean isTokenExpired(final LocalDateTime tokenCreationDate);
-	String generateToken();
-	String resetPassword(String token, String password);
-	String forgotPassword(String email);
+    public  Acount findByEmail(String email);
+
 
     List<Acount> findByRole();
 
     List<Acount> findByFullNamePhoneAndRole(String fullName, String phoneNumber, String role,boolean isActive);
 
-    void register(Acount acount, String siteURL)throws UnsupportedEncodingException, MessagingException;
+    void register(Acount acount, String siteURL,String request)throws UnsupportedEncodingException, MessagingException;
 
-    void sendVerification(Acount acount, String siteURL)throws MessagingException, UnsupportedEncodingException;
+    void forgotPassword(String email, String siteURL, String request)throws UnsupportedEncodingException, MessagingException;
+
+    void sendVerification(Acount acount, String siteURL, String request)throws MessagingException, UnsupportedEncodingException;
+
+    void sendVerificationForgotPassword(Acount acount, String siteURL, String request)throws MessagingException, UnsupportedEncodingException;
 
     boolean verify(String verificationCode);
 }

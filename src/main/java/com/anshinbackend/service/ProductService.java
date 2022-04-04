@@ -30,4 +30,5 @@ public interface ProductService extends GenericService<Product, Integer> {
     List<ProductDTO> findAllBySaleEvent();
     List<ProductDTO> findByCartegoryParentID(Integer id);
 
+    List<Product> findAllByOrderId(Integer id);
 }

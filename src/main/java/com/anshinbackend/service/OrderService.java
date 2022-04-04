@@ -21,4 +21,6 @@ public interface OrderService {
     public List<OrderDetailDTO> findByOrderId(Integer orderId);
     public void updateQuantity(Integer idOrderDetail, Integer quantity);
     public void deleteOrderDetail(Integer idOrderDetailId);
+
+    List<Order> findByOrderByStatusAndSort();
 }

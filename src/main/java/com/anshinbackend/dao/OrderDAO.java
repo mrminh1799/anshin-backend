@@ -30,4 +30,6 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
     @Query("select o from Order o where o.acount.id=?1")
     public List<Order> findByAcountId(Integer id);
 
+    @Query(value = "select * from orders o join history_orders hs on o.id=hs.order_id where o.return_order='1' order by hs.date_create DESC",nativeQuery = true)
+    public List<Order> findByStatusAndSort();
 }

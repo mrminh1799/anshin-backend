@@ -24,5 +24,9 @@ public interface OrderDetailDAO extends JpaRepository<OrderDetail, Integer> {
 
     @Query("select od from OrderDetail  od where od.order.id=?1")
     public List<OrderDetail> findByOrderDetailId(Integer id);
-
+    @Transactional
+    @Modifying
+    @Query(value = "update detail_orders dos join detail_products dp on dp.id=dos.id_product_detail " +
+            "set dos.quantity=?3 WHERE dp.id=?1 and order_id=?2",nativeQuery = true)
+    public void updateNumberOfProductInOrder(int id_product, int id_order,int quantity);
 }

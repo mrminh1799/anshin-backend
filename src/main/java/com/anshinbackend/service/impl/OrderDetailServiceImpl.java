@@ -2,6 +2,7 @@ package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.OrderDetailDAO;
 import com.anshinbackend.dto.OrderTableForAdmin.OrderDetailDTO;
+import com.anshinbackend.entity.OrderDetail;
 import com.anshinbackend.service.OrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,5 +28,10 @@ public class OrderDetailServiceImpl implements OrderDetailService {
                     ));
         });
         return list;
+    }
+    @Override
+    public void updateNumberOfProductInOrder(int id_productDetail, int id_Order, int quantity){
+         _OrdetailDAO.updateNumberOfProductInOrder(id_productDetail,id_Order,quantity);
+
     }
 }

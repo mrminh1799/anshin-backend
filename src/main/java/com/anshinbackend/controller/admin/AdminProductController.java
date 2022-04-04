@@ -41,6 +41,10 @@ public class AdminProductController {
         return  ResponseEntity.ok(null);
     }
 
+    @GetMapping("/findByOrderId/{id}")
+    public ResponseEntity<List<Product>> findByOrderId(@PathVariable("id") Integer id){
+        return  ResponseEntity.ok(_productProductService.findAllByOrderId(id));
+    }
 
 
 

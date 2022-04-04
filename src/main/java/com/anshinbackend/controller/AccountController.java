@@ -1,9 +1,9 @@
 package com.anshinbackend.controller;
 
+import com.anshinbackend.dao.AcountDAO;
 import com.anshinbackend.entity.Acount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,52 +12,63 @@ import com.anshinbackend.service.AcountService;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.util.Random;
+import java.util.Optional;
 
 @RestController
 
 public class AccountController {
 	@Autowired
 	private AcountService accountService;
+	@Autowired
+	private AcountDAO acountDAO;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
-	@PostMapping("/forgotPassword")
-	public String forgotPassword(@RequestParam String email) {
-
-		String response = accountService.forgotPassword(email);
-
-		if (!response.startsWith("Invalid")) {
-			response = "http://localhost:8080/reset-password?token=" + response;
+	@PostMapping("/processRegister")
+	public ResponseEntity<Acount>  processRegister(@RequestBody Acount acount, HttpServletRequest request)
+			throws UnsupportedEncodingException, MessagingException {
+		String detail="registation";
+		accountService.register(acount, getSiteURL(request),detail);
+		return ResponseEntity.ok().body(acount) ;
+	}
+	@PostMapping("/processForgotPassword")
+	public ResponseEntity<Acount>  processForgotPassword(@RequestParam("email")String email, HttpServletRequest request)
+			throws UnsupportedEncodingException, MessagingException {
+		String detail="forgot password process";
+		Acount acount= accountService.findByEmail( email);
+		accountService.forgotPassword(email, getSiteURL(request),detail);
+		return ResponseEntity.ok().body(acount) ;
+	}
+	private String getSiteURL(HttpServletRequest request) {
+		String siteURL = request.getRequestURL().toString();
+		return siteURL.replace(request.getServletPath(), "");
+	}
+	@GetMapping("/verify")
+	public String verifyUser(@RequestParam("code") String code,@RequestParam("id") int id,@RequestParam("password") String password) {
+	if(password==null){
+		if (accountService.verify(code)) {
+			return "verify_success";
+		} else {
+			return "verify_fail";
 		}
-		return response;
+	} else{
+		Acount acc=acountDAO.getById(id);
+		String passwordEncoded=passwordEncoder.encode(password);
+
+		acc.setPassword(passwordEncoded);
+
+		return "verify_success";
 	}
 
-	@PutMapping("/resetPassword")
-	public String resetPassword(@RequestParam String token,
-			@RequestParam String password) {
-		BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
-		String encode= passwordEncoder.encode(password);
-		return accountService.resetPassword(token, encode);
-	}
 
-//	@PostMapping("/processRegister")
-//	public ResponseEntity<?>  processRegister(Acount acount, HttpServletRequest request)
-//			throws UnsupportedEncodingException, MessagingException {
-//		accountService.register(acount, getSiteURL(request));
-//		return ResponseEntity.ok("register successfully") ;
-//	}
+}
+	@PostMapping("/changePassword")
+	public ResponseEntity<Acount> changePassword(@RequestParam("id") int id, @RequestParam("password")String pass){
+		String passwordEncode=passwordEncoder.encode(pass);
 //
-//	private String getSiteURL(HttpServletRequest request) {
-//		String siteURL = request.getRequestURL().toString();
-//		return siteURL.replace(request.getServletPath(), "");
-//	}
-//	@GetMapping("/verify")
-//	public String verifyUser(@RequestParam("code") String code) {
-//		if (accountService.verify(code)) {
-//			return "verify_success";
-//		} else {
-//			return "verify_fail";
-//		}
-//	}
-	
+//
+		acountDAO.updateAcount(passwordEncode,id);
 
+	return ResponseEntity.ok().body(null);
+	}
 }

@@ -351,4 +351,11 @@ public class OrderServiceImpl implements OrderService {
         _orderDetailDAO.deleteById(idOrderDetailId);
 
     }
+
+    @Override
+    public List<Order> findByOrderByStatusAndSort(){
+
+        return _orderDAO.findByStatusAndSort();
+    }
+
 }

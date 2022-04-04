@@ -1,12 +1,13 @@
 package com.anshinbackend.service.impl;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.time.Duration;
-import java.time.LocalDateTime;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.modelmapper.internal.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,8 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -142,73 +141,13 @@ public class AcountServiceImpl implements AcountService {
         return pagedto;
 
     }
-    
-    private static final long EXPIRE_TOKEN_AFTER_MINUTES = 30;
 
-	
-	@Override
-	public String forgotPassword(String email) {
+    @Override
+    public Acount findByEmail(String email) {
+        return acountDAO.findByEmail(email);
+    }
 
-		Optional<Acount> accountOptiontal = Optional
-				.ofNullable(acountDAO.findByEmail(email));
 
-		if (!accountOptiontal.isPresent()) {
-			return "Invalid email ";
-		}
-
-		Acount acc = accountOptiontal.get();
-		acc.setToken(generateToken());
-		acc.setTokenCreationDate(LocalDateTime.now());
-
-		acc = acountDAO.save(acc);
-
-		return acc.getToken();
-	}
-
-	@Override
-	public String resetPassword(String token, String password) {
-
-		Optional<Acount> accountOptiontal = Optional
-				.ofNullable(acountDAO.findByToken(token));
-
-		if (!accountOptiontal.isPresent()) {
-			return "Invalid token.";
-		}
-
-		LocalDateTime tokenCreationDate = accountOptiontal.get().getTokenCreationDate();
-
-		if (isTokenExpired(tokenCreationDate)) {
-			return "Token expired.";
-
-		}
-
-		Acount acc = accountOptiontal.get();
-
-		acc.setPassword(password);
-		acc.setToken(null);
-		acc.setTokenCreationDate(null);
-
-		acountDAO.save(acc);
-
-		return "Your password successfully updated.";
-	}
-	@Override
-	public String generateToken() {
-		StringBuilder token = new StringBuilder();
-
-		return token.append(UUID.randomUUID().toString())
-				.append(UUID.randomUUID().toString()).toString();
-	}
-
-	 
-	@Override
-	public boolean isTokenExpired(final LocalDateTime tokenCreationDate) {
-
-		LocalDateTime now = LocalDateTime.now();
-		Duration diff = Duration.between(tokenCreationDate, now);
-
-		return diff.toMinutes() >= EXPIRE_TOKEN_AFTER_MINUTES;
-	}
     @Override
     public List<Acount> findByRole(){
         return acountDAO.findByRole();
@@ -220,10 +159,9 @@ public class AcountServiceImpl implements AcountService {
     }
 
     @Override
-    public void register(Acount acount, String siteURL)throws UnsupportedEncodingException, MessagingException {
-//        BCryptPasswordEncoder passwordEncoderX = new BCryptPasswordEncoder();
-//        String encodedPassword = passwordEncoderX.encode(acount.getPassword());
-//        acount.setPassword(encodedPassword);
+    public void register(Acount acount, String siteURL,String request)throws UnsupportedEncodingException, MessagingException {
+        String encodedPassword = passwordEncoder.encode(acount.getPassword());
+        acount.setPassword(encodedPassword);
 
         String randomCode = RandomString.make(64);
         acount.setVerificationCode(randomCode);
@@ -231,17 +169,25 @@ public class AcountServiceImpl implements AcountService {
 
         acountDAO.save(acount);
 
-        sendVerification(acount, siteURL);
+        sendVerification(acount, siteURL,request);
 
     }
     @Override
-    public void sendVerification(Acount acount, String siteURL)throws MessagingException, UnsupportedEncodingException {
-        String toAddress = "duydvph09704@fpt.edu.vn";
-        String fromAddress = "Your email address";
-        String senderName = "Your company name";
-        String subject = "Please verify your registration";
+    public void forgotPassword(String email, String siteURL, String request)throws UnsupportedEncodingException, MessagingException {
+
+        Acount acc= acountDAO.findByEmail(email);
+        sendVerificationForgotPassword(acc, siteURL,request);
+
+    }
+    @Override
+    public void sendVerification(Acount acount, String siteURL,String request)throws MessagingException, UnsupportedEncodingException {
+
+        String toAddress = ""+acount.getEmail();
+        String fromAddress = "anshinstore1@gmail.com";
+        String senderName = "Anshin Store";
+        String subject = "Please verify your "+request;
         String content = "Dear [[name]],<br>"
-                + "Please click the link below to verify your registration:<br>"
+                + "Please click the link below to verify your "+request+":<br>"
                 + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
                 + "Thank you,<br>"
                 + "Anshin Store";
@@ -261,6 +207,46 @@ public class AcountServiceImpl implements AcountService {
         helper.setText(content, true);
 
         mailSender.send(message);
+    }
+    @Override
+    public void sendVerificationForgotPassword(Acount acount, String siteURL,String request)throws MessagingException, UnsupportedEncodingException {
+
+        String toAddress = ""+acount.getEmail();
+        String fromAddress = "anshinstore1@gmail.com";
+        String senderName = "Anshin Store";
+        String subject = "Please verify your "+request;
+        String content = "Dear [[name]],<br>"
+                + "Please click the link below to verify your "+request+":<br>"
+                + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
+                + "Thank you,<br>"
+                + "Anshin Store";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+
+        content = content.replace("[[name]]", acount.getFullName());
+        String verifyURL = siteURL + "/changePassword/password=?&id="+acount.id;
+
+        content = content.replace("[[URL]]", verifyURL);
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
+    }
+    void sendRequest(String request) throws IOException {
+
+        URL url = new URL(request);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setDoOutput(true);
+        connection.setInstanceFollowRedirects(false);
+        connection.setRequestMethod("Post");
+        connection.setRequestProperty("Content-Type", "text/plain");
+        connection.setRequestProperty("charset", "utf-8");
+        connection.connect();
     }
     @Override
     public boolean verify(String verificationCode) {

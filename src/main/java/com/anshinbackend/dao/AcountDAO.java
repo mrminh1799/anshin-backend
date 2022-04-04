@@ -50,6 +50,10 @@ public interface AcountDAO extends JpaRepository<Acount, Integer> {
     @Query("SELECT a FROM Acount a WHERE a.verificationCode = ?1")
     public Acount findByVerificationCode(String code);
 
+    @Transactional
+    @Modifying
+    @Query("update Acount a set a.password=?1 where a.id=?2")
+    public void updateAcount(String pass,int id);
 
    // public Page<Acount> findAllBy(Acount a);
 

@@ -1,11 +1,11 @@
 package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.ProductDAO;
-import com.anshinbackend.dto.ColorProductDetailDTO;
 import com.anshinbackend.dto.Customer.ProductDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
 import com.anshinbackend.entity.Product;
 import com.anshinbackend.service.ProductService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -259,6 +259,14 @@ public class ProductServiceImpl  implements ProductService {
 
         return list;
     }
+
+    @Override
+    public List<Product> findAllByOrderId(Integer id){
+
+
+        return _productDAO.findAllByOrderId(id);
+    }
+    
 
 
 

@@ -54,4 +54,11 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
             "    WHERE   s.startTime <= current_date and s.endTime >= CURRENT_DATE \n" +
             "    GROUP BY p.id")
     List<Product> findAllBySaleEvent();
+    @Query(value = "SELECT * from products p join detail_products dp on p.id=dp.id_product " +
+            "join detail_orders dos on dos.id_product_detail=dp.id join orders o on o.id=dos.order_id " +
+            "where o.id=?1",nativeQuery = true)
+    List<Product> findAllByOrderId(int id);
+
+
+
 }
