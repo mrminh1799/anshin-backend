@@ -2,6 +2,7 @@ package com.anshinbackend.controller;
 
 import com.anshinbackend.dao.ProductDAO;
 import com.anshinbackend.dto.Customer.ProductDTO;
+import com.anshinbackend.dto.Customer.ProductsssDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
 import com.anshinbackend.entity.Product;
 import com.anshinbackend.service.ProductService;
@@ -74,7 +75,7 @@ public class ProductController {
     }
 
     @GetMapping("/findAllBySaleEvent")
-    public  ResponseEntity<List<ProductDTO>> findAllBySaleEvent() {
+    public  ResponseEntity<List<ProductsssDTO>> findAllBySaleEvent() {
         return ResponseEntity.ok().body(_productService.findAllBySaleEvent());
     }
 }
