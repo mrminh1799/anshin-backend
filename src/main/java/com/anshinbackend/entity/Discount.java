@@ -18,19 +18,12 @@ public class Discount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
-
-    @Column(name = "stye_discount")
-    Integer styleDiscount;
-
     @Column(name = "discount")
-    Integer discount;
+    private Integer discountprice;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-
-
 
 
     @ManyToOne
@@ -39,5 +32,7 @@ public class Discount {
 
     @Column(name ="stye_discount")
     private  Boolean styleDiscount;
+
+
 
 }
