@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SaleEventServiceImpl implements SaleEventService {
@@ -49,6 +50,16 @@ public class SaleEventServiceImpl implements SaleEventService {
     @Override
     public SaleEvent update(SaleEvent e) {
         return _saleEventDAO.save(e);
+    }
+
+    @Override
+    public SaleEvent update1(SaleEvent e) {
+        SaleEvent  saleEvent = _saleEventDAO.findById(e.id).get();
+
+//        saleEvent.setId(e.id);
+        saleEvent.setStatus(e.getStatus());
+
+        return _saleEventDAO.save(saleEvent);
     }
 
     @Override

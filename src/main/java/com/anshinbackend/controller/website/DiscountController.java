@@ -35,22 +35,4 @@ public class DiscountController {
         return  ResponseEntity.ok().body(discountService.findById(id));
     }
 
-//    @GetMapping("/findAllBySaleEvent")
-//    public  ResponseEntity<List<DiscountDTO>> findAllBySaleEvent(
-//
-//            )
-////            throws ParseException
-//            {
-////                System.out.println(year);
-////        String date_s = year;
-//
-////                String oldstring = String.valueOf(year);
-//////                String oldstring = "2011-01-18 00:00:00.0";
-////                Date date = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss.SSS").parse(oldstring);
-//////
-////                String newstring = new SimpleDateFormat("yyyy-mm-dd").format(date);
-////                System.out.println(newstring); // 2011-01-18
-//
-//                return  ResponseEntity.ok().body(discountService.findAllBySaleEven());
-//    }
 }

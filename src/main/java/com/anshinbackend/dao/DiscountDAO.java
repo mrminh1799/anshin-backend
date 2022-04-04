@@ -26,6 +26,8 @@ public interface DiscountDAO extends JpaRepository<Discount, Integer> {
             "    WHERE   s.startTime <= current_date and s.endTime >= CURRENT_DATE \n" +
             "    GROUP BY p.id, s.id")
             List<Discount> findAllBySaleEvent();
+
+
 //    SELECT products.product_name, sale_events.start_time, sale_events.end_time FROM discounts
 //    RIGHT JOIN products on products.id = discounts.product_id
 //    LEFT JOIN sale_events on sale_events.id = discounts.sale_Event_id

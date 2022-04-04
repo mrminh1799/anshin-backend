@@ -18,6 +18,7 @@ import java.util.List;
 public class SaleEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public
     Integer id;
 
     @Column(name = "name_event")

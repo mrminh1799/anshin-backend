@@ -37,4 +37,7 @@ public class Discount {
     @JoinColumn(name = "sale_Event_id")
     SaleEvent saleEvent;
 
+    @Column(name ="stye_discount")
+    private  Boolean styleDiscount;
+
 }

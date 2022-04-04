@@ -33,5 +33,5 @@ public interface ProductService extends GenericService<Product, Integer> {
 
 
     public Integer insertProductAndProductDetail(ProductAndProductDetailDTO dto);
-    public void updateStatusProduct(Integer id);
+
 }
