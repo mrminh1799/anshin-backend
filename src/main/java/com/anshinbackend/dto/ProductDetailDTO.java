@@ -14,6 +14,10 @@ public class ProductDetailDTO {
     String name;
     Integer price;
     String image;
-    List<DetailProduct> listDetailProduct;
+    Integer categoryId;
+    String categoryName;
     String description;
+    List<DetailProduct> listDetailProduct;
+    List<ColorDTO> listColor;
+    List<SizeDTO> listSize;
 }

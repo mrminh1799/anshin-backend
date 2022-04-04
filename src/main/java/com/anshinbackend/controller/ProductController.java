@@ -78,4 +78,8 @@ public class ProductController {
     public  ResponseEntity<List<ProductsssDTO>> findAllBySaleEvent() {
         return ResponseEntity.ok().body(_productService.findAllBySaleEvent());
     }
+    @GetMapping("/findByCategoryParentId/{id}")
+    public  ResponseEntity<?> findByCategoryParentId(@PathVariable("id") Integer id){
+        return ResponseEntity.ok(_productService.findByCartegoryParentID(id));
+    }
 }

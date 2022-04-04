@@ -139,6 +139,26 @@ public class OrderController {
         return ResponseEntity.ok("Cap nhap status order thanh cong");
     }
 
+    @GetMapping("/findListOrderDetailForOrderId/{id}")
+    public ResponseEntity<?> findByOrderId(@PathVariable("id") Integer id){
+
+        return ResponseEntity.ok(_orderService.findByOrderId(id));
+    }
+
+    @GetMapping("/updateQuanityForOrderDetail/{id}/{quantity}")
+    public ResponseEntity<?> updatteQuantityForOrderDetai(@PathVariable("id") Integer id, @PathVariable("quantity") Integer quantity){
+        _orderService.updateQuantity(id, quantity);
+        return   ResponseEntity.ok("Thay do so luong thanh cong");
+    }
+
+    @GetMapping("/deleteOrderDetailById/{id}")
+    public ResponseEntity<?> updatteQuantityForOrderDetai(@PathVariable("id") Integer id){
+        _orderService.deleteOrderDetail(id);
+        return   ResponseEntity.ok("Thay do so luong thanh cong");
+    }
+
+
+
 
 
 

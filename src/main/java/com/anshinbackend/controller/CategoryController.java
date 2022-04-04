@@ -24,7 +24,7 @@ public class CategoryController {
 
 
     @GetMapping("/findByCon")
-    public  ResponseEntity<List<Category>> findByCon(){
+    public  ResponseEntity<?> findByCon(){
         return  ResponseEntity.ok().body(_categoryService.findByCon());
     }
 

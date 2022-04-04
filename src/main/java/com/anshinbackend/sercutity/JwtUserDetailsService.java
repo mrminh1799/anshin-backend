@@ -1,8 +1,10 @@
 package com.anshinbackend.sercutity;
 
+import com.anshinbackend.dao.AcountDAO;
 import com.anshinbackend.entity.Acount;
 import com.anshinbackend.service.AcountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,6 +22,9 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder bcryptEncoder;
+
+    @Autowired
+    AcountDAO _acountDAO;
 
 
     @Override
@@ -48,5 +53,21 @@ public class JwtUserDetailsService implements UserDetailsService {
         newUser.setPhoto(user.getPhoto());
         newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
         return _acountService.insertAcount(newUser);
+    }
+
+    public Boolean confirmPassword(Integer id, String passwordConfirm){
+
+        Acount acount = _acountService.findById(id);
+        System.out.println(acount.getPassword());
+        return bcryptEncoder.matches(passwordConfirm, acount.getPassword());
+
+    }
+
+
+    public  void changePassword(Integer id , String password){
+        Acount acount = _acountService.findById(id);
+        acount.setPassword(bcryptEncoder.encode(password));
+        _acountDAO.save(acount);
+
     }
 }

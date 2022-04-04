@@ -1,31 +1,30 @@
-package com.anshinbackend.dto;
+package com.anshinbackend.dto.Admin.PageAcount;
 
+import com.anshinbackend.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 import java.util.List;
-
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class AcountDTO {
-
-    private Integer id;
+    public Integer id;
 
     private String phoneNumber;
 
     private String fullName;
 
-    private String password;
+    private List<String> roles;
 
     private String email;
+
+
 
     private Boolean isActive;
 
     private String photo;
 
-    private List<String> roles;
 }
