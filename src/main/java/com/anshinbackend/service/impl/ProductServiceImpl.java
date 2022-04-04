@@ -1,16 +1,30 @@
 package com.anshinbackend.service.impl;
 
+                  
+import com.anshinbackend.dao.DiscountDAO;
+import com.anshinbackend.dao.ProductDAO;
+import com.anshinbackend.dao.SaleEventDAO;
+
 import com.anshinbackend.dao.ColorDAO;
 import com.anshinbackend.dao.ProductDAO;
 import com.anshinbackend.dao.ProductDetailDAO;
 import com.anshinbackend.dao.SizeDAO;
 import com.anshinbackend.dto.Admin.ProductAndProductDetailDTO;
 import com.anshinbackend.dto.ColorDTO;
+
 import com.anshinbackend.dto.ColorProductDetailDTO;
 import com.anshinbackend.dto.Customer.ProductDTO;
+import com.anshinbackend.dto.Customer.ProductsssDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
+
+import com.anshinbackend.entity.Category;
+import com.anshinbackend.entity.Discount;
+import com.anshinbackend.entity.Product;
+import com.anshinbackend.entity.SaleEvent;
+
 import com.anshinbackend.dto.SizeDTO;
 import com.anshinbackend.entity.*;
+
 import com.anshinbackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -30,6 +44,10 @@ public class ProductServiceImpl  implements ProductService {
     @Autowired
     ProductDAO _productDAO;
 
+    @Autowired
+    SaleEventDAO sdao;
+    @Autowired
+    DiscountDAO ddao;
     @Autowired
     EntityManager em;
 
@@ -273,17 +291,23 @@ public class ProductServiceImpl  implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> findAllBySaleEvent() {
-        List<ProductDTO> list= new ArrayList<>();
+    public List<ProductsssDTO> findAllBySaleEvent() {
+        List<ProductsssDTO> list= new ArrayList<>();
+//        _productDAO.findAllBySaleEvent().forEach(x->{
+//            ProductDTO e = new ProductDTO();
+//            e.setId(x.getId());
+//            e.setName(x.getProductName());
+//            e.setImage(x.getImage());
+//            e.setPrice(x.getPrice());
+//            e.setDescription(x.getDescription());
+//            list.add(e);
+//        });
+
         _productDAO.findAllBySaleEvent().forEach(x->{
-            ProductDTO e = new ProductDTO();
-            e.setId(x.getId());
-            e.setName(x.getProductName());
-            e.setImage(x.getImage());
-            e.setPrice(x.getPrice());
-            e.setDescription(x.getDescription());
-            list.add(e);
+            Discount discount =  ddao.findById(x.getId()).get();
+            list.add(new ProductsssDTO(x.getId(),x.getProductName(),x.getPrice(),x.getImage(),x.getDescription(),discount.getStyleDiscount(),discount.getDiscountprice()));
         });
+
         return list ;
     }
 

@@ -37,6 +37,22 @@ public class DiscountServiceImpl  implements DiscountService {
 //        _ddao.findAllBySaleEvent().forEach(x->{
 //            DiscountDTO e = new DiscountDTO();
 //            e.setId(x.getId());
+//            e.setDiscount(String.valueOf(x.getDiscountprice()));
+//            e.setProduct(x.getProduct());
+//            e.setSaleEvent(x.getSaleEvent());
+//            list.add(e);
+//        });
+//        return list ;
+//    }
+
+//    @Override
+//    public List<DiscountDTO> findAllBySaleEven() {
+//        List<DiscountDTO> list= new ArrayList<>();
+//
+//
+//        _ddao.findAllBySaleEvent().forEach(x->{
+//            DiscountDTO e = new DiscountDTO();
+//            e.setId(x.getId());
 //            e.setProduct((List<Product>) x.getProduct());
 //
 //            list.add(e);
