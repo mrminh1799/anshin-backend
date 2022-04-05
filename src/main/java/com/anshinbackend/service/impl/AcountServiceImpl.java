@@ -229,7 +229,7 @@ public class AcountServiceImpl implements AcountService {
         helper.setSubject(subject);
 
         content = content.replace("[[name]]", acount.getFullName());
-        String verifyURL = siteURL + "/changePassword/password=?&id="+acount.id;
+        String verifyURL = siteURL + "/changePassword?id="+acount.id+"&password=?";
 
         content = content.replace("[[URL]]", verifyURL);
 

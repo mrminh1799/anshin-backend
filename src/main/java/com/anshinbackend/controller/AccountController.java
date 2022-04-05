@@ -62,8 +62,8 @@ public class AccountController {
 
 
 }
-	@PostMapping("/changePassword")
-	public ResponseEntity<Acount> changePassword(@RequestParam("id") int id, @RequestParam("password")String pass){
+	@RequestMapping("/changePassword")
+	public ResponseEntity<Acount> changePassword( @RequestParam("password")String pass,@RequestParam("id") int id){
 		String passwordEncode=passwordEncoder.encode(pass);
 //
 //
