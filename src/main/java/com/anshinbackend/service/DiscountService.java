@@ -1,11 +1,8 @@
 package com.anshinbackend.service;
 
-import com.anshinbackend.dto.DiscountDTO;
+import com.anshinbackend.dto.Admin.AdminDiscountDTO;
 import com.anshinbackend.entity.Discount;
-import com.anshinbackend.entity.Size;
-import org.springframework.data.relational.core.sql.In;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,4 +19,11 @@ public interface DiscountService {
     Discount update(Discount discount);
 
     void delete(Integer id);
+
+    public List<AdminDiscountDTO> findByEventId(Integer id);
+
+    public void updateStatusEventForIdEvent(Integer idEvent);
+
+    public void deleteDiscountForId(Integer id);
+    public AdminDiscountDTO updateDiscountForId(Integer idDiscount, Boolean styleDiscount, Integer discount);
 }

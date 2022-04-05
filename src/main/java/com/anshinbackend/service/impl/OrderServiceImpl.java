@@ -412,7 +412,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDetail insertOrderDetail(Integer idOrder, Integer idProductDetail, Integer quantity) {
+    public OrderDetailForCreateOrderDTO insertOrderDetail(Integer idOrder, Integer idProductDetail, Integer quantity) {
 
         DetailProduct productDetail = _productDetailDAO.findById(idProductDetail).get();
         Integer price = productDetail.getProduct().getPrice();
@@ -424,7 +424,13 @@ public class OrderServiceImpl implements OrderService {
         orderDetail.setOrder(order);
         orderDetail.setPrice(price);
         orderDetail.setQuantity(quantity);
-        return _orderDetailDAO.save(orderDetail);
+
+        OrderDetailForCreateOrderDTO dto = new OrderDetailForCreateOrderDTO();
+        dto.setProductName(productDetail.getProduct().getProductName());
+        dto.setPrice(productDetail.getProduct().getPrice());
+        dto.setOrderDetail(_orderDetailDAO.save(orderDetail));
+
+        return dto;
 
     }
 }

@@ -1,6 +1,7 @@
 package com.anshinbackend.service;
 
 import com.anshinbackend.dto.Admin.AdminOrderDTO;
+import com.anshinbackend.dto.Admin.OrderDetailForCreateOrderDTO;
 import com.anshinbackend.dto.Customer.OrderDTO;
 import com.anshinbackend.dto.OrderTableForAdmin.OrderDetailDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
@@ -24,6 +25,6 @@ public interface OrderService {
     public void updateQuantity(Integer idOrderDetail, Integer quantity);
     public void deleteOrderDetail(Integer idOrderDetailId);
     public List<AdminOrderDTO> findOrderForAdminCreate();
-    public OrderDetail insertOrderDetail(Integer idOrder, Integer idProductDetail, Integer quantity);
+    public OrderDetailForCreateOrderDTO insertOrderDetail(Integer idOrder, Integer idProductDetail, Integer quantity);
 
 }

@@ -30,10 +30,8 @@ public class SizeServiceImpl implements SizeService {
 
     @Override
     public Size create(Size size) {
-        Integer id =  _sizeDAO.save(size).getId();
-        size.setId(id);
         size.setIsDelete(false);
-        return size;
+        return  _sizeDAO.save(size);
     }
 
     @Override
