@@ -30,10 +30,8 @@ public class ColorServiceImpl implements ColorService {
 
     @Override
 	public Color create(Color color) {
-        Integer id =  colorDAO.save(color).getId();
-        color.setId(id);
         color.setIsDelete(false);
-        return color;
+        return colorDAO.save(color);
     }
 
     @Override
