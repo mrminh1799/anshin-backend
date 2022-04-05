@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -156,6 +157,16 @@ public class OrderController {
         _orderService.deleteOrderDetail(id);
         return   ResponseEntity.ok("Thay do so luong thanh cong");
     }
+
+    @PostMapping("/createOrderDetail")
+    public ResponseEntity<?> createOrderDetail(@RequestBody Map map){
+        Integer idOrder = Integer.parseInt(map.get("idOrder").toString());
+        Integer idProductDetail = Integer.parseInt(map.get("idProduct").toString());
+        Integer quantity = Integer.parseInt(map.get("quantity").toString());
+        return  ResponseEntity.ok(_orderService.insertOrderDetail(idOrder, idProductDetail, quantity));
+
+    }
+
 
 
 

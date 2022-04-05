@@ -5,8 +5,10 @@ import com.anshinbackend.dto.Customer.OrderDTO;
 import com.anshinbackend.dto.OrderTableForAdmin.OrderDetailDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
 import com.anshinbackend.entity.Order;
+import com.anshinbackend.entity.OrderDetail;
 
 import java.util.List;
+import java.util.Map;
 
 public interface OrderService {
     public void newOrder(Order order, Integer id);
@@ -22,5 +24,6 @@ public interface OrderService {
     public void updateQuantity(Integer idOrderDetail, Integer quantity);
     public void deleteOrderDetail(Integer idOrderDetailId);
     public List<AdminOrderDTO> findOrderForAdminCreate();
+    public OrderDetail insertOrderDetail(Integer idOrder, Integer idProductDetail, Integer quantity);
 
 }

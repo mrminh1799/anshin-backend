@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service
@@ -138,7 +139,7 @@ public class OrderServiceImpl implements OrderService {
                  }catch (NullPointerException ex){
                      price = 0;
                  }
-                 sum.set(quantity * price);
+                 sum.set(sum.get()+  quantity * price);;
              });
 
              dto.setSumPrice(sum.get());
@@ -398,7 +399,7 @@ public class OrderServiceImpl implements OrderService {
                 }catch (NullPointerException ex){
                     price = 0;
                 }
-                sum.set(quantity * price);
+                sum.set(sum.get()+  quantity * price);
             });
 
             dto.setSumPrice(sum.get());
@@ -408,5 +409,22 @@ public class OrderServiceImpl implements OrderService {
         });
 
         return  list;
+    }
+
+    @Override
+    public OrderDetail insertOrderDetail(Integer idOrder, Integer idProductDetail, Integer quantity) {
+
+        DetailProduct productDetail = _productDetailDAO.findById(idProductDetail).get();
+        Integer price = productDetail.getProduct().getPrice();
+        Order order = _orderDAO.findById(idOrder).get();
+
+
+        OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setDetailProduct(productDetail);
+        orderDetail.setOrder(order);
+        orderDetail.setPrice(price);
+        orderDetail.setQuantity(quantity);
+        return _orderDetailDAO.save(orderDetail);
+
     }
 }
