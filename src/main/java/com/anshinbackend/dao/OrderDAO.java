@@ -30,4 +30,10 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
     @Query("select o from Order o where o.acount.id=?1")
     public List<Order> findByAcountId(Integer id);
 
+
+    @Transactional
+    @Modifying
+    @Query("update Order o set o.fullName =?1 , o.address =?2, o.phoneNumber =?3 where  o.id=?4")
+    public void setInformatinCustomer(String fullName, String address, String phoneNumber, Integer idOrder);
+
 }

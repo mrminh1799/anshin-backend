@@ -51,6 +51,9 @@ public interface AcountDAO extends JpaRepository<Acount, Integer> {
     public Acount findByVerificationCode(String code);
 
 
+
+
+
    // public Page<Acount> findAllBy(Acount a);
 
 

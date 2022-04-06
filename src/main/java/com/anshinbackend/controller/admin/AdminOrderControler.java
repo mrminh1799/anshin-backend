@@ -1,6 +1,7 @@
 package com.anshinbackend.controller.admin;
 
 import com.anshinbackend.dto.Admin.AdminOrderDTO;
+import com.anshinbackend.entity.Order;
 import com.anshinbackend.service.OrderDetailService;
 import com.anshinbackend.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,12 @@ public class AdminOrderControler {
     @GetMapping("/findAll")
     public ResponseEntity<List<AdminOrderDTO>> findAllOrder(){
         return ResponseEntity.ok().body(_orderService.findAllOrder());
+    }
+
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<AdminOrderDTO> findById(@PathVariable("id") Integer id){
+        return  ResponseEntity.ok(_orderService.findOrderForId(id));
+
     }
 
     @GetMapping("/findByStatus/{status}")

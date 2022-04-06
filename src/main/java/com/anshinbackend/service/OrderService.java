@@ -26,5 +26,9 @@ public interface OrderService {
     public void deleteOrderDetail(Integer idOrderDetailId);
     public List<AdminOrderDTO> findOrderForAdminCreate();
     public OrderDetailForCreateOrderDTO insertOrderDetail(Integer idOrder, Integer idProductDetail, Integer quantity);
+    public AdminOrderDTO findOrderForId(Integer id);
+    public void updateInfomatinCustomer(Integer idOrder, String name, String address, String phoneNumber);
+    public AdminOrderDTO createNewOrderForAdmin(String name);
+    public void deleteOrderTransaction(Integer id);
 
 }

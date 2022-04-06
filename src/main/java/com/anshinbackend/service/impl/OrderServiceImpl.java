@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Column;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -350,7 +351,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void deleteOrderDetail(Integer idOrderDetailId) {
-        _orderDetailDAO.deleteById(idOrderDetailId);
+        _orderDetailDAO.deleteById2(idOrderDetailId);
 
     }
 
@@ -433,4 +434,107 @@ public class OrderServiceImpl implements OrderService {
         return dto;
 
     }
+
+    @Override
+    public AdminOrderDTO findOrderForId(Integer id) {
+        Order x = _orderDAO.findById(id).get();
+        AdminOrderDTO  dto = new AdminOrderDTO() ;
+        dto.setId(x.getId());
+        dto.setAddress(x.getAddress());
+        dto.setDetailAddress(x.getAddressDetail());
+        dto.setFullName(x.getFullName());
+        dto.setStatus(x.getStatus());
+        dto.setIdAcount(x.getAcount().getId());
+        dto.setIdStaff(x.getStaffId());
+        dto.setPhoneNumber(x.getPhoneNumber());
+        dto.setTimeCreate(x.getTimeCreate());
+
+
+        List<OrderDetailForCreateOrderDTO>  newList= new ArrayList<>();
+
+        // OrderDetailForCreateOrderDTO detail = new OrderDetailForCreateOrderDTO("sdf",x.getListOrderDetail());
+        x.getListOrderDetail().forEach(detail->{
+            newList.add(new OrderDetailForCreateOrderDTO(detail.getDetailProduct().getProduct().getProductName(),detail.getDetailProduct().getProduct().getPrice(), detail));
+        });
+
+        dto.setListOrderDetail(newList);
+        AtomicReference<Integer> sum = new AtomicReference<>(0);
+        _orderDetailDAO.findByOrder(x).forEach(y->
+        {
+            Integer quantity=0;
+            Integer price =0;
+            try {
+                quantity = y.getQuantity();
+                if(quantity==null){
+                    quantity=0;
+                }
+            }catch (NullPointerException ex){
+                quantity=0;
+            }
+
+            try {
+                price = y.getPrice();
+                if(price==null){
+                    price=0;
+                }
+            }catch (NullPointerException ex){
+                price = 0;
+            }
+            sum.set(sum.get()+  quantity * price);
+        });
+
+        dto.setSumPrice(sum.get());
+        dto.setTimeCreate(x.getTimeCreate());
+       return  dto;
+    }
+
+    @Override
+    public void updateInfomatinCustomer(Integer idOrder, String name, String address, String phoneNumber) {
+        _orderDAO.setInformatinCustomer(name, address, phoneNumber, idOrder);
+    }
+
+    @Override
+    public AdminOrderDTO createNewOrderForAdmin(String name) {
+        Order order = new Order();
+        order.setFullName(name);
+        order.setPhoneNumber("");
+        order.setAddressDetail("");
+        order.setAddress("");
+        order.setTimeCreate(new Date());
+        order.setReturnOrder(false);
+        order.setDeliveryCost("0");
+        order.setStatus(7);
+        order.setStaffId(5);
+        order.setAcount(_acountDAO.findById(5).get());
+
+
+        Order x =  _orderDAO.save(order);
+
+        AdminOrderDTO  dto = new AdminOrderDTO() ;
+        dto.setId(x.getId());
+        dto.setAddress(x.getAddress());
+        dto.setDetailAddress(x.getAddressDetail());
+        dto.setFullName(x.getFullName());
+        dto.setStatus(x.getStatus());
+        dto.setIdAcount(x.getAcount().getId());
+        dto.setIdStaff(x.getStaffId());
+        dto.setPhoneNumber(x.getPhoneNumber());
+        dto.setTimeCreate(order.getTimeCreate());
+
+
+
+
+
+        return dto;
+    }
+
+    @Override
+    public void deleteOrderTransaction(Integer id) {
+        Order order =  _orderDAO.findById(id).get();
+        _orderDetailDAO.deleteAll(order.getListOrderDetail());
+        _orderDAO.delete(order);
+
+    }
+
+
 }
