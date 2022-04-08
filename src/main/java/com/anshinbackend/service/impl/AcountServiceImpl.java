@@ -84,16 +84,15 @@ public class AcountServiceImpl implements AcountService {
 
     @Override
     public Acount updateAcount(Acount e) {
-        Acount acount = acountDAO.findById(e.getId()).get();
-        acount.setId(e.getId());
+        Acount acount = acountDAO.findById(e.id).get();
         acount.setFullName(e.getFullName());
         acount.setPhoto(e.getPhoto());
-        acount.setPhoneNumber(e.getPhoneNumber());
+        acount.setEmail(e.getEmail());
         return acountDAO.save(acount);
     }
+
     public Acount UpdateAcount(Acount e) {
         return  acountDAO.save(e);
-
     }
 
     @Override
