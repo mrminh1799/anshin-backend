@@ -15,6 +15,7 @@ public class DiscountDTO {
     Integer id;
     String discount;
     Product product;
+    Boolean styleDiscount;
     SaleEvent saleEvent;
 
 }

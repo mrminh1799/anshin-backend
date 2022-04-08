@@ -2,6 +2,7 @@ package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.SaleEventDAO;
 import com.anshinbackend.dto.Customer.ProductDTO;
+import com.anshinbackend.entity.Acount;
 import com.anshinbackend.entity.SaleEvent;
 import com.anshinbackend.service.SaleEventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class SaleEventServiceImpl implements SaleEventService {
             e.setNameEvent(x.getNameEvent());
             e.setIsDeleted(x.getIsDeleted());
             e.setStartTime(x.getStartTime());
+            e.setSaleStyle(x.getSaleStyle());
             e.setEndTime(x.getEndTime());
             e.setStatus(x.getStatus());
             list.add(e);
@@ -41,21 +43,25 @@ public class SaleEventServiceImpl implements SaleEventService {
     @Override
     public SaleEvent insert(SaleEvent e) {
         e.setIsDeleted(false);
+        e.setStatus(true);
         Integer id = _saleEventDAO.save(e).getId();
         e.setId(id);
-        e.setIsDeleted(false);
         return e;
     }
 
     @Override
     public SaleEvent update(SaleEvent e) {
-        return _saleEventDAO.save(e);
+        SaleEvent  saleEvent = _saleEventDAO.findById(e.id).get();
+        saleEvent.setStartTime(e.getStartTime());
+        saleEvent.setEndTime(e.getEndTime());
+        saleEvent.setSaleStyle(e.getSaleStyle());
+        saleEvent.setIsDeleted(e.getIsDeleted());
+        return _saleEventDAO.save(saleEvent);
     }
 
     @Override
     public SaleEvent update1(SaleEvent e) {
         SaleEvent  saleEvent = _saleEventDAO.findById(e.id).get();
-
 //        saleEvent.setId(e.id);
         saleEvent.setStatus(e.getStatus());
 
