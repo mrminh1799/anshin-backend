@@ -32,9 +32,6 @@ public class SaleEvent {
     @Column(name = "end_time")
     String endTime;
 
-    @Column(name = "sale_style")
-    Integer saleStyle;
-
     @Column(name = "status")
     Boolean status;
 

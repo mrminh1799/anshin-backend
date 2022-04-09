@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 public interface SizeDAO extends JpaRepository<Size, Integer> {
-    @Query(value = "select DISTINCT  sizes.id, sizes.size_name" +
+    @Query(value = "select DISTINCT  sizes.id, sizes.size_name, sizes.is_Delete" +
             " from detail_products inner join sizes " +
             "on detail_products.id_size = sizes.id" +
             " where id_product =?1" ,nativeQuery = true)
