@@ -43,7 +43,7 @@ public class AcountController {
 
     }
 
-    @PutMapping("/updateAcount")
+    @PostMapping("/updateAcount")
     public ResponseEntity<Acount> updateAcount( @RequestBody Acount e){
         return ResponseEntity.ok().body(acountService.updateAcount(e));
     }

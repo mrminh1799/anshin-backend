@@ -65,7 +65,6 @@ public class DiscountServiceImpl  implements DiscountService {
 
     @Override
     public Discount insert(Discount discount) {
-
         return _ddao.save(discount);
     }
 

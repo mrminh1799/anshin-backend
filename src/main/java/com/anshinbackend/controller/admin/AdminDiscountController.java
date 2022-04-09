@@ -33,14 +33,18 @@ public class AdminDiscountController {
     public ResponseEntity<Optional<Discount>> getOne(@PathVariable("id")Integer id){
         return  ResponseEntity.ok().body(discountService.findById(id));
     }
-    @PostMapping("/create/{idProduct}/{idSaleEvent}")
+    @PostMapping("/create/{pricediscount}/{idProduct}/{idSaleEvent}/{styleDiscount}")
 
 
-    public ResponseEntity<?> insert(@PathVariable("idProduct") Integer idProduct,
-                                    @PathVariable("idSaleEvent")  Integer  idSaleEvent){
+    public ResponseEntity<?> insert(@PathVariable("pricediscount") Integer pricediscount,
+                                    @PathVariable("idProduct") Integer idProduct,
+                                    @PathVariable("idSaleEvent")  Integer  idSaleEvent,
+                                    @PathVariable("styleDiscount")  Boolean styleDiscount){
         Discount discount = new Discount();
+        discount.setDiscountprice(pricediscount);
         discount.setProduct(productService.findById(idProduct));
         discount.setSaleEvent(service.findById(idSaleEvent));
+        discount.setStyleDiscount(styleDiscount);
         discountService.insert(discount);
         return  ResponseEntity.ok("Thêm vào discount thành công");
     }

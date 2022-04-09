@@ -31,7 +31,7 @@ public class AdminSaleEventController {
         return  ResponseEntity.ok().body(_saleEventService.insert(e));
     }
 
-    @PutMapping("/update")
+    @PostMapping("/update")
     public  ResponseEntity<SaleEvent> update(@RequestBody SaleEvent e){
         return  ResponseEntity.ok().body(_saleEventService.update(e));
     }
