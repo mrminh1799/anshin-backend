@@ -26,7 +26,6 @@ public class SaleEventServiceImpl implements SaleEventService {
             e.setNameEvent(x.getNameEvent());
             e.setIsDeleted(x.getIsDeleted());
             e.setStartTime(x.getStartTime());
-            e.setSaleStyle(x.getSaleStyle());
             e.setEndTime(x.getEndTime());
             e.setStatus(x.getStatus());
             list.add(e);
@@ -54,7 +53,6 @@ public class SaleEventServiceImpl implements SaleEventService {
         SaleEvent  saleEvent = _saleEventDAO.findById(e.id).get();
         saleEvent.setStartTime(e.getStartTime());
         saleEvent.setEndTime(e.getEndTime());
-        saleEvent.setSaleStyle(e.getSaleStyle());
         saleEvent.setIsDeleted(e.getIsDeleted());
         return _saleEventDAO.save(saleEvent);
     }
