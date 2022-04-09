@@ -12,10 +12,19 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DiscountDTO {
-    Integer id;
-    String discount;
-    Product product;
+//    Integer id;
+//    String discount;
+//    Product product;
+//    Boolean styleDiscount;
+//    SaleEvent saleEvent;
+
+    Integer idDiscount;
+    Integer idProduct;
+    String productName;
+    Integer idSaleEvent;
+    String saleName;
     Boolean styleDiscount;
-    SaleEvent saleEvent;
+    Integer discount;
+    Integer discountPrice;
 
 }
