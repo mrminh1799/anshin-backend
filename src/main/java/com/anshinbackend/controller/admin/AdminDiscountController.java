@@ -45,8 +45,8 @@ public class AdminDiscountController {
         discount.setProduct(productService.findById(idProduct));
         discount.setSaleEvent(service.findById(idSaleEvent));
         discount.setStyleDiscount(styleDiscount);
-        discountService.insert(discount);
-        return  ResponseEntity.ok("Thêm vào discount thành công");
+//        discountService.insert(discount);
+        return  ResponseEntity.ok().body(discountService.insert(discount));
     }
 
     @PutMapping("/update/{idProduct}/{idSaleEvent}")
