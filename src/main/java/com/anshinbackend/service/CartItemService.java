@@ -1,6 +1,7 @@
 package com.anshinbackend.service;
 
 import com.anshinbackend.dto.CartItemDTO;
+import com.anshinbackend.dto.NavBar.CartDetailDTO;
 import com.anshinbackend.entity.CartItem;
 import org.springframework.security.core.userdetails.cache.SpringCacheBasedUserCache;
 
@@ -14,6 +15,8 @@ public interface CartItemService {
     public void deleteBy(Integer id);
 
     public void Create(CartItem cartItem);
+
+    public List<CartDetailDTO> findByIdAcount(Integer id);
 
 
 }

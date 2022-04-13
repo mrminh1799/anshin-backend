@@ -20,10 +20,10 @@ public class AcountController {
     @Autowired
     JwtUserDetailsService jwtUserDetailsService;
 
-    @GetMapping("findBy/{id}")
-    public Optional<Acount> findBy(@PathVariable("id")Integer id){
-        return   acountService.findBy(id);
-    }
+//    @GetMapping("findBy/{id}")
+//    public Optional<Acount> findBy(@PathVariable("id")Integer id){
+//        return   acountService.findBy(id);
+//    }
 
   
 

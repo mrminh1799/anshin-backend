@@ -49,20 +49,8 @@ public class CartController {
 
     @GetMapping("/findByIdAcount2/{id}")
     public ResponseEntity<?> findByIDAcount2(@PathVariable("id") Integer id){
-        List<CartDetailDTO> list = new ArrayList<>();
-        _cartItemService.findByAccountId(id).forEach(x->{
-            DetailProduct p =  _detailProductService.findById(x.getIdProduct());
-            CartDetailDTO c = new CartDetailDTO();
-            c.setIdProduct(p.getId());
-            c.setProductName(p.getProduct().getProductName());
-            c.setColorImage(p.getImage());
-            c.setColorName(p.getColor().getColorName());
-            c.setSizeName(p.getSize().getSize_name());
-            c.setPrice(p.getProduct().getPrice());
-            c.setQuantity(x.getQuantity());
-            list.add(c);
-        });
-        return  ResponseEntity.ok(list);
+
+        return  ResponseEntity.ok(_cartItemService.findByIdAcount(id));
     }
 
 

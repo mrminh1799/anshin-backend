@@ -1,6 +1,7 @@
 package com.anshinbackend.controller;
 
 import com.anshinbackend.config.JwtTokenUtil;
+import com.anshinbackend.dao.AcountDAO;
 import com.anshinbackend.entity.Acount;
 import com.anshinbackend.sercutity.JwtRequest;
 import com.anshinbackend.sercutity.JwtUserDetailsService;
@@ -38,6 +39,9 @@ public class Login {
     RoleService _roleService;
 
 
+    @Autowired
+    AcountDAO _acountDAO;
+
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<UserDTO> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)  throws Exception{
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
@@ -70,6 +74,35 @@ public class Login {
         return ResponseEntity.ok(userLoginDTO );
     }
 
+
+
+
+    @GetMapping("/test/findBy/{idAcount}")
+    public ResponseEntity<UserDTO> findByAcountId(@PathVariable("idAcount") Integer idAcount)  throws Exception{
+
+        Acount acount= _acountDAO.findBy(idAcount).get();
+        Integer id = acount.getId();
+        String phoneNumber = acount.getPhoneNumber();
+        String fullName = acount.getFullName();
+        String email = acount.getEmail();
+        String photo = acount.getPhoto();
+
+        List<String> roles =  new ArrayList<>();
+        acount.getRoleAcounts().stream().forEach(x->roles.add(x.getRole().getRoleName()));
+
+        Boolean isActive = acount.getIsActive();
+
+        UserDTO userLoginDTO = new UserDTO();
+        userLoginDTO.setId(id);
+        userLoginDTO.setFullname(fullName);
+        userLoginDTO.setAccessToken(null);
+        userLoginDTO.setUsername(phoneNumber);
+        userLoginDTO.setEmail(email);
+        userLoginDTO.setPhoto(photo);
+        userLoginDTO.setRoles(roles);
+        userLoginDTO.setIsActive(isActive);
+        return ResponseEntity.ok(userLoginDTO );
+    }
 
     private void authenticate(String username, String password) throws Exception {
         try {
