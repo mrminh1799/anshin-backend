@@ -4,6 +4,7 @@ import com.anshinbackend.dto.AcountDTO;
 import com.anshinbackend.dto.Admin.PageAcount.PageDTO;
 import com.anshinbackend.dto.PageInfo;
 import com.anshinbackend.entity.Acount;
+import com.anshinbackend.sercutity.UserDTO;
 import org.springframework.data.domain.Page;
 
 import java.io.UnsupportedEncodingException;
@@ -21,7 +22,7 @@ public interface AcountService {
     public Acount insertAcount(Acount e);
     public Acount UpdateAcount(Acount e);
     public Integer delete(Integer id);
-    public Acount updateAcount(Acount acount);
+    public UserDTO updateAcount(Acount acount);
 
     public Optional<Acount> findBy(Integer id);
     public PageDTO findBySample(PageInfo page, Acount a);

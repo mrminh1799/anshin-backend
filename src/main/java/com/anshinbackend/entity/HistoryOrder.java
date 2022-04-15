@@ -21,6 +21,9 @@ public class HistoryOrder {
     @Column(name = "date_create")
     Date dateCreate;
 
+    @Column(name = "order_id_current")
+    Integer idCurentHistory;
+
     @ManyToOne
     @JoinColumn (name  = "order_id")
     Order order;

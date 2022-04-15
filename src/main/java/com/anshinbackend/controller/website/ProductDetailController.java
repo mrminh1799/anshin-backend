@@ -31,4 +31,9 @@ public class ProductDetailController {
     public ResponseEntity<List<DetailProduct>> findAllby(@PathVariable("id") Integer id){
         return ResponseEntity.ok().body(_detailProductService.findAllByid(id));
     }
+
+    @GetMapping("/findImage/{idProduct}/{idColor}")
+    public ResponseEntity<?> findImageByProductAndColorId(@PathVariable("idProduct") Integer idProduct, @PathVariable("idColor") Integer idColor){
+        return  ResponseEntity.ok(_detailProductService.findImage(idProduct, idColor));
+    }
 }

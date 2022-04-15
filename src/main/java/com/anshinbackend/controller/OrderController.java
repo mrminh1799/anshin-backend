@@ -91,7 +91,7 @@ public class OrderController {
 
 
     @PutMapping("/changeReturn/{idOld}")
-    public ResponseEntity<?> newOrder(@PathVariable Integer idOld, @RequestBody OrderChangeReturnDTO orderChangeReturnDTO){
+    public ResponseEntity<?> changerReturn(@PathVariable Integer idOld, @RequestBody OrderChangeReturnDTO orderChangeReturnDTO){
 
 
 

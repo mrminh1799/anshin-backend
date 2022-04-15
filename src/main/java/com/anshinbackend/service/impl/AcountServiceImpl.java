@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.anshinbackend.sercutity.UserDTO;
 import org.modelmapper.internal.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -86,12 +87,41 @@ public class AcountServiceImpl implements AcountService {
 
 
     @Override
-    public Acount updateAcount(Acount e) {
-        Acount acount = acountDAO.findById(e.id).get();
-        acount.setFullName(e.getFullName());
-        acount.setPhoto(e.getPhoto());
-        acount.setEmail(e.getEmail());
-        return acountDAO.save(acount);
+    public UserDTO updateAcount(Acount e) {
+        Acount acount1 = acountDAO.findById(e.id).get();
+        acount1.setFullName(e.getFullName());
+        acount1.setPhoto(e.getPhoto());
+        acount1.setPhoneNumber(e.getPhoneNumber());
+        acount1.setEmail(e.getEmail());
+
+
+
+        Acount acount= acountDAO.save(acount1);
+
+
+        Integer id = acount.getId();
+        String phoneNumber = acount.getPhoneNumber();
+        String fullName = acount.getFullName();
+        String email = acount.getEmail();
+        String photo = acount.getPhoto();
+
+        List<String> roles =  new ArrayList<>();
+        acount.getRoleAcounts().stream().forEach(x->roles.add(x.getRole().getRoleName()));
+
+        Boolean isActive = acount.getIsActive();
+
+        UserDTO userLoginDTO = new UserDTO();
+        userLoginDTO.setId(id);
+        userLoginDTO.setFullname(fullName);
+        userLoginDTO.setAccessToken(null);
+        userLoginDTO.setUsername(phoneNumber);
+        userLoginDTO.setEmail(email);
+        userLoginDTO.setPhoto(photo);
+        userLoginDTO.setRoles(roles);
+        userLoginDTO.setIsActive(isActive);
+
+        return userLoginDTO;
+
     }
 
     public Acount UpdateAcount(Acount e) {
