@@ -1,6 +1,7 @@
 package com.anshinbackend.service;
 
 import com.anshinbackend.dto.Admin.AdminDiscountDTO;
+import com.anshinbackend.dto.DiscountDTO;
 import com.anshinbackend.entity.Discount;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface DiscountService {
 
 //    List<DiscountDTO> findAllBySaleEven();
 
-    Discount insert(Discount discount);
+    DiscountDTO insert(Discount discount);
 
     Discount update(Discount discount);
 

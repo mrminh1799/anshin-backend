@@ -4,6 +4,7 @@ import com.anshinbackend.dao.AcountDAO;
 import com.anshinbackend.dao.CartItemDAO;
 import com.anshinbackend.dao.ProductDAO;
 import com.anshinbackend.dto.CartItemDTO;
+import com.anshinbackend.dto.Customer.OrderChangeReturnDTO;
 import com.anshinbackend.dto.NavBar.CartDetailDTO;
 import com.anshinbackend.entity.CartItem;
 import com.anshinbackend.entity.DetailProduct;
@@ -98,4 +99,8 @@ public class CartController {
         return  ResponseEntity.ok("Thêm vào cart thành công");
     }
 
+    @DeleteMapping("/deleteByidProduct/{aid}/{productid}")
+    public void deleteByIdProduct(@PathVariable("aid")Integer acountid, @PathVariable("productid") Integer productid){
+        _cartItemService.deleteByIdProduct(acountid, productid);
+    }
 }
