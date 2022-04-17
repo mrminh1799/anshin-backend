@@ -91,8 +91,10 @@ public class OrderController {
 
 
     @PutMapping("/changeReturn/{idOld}")
-    public ResponseEntity<?> changerReturn(@PathVariable Integer idOld, @RequestBody OrderChangeReturnDTO orderChangeReturnDTO){
 
+    public ResponseEntity<?> newOrder(@PathVariable Integer idOld,
+
+    public ResponseEntity<?> changerReturn(@PathVariable Integer idOld, @RequestBody OrderChangeReturnDTO orderChangeReturnDTO){
 
 
         if(orderChangeReturnDTO.getIdAcount() ==null){
@@ -104,7 +106,6 @@ public class OrderController {
             orderDetail.setDetailProduct(_productDetailDAO.findById(x.getIdProductDetail()).get());
             orderDetail.setQuantity(x.getQuantity());
             listOrderDetail.add(orderDetail);
-
         });
 
 

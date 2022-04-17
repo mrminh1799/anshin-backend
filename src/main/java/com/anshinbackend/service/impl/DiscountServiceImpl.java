@@ -2,14 +2,16 @@ package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dto.Admin.AdminDiscountDTO;
 import com.anshinbackend.dao.DiscountDAO;
+import com.anshinbackend.dto.DiscountDTO;
+import com.anshinbackend.entity.Discount;
 import com.anshinbackend.dao.SaleEventDAO;
 import com.anshinbackend.entity.Discount;
 import com.anshinbackend.entity.SaleEvent;
 import com.anshinbackend.service.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -64,8 +66,32 @@ public class DiscountServiceImpl  implements DiscountService {
 
 
     @Override
-    public Discount insert(Discount discount) {
-        return _ddao.save(discount);
+    public DiscountDTO insert(Discount discount) {
+         _ddao.save(discount);
+        Integer discount1 = 0;
+        Discount x = _ddao.findById(discount.getId()).get();
+        DiscountDTO dto = new DiscountDTO();
+        dto.setIdDiscount(x.getId());
+        dto.setIdProduct(x.getProduct().getId());
+        dto.setProductName(x.getProduct().getProductName());
+        dto.setIdSaleEvent(x.getSaleEvent().getId());
+        dto.setSaleName(x.getSaleEvent().getNameEvent());
+        dto.setStyleDiscount(x.getStyleDiscount());
+        dto.setDiscount(x.getDiscountprice());
+        double discountP =0;
+        if(!x.getStyleDiscount()){
+            discount1 = x.getDiscountprice();
+
+        }else {
+            discountP = (double)x.getProduct().getPrice()*(double)x.getDiscountprice()/(double)100;
+            System.out.println(discount1);
+        }
+        dto.setDiscountPrice((int)discount1);
+
+
+
+        return dto;
+
     }
 
     @Override

@@ -14,7 +14,7 @@ public interface DiscountService {
 
 //    List<DiscountDTO> findAllBySaleEven();
 
-    Discount insert(Discount discount);
+    DiscountDTO insert(Discount discount);
 
     Discount update(Discount discount);
 
