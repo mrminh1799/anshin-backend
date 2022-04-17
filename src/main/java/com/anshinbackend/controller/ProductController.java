@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin("*")
@@ -59,8 +60,19 @@ public class ProductController {
     }
 
     @GetMapping("/findAllByNameCategory/{cid}")
-    public ResponseEntity<List<ProductDTO>> findAllByNameCate(@PathVariable("cid") String name) {
+    public ResponseEntity<List<ProductDTO>> findAllByNameCate(@PathVariable(name = "cid" , required = false, value = "") String name) {
         return ResponseEntity.ok().body((_productService.findAllByNameCategory(name)));
+    }
+
+    @PostMapping("/findAllByNameCategory2")
+    public ResponseEntity<List<ProductDTO>> findAllByNameCate2(@RequestBody Map product) {
+
+
+        if(product.get("name").equals("")){
+            return ResponseEntity.ok().body(_productService.findAll());
+
+        }
+        return ResponseEntity.ok().body(_productService.findAllByNameCategory(product.get("name").toString()));
     }
     @GetMapping("/findBySumTop")
     public  ResponseEntity<List<ProductDTO>> findBySumTop(){
@@ -78,4 +90,16 @@ public class ProductController {
     public  ResponseEntity<List<ProductsssDTO>> findAllBySaleEvent() {
         return ResponseEntity.ok().body(_productService.findAllBySaleEvent());
     }
+    @GetMapping("/findByCategoryParentId/{id}")
+    public  ResponseEntity<?> findByCategoryParentId(@PathVariable("id") Integer id){
+        return ResponseEntity.ok(_productService.findByCartegoryParentID(id));
+    }
+
+    @GetMapping("/updateStatus/{id}")
+        public ResponseEntity<?> updateStatus(@PathVariable("id") Integer id){
+
+            _productService.updateStatusProduct(id);
+            return ResponseEntity.ok("Update stt thành công");
+
+        }
 }

@@ -1,6 +1,7 @@
 package com.anshinbackend.controller;
 
 import com.anshinbackend.dao.AcountDAO;
+import com.anshinbackend.dao.CartItemDAO;
 import com.anshinbackend.dao.ProductDAO;
 import com.anshinbackend.dto.CartItemDTO;
 import com.anshinbackend.dto.Customer.OrderChangeReturnDTO;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @RestController
 @RequestMapping("/cart")
@@ -32,6 +33,9 @@ public class CartController {
     ProductDAO _productDao;
 
     @Autowired
+    CartItemDAO _cartItemDao;
+
+    @Autowired
     DetailProductService _detailProductService;
     @GetMapping("/findAll")
     public ResponseEntity<List<CartItem>> findAll(){
@@ -46,20 +50,8 @@ public class CartController {
 
     @GetMapping("/findByIdAcount2/{id}")
     public ResponseEntity<?> findByIDAcount2(@PathVariable("id") Integer id){
-        List<CartDetailDTO> list = new ArrayList<>();
-        _cartItemService.findByAccountId(id).forEach(x->{
-            DetailProduct p =  _detailProductService.findById(x.getIdProduct());
-            CartDetailDTO c = new CartDetailDTO();
-            c.setIdProduct(p.getId());
-            c.setProductName(p.getProduct().getProductName());
-            c.setColorImage(p.getImage());
-            c.setColorName(p.getColor().getColorName());
-            c.setSizeName(p.getSize().getSize_name());
-            c.setPrice(p.getProduct().getPrice());
-            c.setQuantity(x.getQuantity());
-            list.add(c);
-        });
-        return  ResponseEntity.ok(list);
+
+        return  ResponseEntity.ok(_cartItemService.findByIdAcount(id));
     }
 
 
@@ -86,11 +78,24 @@ public class CartController {
     public ResponseEntity<?> createCartItem(@PathVariable("idAcount") Integer idAcount,
                                             @PathVariable("idProductDetail") Integer idProductDetail,
                                             @PathVariable("quantity")  Integer quantity){
-        CartItem cartItem = new CartItem();
-        cartItem.setQuantity(quantity);
-        cartItem.setAccount(_acountDao.findById(idAcount).get());
-        cartItem.setDetailProduct(_detailProductService.findById(idProductDetail));
-        _cartItemService.Create(cartItem);
+        List<CartItem> listCart =  _cartItemDao.findByAcountId(idAcount);
+        AtomicReference<Boolean> check = new AtomicReference<>(false);
+        listCart.forEach(x->{
+            if(x.getDetailProduct().getId()== idProductDetail){
+                x.setQuantity(quantity);
+                _cartItemDao.save(x);
+                check.set(true);
+
+            }
+        });
+
+        if(check.get() == false) {
+            CartItem cartItem = new CartItem();
+            cartItem.setQuantity(quantity);
+            cartItem.setAccount(_acountDao.findById(idAcount).get());
+            cartItem.setDetailProduct(_detailProductService.findById(idProductDetail));
+            _cartItemService.Create(cartItem);
+        }
         return  ResponseEntity.ok("Thêm vào cart thành công");
     }
 

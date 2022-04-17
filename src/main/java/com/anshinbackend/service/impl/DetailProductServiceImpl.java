@@ -49,4 +49,10 @@ public class DetailProductServiceImpl implements DetailProductService {
     public DetailProduct findByProductColorSize(Integer idColor, Integer idSize, Integer idProduct) {
         return _productDetailDAO.findByColorSizeProduct(idColor, idSize, idProduct);
     }
+
+    @Override
+    public String findImage(Integer idProduct, Integer idColor) {
+
+        return _productDetailDAO.findImage(idProduct, idColor).getImage();
+    }
 }

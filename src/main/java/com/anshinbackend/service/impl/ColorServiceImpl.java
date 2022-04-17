@@ -22,25 +22,36 @@ public class ColorServiceImpl implements ColorService {
 
     @Autowired
     EntityManager em;
+
     @Override
 	public List<Color> findAll(){
     	return colorDAO.findAll();
     }
+
     @Override
 	public Color create(Color color) {
-
+        color.setIsDelete(false);
         return colorDAO.save(color);
     }
+
+    @Override
+    public Color update(Color color) {
+        return colorDAO.save(color);
+    }
+
+    @Override
+    public Integer delete(Integer id) {
+        colorDAO.deleteColor(id);
+        return 1;
+    }
+
     @Override
 	public Color findById(int id) {
-    	
     	return colorDAO.getOne(id);
-    	
     }
 
     @Override
     public List<ColorProductDetailDTO> findAllForProduct(Integer id) {
-
         List<ColorProductDetailDTO>  listReturn= new ArrayList<>();
 
         String sql = "select DISTINCT  colors.id, colors.color_name, detail_products.image from detail_products inner join colors on detail_products.id_color = colors.id where id_product = "+id;
@@ -54,14 +65,11 @@ public class ColorServiceImpl implements ColorService {
             String image = x.get("image", String.class);
             listReturn.add(new ColorProductDetailDTO(id, nameColor, image));
         }
-
-
-
         return  listReturn;
-
     }
 
-   
-    
-    
+    @Override
+    public List<Color> findByIsdeleteColor() {
+        return colorDAO.findByIsdeleteColor();
+    }
 }

@@ -1,6 +1,10 @@
 package com.anshinbackend.service;
 
+
+import com.anshinbackend.dto.Admin.CategoryDTO;
+
 import com.anshinbackend.dto.Admin.CategoriDTO;
+
 import com.anshinbackend.dto.NavBar.NavBarDTO;
 import com.anshinbackend.entity.Category;
 
@@ -10,10 +14,13 @@ public interface CategoryService {
     List<NavBarDTO> findForNavBar();
     List<Category> findAll();
 
+
+    List<CategoryDTO> findAllByCategoryParentId();
+
     //Việt anh
     List<CategoriDTO> findForNavbar1(Integer id);
 
-    List<Category> findByCon();
+    List<CategoryDTO> findByCon();
 
     List<Category> findByCategoryParentId(Integer id);
 
@@ -23,4 +30,5 @@ public interface CategoryService {
     Category update(Category category);
 
     Integer delete(Integer id);
+
 }
