@@ -23,4 +23,11 @@ public interface CartItemDAO extends JpaRepository<CartItem, Integer> {
 
 
 
+
+    @Transactional
+    @Modifying
+    @Query("Delete FROM CartItem as c WHERE c.detailProduct.id = ?1")
+    public void deleteByIdProduct(Integer productid);
+
+
 }

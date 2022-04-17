@@ -93,4 +93,11 @@ public class CartController {
         return  ResponseEntity.ok("Thêm vào cart thành công");
     }
 
+    @DeleteMapping("/deleteByidProduct/{cid}")
+    public void findByAcount(@PathVariable("cid") Integer id
+                             ) {
+        _cartItemService.deleteByIdProduct(id);
+
+    }
+
 }
