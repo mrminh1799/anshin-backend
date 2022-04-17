@@ -15,6 +15,6 @@ public interface CartItemService {
 
     public void Create(CartItem cartItem);
 
-    public void deleteByIdProduct(Integer id);
+    public void deleteByIdProduct(Integer acountid,Integer productid);
 
 }

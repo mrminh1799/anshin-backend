@@ -204,10 +204,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
 
     public void changeReturn(Order order, Integer orderOld, String reason) {
-
         Order newOrder = _orderDAO.findById(orderOld).get();
         Order oldOrder = new Order();
-
        List<OrderDetail> listOld =  newOrder.getListOrderDetail();
         String fullName = newOrder.getFullName();
         oldOrder.setAcount(newOrder.getAcount());
@@ -226,11 +224,6 @@ public class OrderServiceImpl implements OrderService {
            orderDetailOld.setDetailProduct(x.getDetailProduct());
            _orderDetailDAO.save(orderDetailOld);
        });
-
-
-
-
-
         newOrder.setAddress(order.getAddress());
         newOrder.setTimeCreate(new Date());
         _orderDetailDAO.deleteAllByOrderId(orderOld);
@@ -310,8 +303,6 @@ public class OrderServiceImpl implements OrderService {
         });
         return list;
     }
-
-
     public void updateStatus(Integer id, Integer status){
         _orderDAO.updateStatus(status, id);
 

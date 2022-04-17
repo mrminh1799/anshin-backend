@@ -42,8 +42,10 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public void deleteByIdProduct(Integer id) {
-        _cartItemDao.deleteByIdProduct(id);
+    public void deleteByIdProduct(Integer acountid,Integer productid) {
+
+        _cartItemDao.deleteByIdProduct(acountid,productid);
+
     }
 
 
