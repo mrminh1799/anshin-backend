@@ -30,4 +30,7 @@ public interface OrderDetailDAO extends JpaRepository<OrderDetail, Integer> {
     @Query("delete from OrderDetail  o where o.id=?1")
     void deleteById2  (Integer id);
 
+    @Query("select  od from OrderDetail  od where od.detailProduct.id=?1 and od.order.id=?2")
+    public OrderDetail findByProductId(Integer productId, Integer idOrder);
+
 }

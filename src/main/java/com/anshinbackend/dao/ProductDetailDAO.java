@@ -26,4 +26,6 @@ public interface ProductDetailDAO  extends JpaRepository<DetailProduct, Integer>
 
     @Query("SELECT  pd from DetailProduct  pd where pd.product.id =?1 and pd.color.id=?2")
     public  DetailProduct findImage(Integer idProduct, Integer idColor);
+
+
 }

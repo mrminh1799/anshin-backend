@@ -407,22 +407,38 @@ public class OrderServiceImpl implements OrderService {
     public OrderDetailForCreateOrderDTO insertOrderDetail(Integer idOrder, Integer idProductDetail, Integer quantity) {
 
         DetailProduct productDetail = _productDetailDAO.findById(idProductDetail).get();
-        Integer price = productDetail.getProduct().getPrice();
         Order order = _orderDAO.findById(idOrder).get();
 
+        if(_orderDetailDAO.findByProductId(idProductDetail, idOrder)== null){
+            Integer price = productDetail.getProduct().getPrice();
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setDetailProduct(productDetail);
+            orderDetail.setOrder(order);
+            orderDetail.setPrice(price);
+            orderDetail.setQuantity(quantity);
+            OrderDetailForCreateOrderDTO dto = new OrderDetailForCreateOrderDTO();
+            dto.setProductName(productDetail.getProduct().getProductName());
+            dto.setPrice(productDetail.getProduct().getPrice());
+            dto.setOrderDetail(_orderDetailDAO.save(orderDetail));
 
-        OrderDetail orderDetail = new OrderDetail();
-        orderDetail.setDetailProduct(productDetail);
-        orderDetail.setOrder(order);
-        orderDetail.setPrice(price);
-        orderDetail.setQuantity(quantity);
+            return dto;
 
-        OrderDetailForCreateOrderDTO dto = new OrderDetailForCreateOrderDTO();
-        dto.setProductName(productDetail.getProduct().getProductName());
-        dto.setPrice(productDetail.getProduct().getPrice());
-        dto.setOrderDetail(_orderDetailDAO.save(orderDetail));
+        }
+        else {
+            OrderDetail orderDetail =  _orderDetailDAO.findByProductId(idProductDetail, idOrder);
+            orderDetail.setQuantity(quantity);
+            OrderDetailForCreateOrderDTO dto = new OrderDetailForCreateOrderDTO();
+            dto.setProductName(productDetail.getProduct().getProductName());
+            dto.setPrice(productDetail.getProduct().getPrice());
+            dto.setOrderDetail(_orderDetailDAO.save(orderDetail));
 
-        return dto;
+
+
+
+
+            return dto;
+        }
+
 
     }
 

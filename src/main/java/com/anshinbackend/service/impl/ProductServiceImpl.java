@@ -67,14 +67,16 @@ public class ProductServiceImpl  implements ProductService {
 
         List<ProductDTO> list= new ArrayList<>();
         _productDAO.findByIsDeleteIsFalse().forEach(x->{
-            ProductDTO e = new ProductDTO();
-            e.setId(x.getId());
-            e.setName(x.getProductName());
-            e.setImage(x.getImage());
-            e.setPrice(x.getPrice());
-            e.setDescription(x.getDescription());
-            e.setStatus(x.getStatus());
-            list.add(e);
+            if(x.getIsDelete()== false) {
+                ProductDTO e = new ProductDTO();
+                e.setId(x.getId());
+                e.setName(x.getProductName());
+                e.setImage(x.getImage());
+                e.setPrice(x.getPrice());
+                e.setDescription(x.getDescription());
+                e.setStatus(x.getStatus());
+                list.add(e);
+            }
         });
         return list;
     }
