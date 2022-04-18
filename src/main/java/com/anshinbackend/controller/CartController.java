@@ -79,6 +79,9 @@ public class CartController {
                                             @PathVariable("idProductDetail") Integer idProductDetail,
                                             @PathVariable("quantity")  Integer quantity){
         List<CartItem> listCart =  _cartItemDao.findByAcountId(idAcount);
+        System.out.println(idAcount);
+        System.out.println(idProductDetail);
+        System.out.println(quantity);
         AtomicReference<Boolean> check = new AtomicReference<>(false);
         listCart.forEach(x->{
             if(x.getDetailProduct().getId()== idProductDetail){

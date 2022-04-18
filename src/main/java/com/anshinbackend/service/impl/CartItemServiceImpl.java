@@ -67,7 +67,7 @@ public class CartItemServiceImpl implements CartItemService {
         String sql = "select cart_items.product_detail_id, products.product_name, sizes.size_name, colors.color_name, detail_products.image, products.price,SUM(cart_items.quantity) as quantity from cart_items  INNER join detail_products ON \n" +
                 " detail_products.id = cart_items.id INNER join colors ON colors.id = detail_products.id_color\n" +
                 "INNER join sizes ON sizes.id = detail_products.id_size INNER join products ON products.id = detail_products.id_product    \n" +
-                " WHERE acount_id=1 GROUP BY cart_items.product_detail_id";
+                " WHERE acount_id= "+ id +" GROUP BY cart_items.product_detail_id";
         Query query = em.createNativeQuery(sql, Tuple.class);
         List<Tuple> listResult = query.getResultList();
 
