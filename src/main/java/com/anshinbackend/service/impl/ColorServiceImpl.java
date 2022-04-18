@@ -63,7 +63,7 @@ public class ColorServiceImpl implements ColorService {
             Integer idColor = x.get("id", Integer.class);
             String nameColor =x.get("color_name", String.class);
             String image = x.get("image", String.class);
-            listReturn.add(new ColorProductDetailDTO(id, nameColor, image));
+            listReturn.add(new ColorProductDetailDTO(idColor, nameColor, image));
         }
         return  listReturn;
     }
