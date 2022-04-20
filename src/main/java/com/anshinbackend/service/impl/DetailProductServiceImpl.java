@@ -1,11 +1,14 @@
 package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.ProductDetailDAO;
+import com.anshinbackend.dto.Customer.ImageProductDetailDTO;
+import com.anshinbackend.dto.ProductDetailDTO;
 import com.anshinbackend.entity.DetailProduct;
 import com.anshinbackend.service.DetailProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -48,5 +51,17 @@ public class DetailProductServiceImpl implements DetailProductService {
     @Override
     public DetailProduct findByProductColorSize(Integer idColor, Integer idSize, Integer idProduct) {
         return _productDetailDAO.findByColorSizeProduct(idColor, idSize, idProduct);
+    }
+
+    @Override
+    public List<ImageProductDetailDTO> findAllImageProductDetailByProduct(Integer id) {
+        List<ImageProductDetailDTO> list= new ArrayList<>();
+        _productDetailDAO.findAllImageProductDetailByProduct(id).forEach(x->{
+            ImageProductDetailDTO e = new ImageProductDetailDTO();
+            e.setIdProductDetail(x.getId());
+            e.setImageProDetail(x.getImage());
+            list.add(e);
+        });
+        return list;
     }
 }
