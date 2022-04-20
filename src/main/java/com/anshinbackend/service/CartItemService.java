@@ -20,5 +20,6 @@ public interface CartItemService {
 
     public List<CartDetailDTO> findByIdAcount(Integer id);
 
+    public void updateQuantityCart(Integer idCount, Integer productDetail, Integer quantiy);
 
 }

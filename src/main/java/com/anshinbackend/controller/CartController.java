@@ -106,4 +106,11 @@ public class CartController {
     public void deleteByIdProduct(@PathVariable("aid")Integer acountid, @PathVariable("productid") Integer productid){
         _cartItemService.deleteByIdProduct(acountid, productid);
     }
+
+    @GetMapping("/updateQuantity/{idAcount}/{idProductDetail}/{quantity}")
+    public ResponseEntity<?> updateQuantityForCart(@PathVariable("idAcount") Integer idAcount, @PathVariable("idProductDetail") Integer idProductDetail, @PathVariable("quantity") Integer quantity ){
+        _cartItemService.updateQuantityCart(idAcount, idProductDetail, quantity);
+        return ResponseEntity.ok("Id count: "+ idAcount +" idProduct:" + idProductDetail + " quantity "+ quantity);
+    }
+
 }

@@ -90,4 +90,9 @@ public class CartItemServiceImpl implements CartItemService {
         return listCartItems;
     }
 
+    @Override
+    public void updateQuantityCart(Integer idCount, Integer productDetail, Integer quantiy) {
+        _cartItemDao.updateQuantiy(quantiy, idCount, productDetail);
+    }
+
 }
