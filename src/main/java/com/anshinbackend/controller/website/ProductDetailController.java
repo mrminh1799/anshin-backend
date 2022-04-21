@@ -1,5 +1,7 @@
 package com.anshinbackend.controller.website;
 
+import com.anshinbackend.dto.Customer.ImageProductDetailDTO;
+import com.anshinbackend.dto.ProductDetailDTO;
 import com.anshinbackend.entity.DetailProduct;
 import com.anshinbackend.service.DetailProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +34,14 @@ public class ProductDetailController {
         return ResponseEntity.ok().body(_detailProductService.findAllByid(id));
     }
 
+
+    @GetMapping("/findAllImageProductDetailByProduct/{id}")
+    public ResponseEntity<List<ImageProductDetailDTO>> findAllImageProductDetailByProduct(@PathVariable("id") Integer id){
+        return ResponseEntity.ok().body(_detailProductService.findAllImageProductDetailByProduct(id));
+
     @GetMapping("/findImage/{idProduct}/{idColor}")
     public ResponseEntity<?> findImageByProductAndColorId(@PathVariable("idProduct") Integer idProduct, @PathVariable("idColor") Integer idColor){
         return  ResponseEntity.ok(_detailProductService.findImage(idProduct, idColor));
+
     }
 }
