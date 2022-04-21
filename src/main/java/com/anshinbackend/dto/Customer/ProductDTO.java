@@ -14,7 +14,9 @@ public class ProductDTO {
     String name;
     Integer price;
     String image;
+    Integer status;
     String description;
+
 
     //List<DetailProduct> listDetailProduct;
 

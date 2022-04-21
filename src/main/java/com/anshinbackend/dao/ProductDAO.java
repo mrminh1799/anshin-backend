@@ -54,4 +54,9 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
             "    WHERE   s.startTime <= current_date and s.endTime >= CURRENT_DATE \n" +
             "    GROUP BY p.id")
     List<Product> findAllBySaleEvent();
+
+    @Transactional
+    @Modifying
+    @Query("update Product p set p.status = ?1 where p.id = ?2")
+    public void updateStatus(Integer status, Integer idProduct);
 }

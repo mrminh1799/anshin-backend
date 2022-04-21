@@ -14,6 +14,7 @@ public interface DetailProductService {
     public  List<DetailProduct> findAllByid(Integer id);
     public void delete(Integer p);
     public DetailProduct findByProductColorSize(Integer idColor, Integer idSize, Integer idProduct);
+    public String findImage(Integer idProduct, Integer idColor);
 
     public List<ImageProductDetailDTO> findAllImageProductDetailByProduct(Integer id);
 

@@ -33,4 +33,6 @@ public class Discount {
     @Column(name ="stye_discount")
     private  Boolean styleDiscount;
 
+
+
 }

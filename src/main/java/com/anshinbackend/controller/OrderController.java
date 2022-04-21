@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -90,8 +91,9 @@ public class OrderController {
 
 
     @PutMapping("/changeReturn/{idOld}")
-    public ResponseEntity<?> newOrder(@PathVariable Integer idOld,
-                                      @RequestBody OrderChangeReturnDTO orderChangeReturnDTO){
+    public ResponseEntity<?> changerReturn(@PathVariable Integer idOld, @RequestBody OrderChangeReturnDTO orderChangeReturnDTO){
+
+
         if(orderChangeReturnDTO.getIdAcount() ==null){
             orderChangeReturnDTO.setIdAcount(5);
         }
@@ -136,14 +138,56 @@ public class OrderController {
         return ResponseEntity.ok("Cap nhap status order thanh cong");
     }
 
+    @GetMapping("/findListOrderDetailForOrderId/{id}")
+    public ResponseEntity<?> findByOrderId(@PathVariable("id") Integer id){
+
+        return ResponseEntity.ok(_orderService.findByOrderId(id));
+    }
+
+    @GetMapping("/updateQuanityForOrderDetail/{id}/{quantity}")
+    public ResponseEntity<?> updatteQuantityForOrderDetai(@PathVariable("id") Integer id, @PathVariable("quantity") Integer quantity){
+        _orderService.updateQuantity(id, quantity);
+        return   ResponseEntity.ok("Thay do so luong thanh cong");
+    }
+
+    @GetMapping("/deleteOrderDetailById/{id}")
+    public ResponseEntity<?> updatteQuantityForOrderDetai(@PathVariable("id") Integer id){
+        _orderService.deleteOrderDetail(id);
+        return   ResponseEntity.ok("Xoa order detail thanh cong");
+    }
+
+    @PostMapping("/createOrderDetail")
+    public ResponseEntity<?> createOrderDetail(@RequestBody Map map){
 
 
+        Integer idOrder = Integer.parseInt(map.get("idOrder").toString());
+        Integer idProductDetail = Integer.parseInt(map.get("idProduct").toString());
+        Integer quantity = Integer.parseInt(map.get("quantity").toString());
+        return  ResponseEntity.ok(_orderService.insertOrderDetail(idOrder, idProductDetail, quantity));
+
+    }
+
+    @PutMapping("/updateInfomatinCustomer/{idOrder}")
+    public ResponseEntity<?> updateInfomationCustomer(@PathVariable("idOrder") Integer idOrder, @RequestBody Map map){
+        String fullName= map.get("fullName").toString();
+        String address = map.get("address").toString();
+        String phoneNumber =map.get("phoneNumber").toString();
+        _orderService.updateInfomatinCustomer(idOrder, fullName, address, phoneNumber);
+        return ResponseEntity.ok("Doi thong tin thanh cong");
+
+    }
 
 
+    @GetMapping("/createNewOrderForAdmin/{name}")
+    public ResponseEntity<?> createNewOrderForAdmin(@PathVariable("name") String name){
+       return  ResponseEntity.ok(_orderService.createNewOrderForAdmin(name));
+    }
 
-
-
-
+    @DeleteMapping("/deleteTransaction/{id}")
+    public ResponseEntity<?> deleteTransaction(@PathVariable("id") Integer id){
+        _orderService.deleteOrderTransaction(id);
+        return  ResponseEntity.ok("Xóa thành công");
+    }
 
 
 }

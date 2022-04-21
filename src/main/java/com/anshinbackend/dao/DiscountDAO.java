@@ -1,9 +1,12 @@
 package com.anshinbackend.dao;
 
 import com.anshinbackend.entity.Discount;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.relational.core.sql.In;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +29,15 @@ public interface DiscountDAO extends JpaRepository<Discount, Integer> {
             "    WHERE   s.startTime <= current_date and s.endTime >= CURRENT_DATE \n" +
             "    GROUP BY p.id, s.id")
             List<Discount> findAllBySaleEvent();
+    @Query("select dc from Discount  dc where dc.saleEvent.id=?1")
+    public List<Discount> getBySaleEventId(Integer id);
+
+
+    @Modifying
+    @Transactional
+
+    @Query("update Discount  d set d.styleDiscount=?1, d.discountprice =?2 where d.id =?3")
+    public void updateDiscountForId(Boolean disCountStyle, Integer discount, Integer idDiscount);
 
 
 //    SELECT products.product_name, sale_events.start_time, sale_events.end_time FROM discounts

@@ -21,4 +21,9 @@ public class RoleServiceImpl implements RoleService {
     public Role findById(Integer id) {
         return _roleDAO.findById(id).get();
     }
+
+    @Override
+    public Role save(Role role){
+        return _roleDAO.save(role);
+    }
 }

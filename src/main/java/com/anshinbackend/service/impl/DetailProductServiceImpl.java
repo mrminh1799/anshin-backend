@@ -54,6 +54,7 @@ public class DetailProductServiceImpl implements DetailProductService {
     }
 
     @Override
+
     public List<ImageProductDetailDTO> findAllImageProductDetailByProduct(Integer id) {
         List<ImageProductDetailDTO> list= new ArrayList<>();
         _productDetailDAO.findAllImageProductDetailByProduct(id).forEach(x->{
@@ -63,5 +64,10 @@ public class DetailProductServiceImpl implements DetailProductService {
             list.add(e);
         });
         return list;
+}
+    public String findImage(Integer idProduct, Integer idColor) {
+
+        return _productDetailDAO.findImage(idProduct, idColor).getImage();
+
     }
 }

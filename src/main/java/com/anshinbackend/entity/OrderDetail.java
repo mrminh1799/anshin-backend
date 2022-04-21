@@ -1,5 +1,6 @@
 package com.anshinbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,10 +24,12 @@ public class OrderDetail {
     @Column(name = "price")
     private Integer price;
 
+
     @ManyToOne
     @JoinColumn(name = "id_product_detail")
     DetailProduct detailProduct;
 
+    @JsonIgnore
     @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE}, fetch=FetchType.EAGER)
     @JoinColumn(name = "order_id")
     Order order;

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CartItemDAO extends JpaRepository<CartItem, Integer> {
@@ -22,6 +23,8 @@ public interface CartItemDAO extends JpaRepository<CartItem, Integer> {
     @Query("Delete  FROM CartItem as c WHERE c.account.id =?1")
     public void deleteBy(Integer id);
 
+    public Optional<CartItem> findById(Integer id);
+
 
 
 
@@ -29,4 +32,11 @@ public interface CartItemDAO extends JpaRepository<CartItem, Integer> {
     @Modifying
     @Query("Delete FROM CartItem as c WHERE c.account.id=?1 and c.detailProduct.id = ?2")
     public void deleteByIdProduct(Integer acountid,Integer productid);
+
+    @Transactional
+    @Modifying
+    @Query("update  CartItem c set c.quantity = ?1 where c.account.id=?2 and c.detailProduct.id = ?3")
+    public void updateQuantiy(Integer quantity, Integer acountid , Integer productid);
+
+
 }
