@@ -1,6 +1,8 @@
 package com.anshinbackend.service.impl;
 
 import com.anshinbackend.dao.ProductDetailDAO;
+import com.anshinbackend.dto.Customer.ProductDTO;
+import com.anshinbackend.dto.Customer.ShowImageProdetailDTO;
 import com.anshinbackend.dto.Customer.ImageProductDetailDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
 import com.anshinbackend.entity.DetailProduct;
@@ -69,5 +71,18 @@ public class DetailProductServiceImpl implements DetailProductService {
 
         return _productDetailDAO.findImage(idProduct, idColor).getImage();
 
+    }
+
+    @Override
+    public List<ShowImageProdetailDTO> findAllImageProductDetailByProduct(Integer idProduct) {
+        List<ShowImageProdetailDTO> list= new ArrayList<>();
+        _productDetailDAO.findAllImageProductDetailByProduct(idProduct).forEach(x->{
+                ShowImageProdetailDTO e = new ShowImageProdetailDTO();
+                e.setIdProductDetail(x.getId());
+                e.setImageProductDetail(x.getImage());
+                list.add(e);
+
+        });
+        return list;
     }
 }
