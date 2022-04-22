@@ -1,8 +1,7 @@
 package com.anshinbackend.service;
-
 import com.anshinbackend.dto.Customer.ShowImageProdetailDTO;
+import com.anshinbackend.dto.Customer.ImageProductDetailDTO;
 import com.anshinbackend.entity.DetailProduct;
-import org.springframework.data.relational.core.sql.In;
 
 import java.util.List;
 
@@ -17,6 +16,8 @@ public interface DetailProductService {
     public DetailProduct findByProductColorSize(Integer idColor, Integer idSize, Integer idProduct);
     public String findImage(Integer idProduct, Integer idColor);
     List<ShowImageProdetailDTO> findAllImageProductDetailByProduct(Integer idProduct);
+
+    public List<ImageProductDetailDTO> findAllImageProductDetailByProduct(Integer id);
 
 
 }

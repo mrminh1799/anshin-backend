@@ -1,5 +1,6 @@
 package com.anshinbackend.controller.website;
 
+import com.anshinbackend.dto.Customer.FavoriteDTO;
 import com.anshinbackend.entity.Favorite;
 import com.anshinbackend.service.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class FavoriteController {
     FavoriteService favoriteService;
 
     @GetMapping("{aid}")
-    public List<Favorite> getOne(@PathVariable("aid")Integer id){
+    public List<FavoriteDTO> getOne(@PathVariable("aid")Integer id){
         return  favoriteService.findByAccountId(id);
     }
 
