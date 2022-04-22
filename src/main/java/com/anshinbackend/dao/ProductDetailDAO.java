@@ -33,9 +33,5 @@ public interface ProductDetailDAO  extends JpaRepository<DetailProduct, Integer>
 
 
 
-    @Query("SELECT p FROM DetailProduct p\n" +
-            "    join Product p1 on p1.id = p.product.id\n" +
-            "    WHERE p1.id =?1")
-    public  List<DetailProduct> findAllImageProductDetailByProduct(Integer idProduct);
 
 }

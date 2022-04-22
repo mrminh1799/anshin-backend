@@ -38,7 +38,7 @@ public class ProductDetailController {
 
 
     @GetMapping("/findAllImageProductDetailByProduct/{id}")
-    public ResponseEntity<List<ImageProductDetailDTO>> findAllImageProductDetailByProduct(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> findAllImageProductDetailByProduct(@PathVariable("id") Integer id) {
         return ResponseEntity.ok().body(_detailProductService.findAllImageProductDetailByProduct(id));
     }
     @GetMapping("/findImage/{idProduct}/{idColor}")
@@ -48,9 +48,5 @@ public class ProductDetailController {
     }
 
 
-    @GetMapping("/findAllImageProductDetailByProduct/{id}")
-    public ResponseEntity<List<ShowImageProdetailDTO>> findImage(@PathVariable("id") Integer id){
-    return ResponseEntity.ok(_detailProductService.findAllImageProductDetailByProduct(id));
-    }
 
 }

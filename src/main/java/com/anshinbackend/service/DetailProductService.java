@@ -17,7 +17,6 @@ public interface DetailProductService {
     public String findImage(Integer idProduct, Integer idColor);
     List<ShowImageProdetailDTO> findAllImageProductDetailByProduct(Integer idProduct);
 
-    public List<ImageProductDetailDTO> findAllImageProductDetailByProduct(Integer id);
 
 
 }

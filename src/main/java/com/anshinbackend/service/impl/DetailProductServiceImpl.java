@@ -55,18 +55,6 @@ public class DetailProductServiceImpl implements DetailProductService {
         return _productDetailDAO.findByColorSizeProduct(idColor, idSize, idProduct);
     }
 
-    @Override
-
-    public List<ImageProductDetailDTO> findAllImageProductDetailByProduct(Integer id) {
-        List<ImageProductDetailDTO> list= new ArrayList<>();
-        _productDetailDAO.findAllImageProductDetailByProduct(id).forEach(x->{
-            ImageProductDetailDTO e = new ImageProductDetailDTO();
-            e.setIdProductDetail(x.getId());
-            e.setImageProDetail(x.getImage());
-            list.add(e);
-        });
-        return list;
-}
     public String findImage(Integer idProduct, Integer idColor) {
 
         return _productDetailDAO.findImage(idProduct, idColor).getImage();
