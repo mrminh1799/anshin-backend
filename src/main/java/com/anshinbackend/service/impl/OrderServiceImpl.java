@@ -308,6 +308,18 @@ public class OrderServiceImpl implements OrderService {
         return list;
     }
     public void updateStatus(Integer id, Integer status){
+
+        if(status==4){
+        Order order = _orderDAO.findById(id).get();
+        order.getListOrderDetail().forEach(
+                x->{
+                    DetailProduct p = _productDetailDAO.findById(x.getDetailProduct().getId()).get();
+                    Integer sumQuantity = p.getQuantity()+x.getQuantity();
+                    p.setQuantity(sumQuantity);
+                    _productDetailDAO.save(p);
+                }
+        );
+        }
         _orderDAO.updateStatus(status, id);
 
 
