@@ -280,6 +280,7 @@ public class OrderServiceImpl implements OrderService {
                 dto.setSizeId(y.getDetailProduct().getSize().getId());
                 dto.setSizeName(y.getDetailProduct().getSize().getSize_name());
                 dto.setPrice(y.getPrice());
+                dto.setImage(y.getDetailProduct().getImage());
 
 
 

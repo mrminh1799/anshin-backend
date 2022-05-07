@@ -19,6 +19,7 @@ public class OrderDetailDTO {
     String sizeName;
     Integer price;
     Integer quantity;
+    String image;
 
 
 
