@@ -388,7 +388,7 @@ public class ProductServiceImpl  implements ProductService {
             productDetail.setIsDeleted(false);
             productDetail.setSize(size);
             productDetail.setColor(color);
-            productDetail.setImage(image);
+           // productDetail.setImage(image);
             productDetail.setQuantity(quantity);
             productDetail.setProduct(product);
             _productDetailDAO.save(productDetail);
