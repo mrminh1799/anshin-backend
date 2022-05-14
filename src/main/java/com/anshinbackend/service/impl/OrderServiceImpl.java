@@ -266,12 +266,9 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDTO> list= new ArrayList<>();
 
         _orderDAO.findByAcountId(idAcount).forEach(x->{
-
-
-
             List<OrderDetailDTO>  listDetail = new ArrayList<>();
-            OrderDetailDTO dto= new OrderDetailDTO();
             x.getListOrderDetail().forEach(y->{
+                OrderDetailDTO dto= new OrderDetailDTO();
                 dto.setIdProduct(y.getDetailProduct().getId());
                 dto.setNameProduct(y.getDetailProduct().getProduct().getProductName());
                 dto.setQuantity(y.getQuantity());
@@ -282,11 +279,15 @@ public class OrderServiceImpl implements OrderService {
                 dto.setPrice(y.getPrice());
                 dto.setImage(y.getDetailProduct().getImage());
 
+                System.out.println(y.getId());
+
 
 
                 listDetail.add(dto);
 
             });
+
+            System.out.println("---");
             OrderDTO orderDTO = new OrderDTO();
             orderDTO.setListOrderDetailDTO(listDetail);
             orderDTO.setOrderId(x.getId());
@@ -297,12 +298,6 @@ public class OrderServiceImpl implements OrderService {
             orderDTO.setCreateDate(new Date());
 
             list.add(orderDTO);
-
-
-
-
-
-
 
         });
         return list;
