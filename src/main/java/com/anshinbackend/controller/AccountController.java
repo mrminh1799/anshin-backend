@@ -31,33 +31,7 @@ public class AccountController {
 		return response;
 	}
 
-	@PutMapping("/resetPassword")
-	public String resetPassword(@RequestParam String token,
-			@RequestParam String password) {
-		BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
-		String encode= passwordEncoder.encode(password);
-		return accountService.resetPassword(token, encode);
-	}
 
-//	@PostMapping("/processRegister")
-//	public ResponseEntity<?>  processRegister(Acount acount, HttpServletRequest request)
-//			throws UnsupportedEncodingException, MessagingException {
-//		accountService.register(acount, getSiteURL(request));
-//		return ResponseEntity.ok("register successfully") ;
-//	}
-//
-//	private String getSiteURL(HttpServletRequest request) {
-//		String siteURL = request.getRequestURL().toString();
-//		return siteURL.replace(request.getServletPath(), "");
-//	}
-//	@GetMapping("/verify")
-//	public String verifyUser(@RequestParam("code") String code) {
-//		if (accountService.verify(code)) {
-//			return "verify_success";
-//		} else {
-//			return "verify_fail";
-//		}
-//	}
-	
+
 
 }

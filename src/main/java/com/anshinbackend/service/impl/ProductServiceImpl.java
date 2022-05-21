@@ -1,20 +1,16 @@
 package com.anshinbackend.service.impl;
 
                   
-import com.anshinbackend.dao.DiscountDAO;
-import com.anshinbackend.dao.ProductDAO;
-import com.anshinbackend.dao.SaleEventDAO;
+import com.anshinbackend.dao.*;
 
-import com.anshinbackend.dao.ColorDAO;
 import com.anshinbackend.dao.ProductDAO;
-import com.anshinbackend.dao.ProductDetailDAO;
-import com.anshinbackend.dao.SizeDAO;
 import com.anshinbackend.dto.Admin.ProductAndProductDetailDTO;
 import com.anshinbackend.dto.ColorDTO;
 
 import com.anshinbackend.dto.ColorProductDetailDTO;
 import com.anshinbackend.dto.Customer.ProductDTO;
 import com.anshinbackend.dto.Customer.ProductsssDTO;
+import com.anshinbackend.dto.Product.ProductUpdateDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
 
 import com.anshinbackend.entity.Category;
@@ -61,6 +57,9 @@ public class ProductServiceImpl  implements ProductService {
     @Autowired
     SizeDAO _sizeDAO;
 
+
+    @Autowired
+    CategoryDAO _categoryDAO;
 
     @Override
     public List<ProductDTO> findAll() {
@@ -398,6 +397,18 @@ public class ProductServiceImpl  implements ProductService {
 
 
 return  product.getId();
+    }
+
+    @Override
+    public void updateProduct(ProductUpdateDTO dto) {
+        Product product = _productDAO.findById(dto.getId()).get();
+        product.setProductName(dto.getName());
+        product.setPrice(dto.getPrice());
+        Category category = _categoryDAO.findById(dto.getIdCategory()).get();
+        product.setCategory(category);
+        product.setDescription(dto.getDescription());
+        product.setImage(dto.getImage());
+        _productDAO.save(product);
     }
 
     @Override

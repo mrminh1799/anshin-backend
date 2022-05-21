@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.anshinbackend.dto.RegisterDTO.RegisterResquestDTO;
 import com.anshinbackend.sercutity.UserDTO;
+import com.anshinbackend.service.EmailService;
 import org.modelmapper.internal.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -40,7 +42,8 @@ public class AcountServiceImpl implements AcountService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private JavaMailSender mailSender;
+    private EmailService emailService;
+
 
 
 
@@ -198,33 +201,6 @@ public class AcountServiceImpl implements AcountService {
 	}
 
 	@Override
-	public String resetPassword(String token, String password) {
-
-		Optional<Acount> accountOptiontal = Optional
-				.ofNullable(acountDAO.findByToken(token));
-
-		if (!accountOptiontal.isPresent()) {
-			return "Invalid token.";
-		}
-
-		LocalDateTime tokenCreationDate = accountOptiontal.get().getTokenCreationDate();
-
-		if (isTokenExpired(tokenCreationDate)) {
-			return "Token expired.";
-
-		}
-
-		Acount acc = accountOptiontal.get();
-
-		acc.setPassword(password);
-		acc.setToken(null);
-		acc.setTokenCreationDate(null);
-
-		acountDAO.save(acc);
-
-		return "Your password successfully updated.";
-	}
-	@Override
 	public String generateToken() {
 		StringBuilder token = new StringBuilder();
 
@@ -252,64 +228,58 @@ public class AcountServiceImpl implements AcountService {
     }
 
     @Override
-    public void register(Acount acount, String siteURL)throws UnsupportedEncodingException, MessagingException {
-//        BCryptPasswordEncoder passwordEncoderX = new BCryptPasswordEncoder();
-//        String encodedPassword = passwordEncoderX.encode(acount.getPassword());
-//        acount.setPassword(encodedPassword);
-
-        String randomCode = RandomString.make(64);
-        acount.setVerificationCode(randomCode);
-        acount.setIsActive(false);
-
-        acountDAO.save(acount);
-
-        sendVerification(acount, siteURL);
-
-    }
-    @Override
-    public void sendVerification(Acount acount, String siteURL)throws MessagingException, UnsupportedEncodingException {
-        String toAddress = "duydvph09704@fpt.edu.vn";
-        String fromAddress = "Your email address";
-        String senderName = "Your company name";
-        String subject = "Please verify your registration";
-        String content = "Dear [[name]],<br>"
-                + "Please click the link below to verify your registration:<br>"
-                + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
-                + "Thank you,<br>"
-                + "Anshin Store";
-
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-
-        helper.setFrom(fromAddress, senderName);
-        helper.setTo(toAddress);
-        helper.setSubject(subject);
-
-        content = content.replace("[[name]]", acount.getFullName());
-        String verifyURL = siteURL + "/verify?code=" + acount.getVerificationCode();
-
-        content = content.replace("[[URL]]", verifyURL);
-
-        helper.setText(content, true);
-
-        mailSender.send(message);
-    }
-    @Override
-    public boolean verify(String verificationCode) {
-        Acount acc = acountDAO.findByVerificationCode(verificationCode);
-
-        if (acc == null || acc.getIsActive()) {
-            return false;
-        } else {
-            acc.setVerificationCode(null);
-            acc.setIsActive(true);
-            acountDAO.save(acc);
-
-            return true;
+    public String validRegister(RegisterResquestDTO dto) {
+        Boolean phoneNumberExist = acountDAO.existsAcountByPhoneNumber(dto.getPhoneNumber());
+        Boolean emailExist = acountDAO.existsAcountByEmail(dto.getEmail());
+        if(phoneNumberExist && emailExist){
+            return "3";
+        }
+        if(phoneNumberExist){
+            return  "1";
         }
 
+        if(emailExist){
+            return  "2";
+        }
+
+
+        return "";
+
     }
 
+    @Override
+    public String RegesterSendMail(String mailTo) {
+        String s = System.currentTimeMillis()+UUID.randomUUID().toString();
+        String code = Integer.toHexString(s.hashCode());
+        emailService.sendSimpleMessage(mailTo, "Đăng ký tài khoản", "Chào mừng bạn đến với cửa hàng Anshin, \n Xin mời nhập mã "+ code.substring(0,4)+ " để xác thực tài khản.");
+        return code.substring(0,4);
+
+
+    }
+
+    @Override
+    public void Register(RegisterResquestDTO dto) {
+        Acount acount  = new Acount();
+        acount.setIsDeleted(false);
+        acount.setIsActive(true);
+        acount.setFullName(dto.getFullName());
+        acount.setEmail(dto.getEmail());
+        acount.setPhoneNumber(dto.getPhoneNumber());
+        acount.setPhoto("");
+        acount.setPassword(passwordEncoder.encode(dto.getPassword()));
+        acountDAO.save(acount);
+
+    }
+
+
+
+    @Override
+    public String FGPasswordSendMail(String mailTo) {
+        String s = System.currentTimeMillis()+UUID.randomUUID().toString();
+        String code = Integer.toHexString(s.hashCode());
+        emailService.sendSimpleMessage(mailTo, "Quên mật khẩu", "Bạn vừa thực hiên thao tác quên mất khẩu, \n Xin mời nhập mã "+ code.substring(0,4)+ " để xác thực.");
+        return code.substring(0,4);
+    }
 
 
 }

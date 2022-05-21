@@ -3,6 +3,7 @@ package com.anshinbackend.controller;
 import com.anshinbackend.dao.ProductDAO;
 import com.anshinbackend.dto.Customer.ProductDTO;
 import com.anshinbackend.dto.Customer.ProductsssDTO;
+import com.anshinbackend.dto.Product.ProductUpdateDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
 import com.anshinbackend.entity.Product;
 import com.anshinbackend.service.ProductService;
@@ -100,6 +101,15 @@ public class ProductController {
 
             _productService.updateStatusProduct(id);
             return ResponseEntity.ok("Update stt thành công");
+
+        }
+        @PostMapping("/udpateProduct")
+    public ResponseEntity<?> updateProduct(@RequestBody ProductUpdateDTO dto){
+        _productService.updateProduct(dto);
+
+        return ResponseEntity.ok("update thanh cong");
+
+
 
         }
 }

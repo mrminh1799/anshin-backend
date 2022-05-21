@@ -23,6 +23,7 @@ public class ProductDetailController {
                                                    @PathVariable("idSize") Integer idSize,
                                                    @PathVariable("idProduct") Integer idProduct
                                                    ){
+    System.out.println("abc");
     return ResponseEntity.ok(_detailProductService.findByProductColorSize(idColor, idSize, idProduct));
 }
 

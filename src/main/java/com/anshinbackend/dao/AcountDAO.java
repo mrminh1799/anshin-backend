@@ -37,8 +37,7 @@ public interface AcountDAO extends JpaRepository<Acount, Integer> {
     
     @Query("select a from Acount a where a.email=?1")
     public Acount findByEmail(String email);
-    @Query("select a from Acount a where a.token=?1")
-    public Acount findByToken(String token);
+
     @Query(value = "select * from acounts a join role_acount ra on a.id=ra.acount_id join roles r on r.id=ra.role_id " +
             "where role_name='admin' or role_name ='supper_admin' ",nativeQuery = true)
     public List<Acount> findByRole();
@@ -50,11 +49,14 @@ public interface AcountDAO extends JpaRepository<Acount, Integer> {
     @Query("SELECT a FROM Acount a WHERE a.verificationCode = ?1")
     public Acount findByVerificationCode(String code);
 
+    boolean existsAcountByEmail(String email);
+    boolean existsAcountByPhoneNumber(String phonenumber);
 
 
 
 
-   // public Page<Acount> findAllBy(Acount a);
+
+
 
 
 }

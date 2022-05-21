@@ -4,6 +4,7 @@ import com.anshinbackend.dto.Admin.ProductAndProductDetailDTO;
 import com.anshinbackend.dto.Customer.ProductDTO;
 import com.anshinbackend.dto.Customer.ProductsssDTO;
 import com.anshinbackend.dto.DiscountDTO;
+import com.anshinbackend.dto.Product.ProductUpdateDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
 import com.anshinbackend.entity.Product;
 import org.springframework.data.domain.Sort;
@@ -36,5 +37,6 @@ public interface ProductService extends GenericService<Product, Integer> {
 
 
     public Integer insertProductAndProductDetail(ProductAndProductDetailDTO dto);
+    public void updateProduct(ProductUpdateDTO dto);
 
 }
