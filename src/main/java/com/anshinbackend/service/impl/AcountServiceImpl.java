@@ -81,6 +81,7 @@ public class AcountServiceImpl implements AcountService {
 
     @Override
     public Acount insertAcount(Acount e) {
+        e.setPassword(passwordEncoder.encode(e.getPassword()));
         Integer id = acountDAO.save(e).getId();
         e.setId(id);
         e.setIsActive(true);

@@ -2,19 +2,25 @@ package com.anshinbackend.controller;
 
 import com.anshinbackend.common.constant.OrderStatus;
 import com.anshinbackend.dao.AcountDAO;
+import com.anshinbackend.dao.OrderDAO;
 import com.anshinbackend.dao.ProductDetailDAO;
 import com.anshinbackend.dto.Customer.OrderChangeReturnDTO;
 import com.anshinbackend.dto.OrderTableForAdmin.OrderDTO;
 import com.anshinbackend.entity.Order;
 import com.anshinbackend.entity.OrderDetail;
 import com.anshinbackend.service.OrderService;
-import com.itextpdf.text.DocumentException;
+import com.anshinbackend.service.UserPDFExporter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +37,9 @@ public class OrderController {
 
     @Autowired
     AcountDAO _acountDAO;
+
+    @Autowired
+    OrderDAO _orderDAO;
 
     @PostMapping("/newOrder")
     public ResponseEntity<?> newOrder(@RequestBody OrderDTO orderDTO){
@@ -95,6 +104,10 @@ public class OrderController {
     @PutMapping("/changeReturn/{idOld}")
     public ResponseEntity<?> changerReturn(@PathVariable Integer idOld, @RequestBody OrderChangeReturnDTO orderChangeReturnDTO){
 
+        orderChangeReturnDTO.getListOrderProductDetailDTO().forEach(x->{
+            System.out.println((x.getIdProductDetail()));
+            System.out.println((x.getQuantity()));
+        });
 
         if(orderChangeReturnDTO.getIdAcount() ==null){
             orderChangeReturnDTO.setIdAcount(5);
@@ -192,8 +205,23 @@ public class OrderController {
     }
 
     @GetMapping("/exportToPDS/{id}")
-    public  void expordtOrderToPDD(@PathVariable("id") Integer idOrder) throws DocumentException {
-        _orderService.exportToPDFOrder(idOrder);
+    public  void expordtOrderToPDD(HttpServletResponse response, @PathVariable("id") Integer idOrder) {
+        Order order = _orderDAO.findById(idOrder).get();
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename="+order.getId() + currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+
+
+        UserPDFExporter exporter = new UserPDFExporter(order);
+        try {
+            exporter.export(response);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

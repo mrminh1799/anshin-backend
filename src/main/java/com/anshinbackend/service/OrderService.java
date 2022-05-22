@@ -7,7 +7,6 @@ import com.anshinbackend.dto.OrderTableForAdmin.OrderDetailDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
 import com.anshinbackend.entity.Order;
 import com.anshinbackend.entity.OrderDetail;
-import com.itextpdf.text.DocumentException;
 
 import java.util.List;
 import java.util.Map;
@@ -31,6 +30,6 @@ public interface OrderService {
     public void updateInfomatinCustomer(Integer idOrder, String name, String address, String phoneNumber);
     public AdminOrderDTO createNewOrderForAdmin(String name);
     public void deleteOrderTransaction(Integer id);
-    public void exportToPDFOrder(Integer idOrder) throws DocumentException;
+    public void exportToPDFOrder(Integer idOrder);
 
 }

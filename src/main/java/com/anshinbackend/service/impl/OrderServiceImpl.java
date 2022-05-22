@@ -7,10 +7,6 @@ import com.anshinbackend.dto.Customer.OrderDTO;
 import com.anshinbackend.dto.Customer.OrderDetailDTO;
 import com.anshinbackend.entity.*;
 import com.anshinbackend.service.OrderService;
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfStamper;
-import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -258,7 +254,8 @@ public class OrderServiceImpl implements OrderService {
         historoyOrder.setOrder(newOrder);
         historoyOrder.setDateCreate(new Date());
         historoyOrder.setReason(reason);
-        historoyOrder.setIdCurentHistory(oldOrder.getId());
+        historoyOrder.setIdCurentHistory(9999);
+
         _historyOrderDAO.save(historoyOrder);
 
 
@@ -309,7 +306,7 @@ public class OrderServiceImpl implements OrderService {
     }
     public void updateStatus(Integer id, Integer status){
 
-        if(status==4){
+        if(status==4|| status==0){
         Order order = _orderDAO.findById(id).get();
         order.getListOrderDetail().forEach(
                 x->{
@@ -333,6 +330,7 @@ public class OrderServiceImpl implements OrderService {
             com.anshinbackend.dto.OrderTableForAdmin.OrderDetailDTO dto =
                     new com.anshinbackend.dto.OrderTableForAdmin.OrderDetailDTO();
             dto.setIdOrderDetail(x.getId());
+            dto.setIdProductDetail(x.getDetailProduct().getId());
             dto.setSizeName(x.getDetailProduct().getSize().getSize_name());
             dto.setColoName(x.getDetailProduct().getColor().getColorName());
             dto.setPrice(x.getPrice());
@@ -557,7 +555,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void exportToPDFOrder(Integer idOrder) throws DocumentException {
+    public void exportToPDFOrder(Integer idOrder)  {
 //        PdfReader pdfReader = new PdfReader("HelloWorld.pdf");
 //        PdfStamper pdfStamper
 //                = new PdfStamper(pdfReader, new FileOutputStream("encryptedPdf.pdf"));

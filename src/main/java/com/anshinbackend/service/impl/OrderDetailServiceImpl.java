@@ -18,7 +18,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         List<OrderDetailDTO> list = new ArrayList<>();
 
         _OrdetailDAO.findByOrderId(orderId).forEach(x->{
-            list.add(new OrderDetailDTO(x.getId(), x.getDetailProduct().getProduct().getProductName(),
+            list.add(new OrderDetailDTO(x.getId(),x.getDetailProduct().getId(), x.getDetailProduct().getProduct().getProductName(),
                     x.getDetailProduct().getColor().getColorName(),
                     x.getDetailProduct().getSize().getSize_name(),
                     x.getQuantity(),
