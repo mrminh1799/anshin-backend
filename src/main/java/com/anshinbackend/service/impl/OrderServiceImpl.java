@@ -295,7 +295,7 @@ public class OrderServiceImpl implements OrderService {
             orderDTO.setDressDetail(x.getAddressDetail());
             orderDTO.setPhoneNumber(x.getPhoneNumber());
             orderDTO.setStatus(x.getStatus());
-            orderDTO.setCreateDate(new Date());
+            orderDTO.setCreateDate(x.getTimeCreate());
 
             list.add(orderDTO);
 

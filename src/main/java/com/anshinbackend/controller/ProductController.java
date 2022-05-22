@@ -3,9 +3,11 @@ package com.anshinbackend.controller;
 import com.anshinbackend.dao.ProductDAO;
 import com.anshinbackend.dto.Customer.ProductDTO;
 import com.anshinbackend.dto.Customer.ProductsssDTO;
+import com.anshinbackend.dto.Product.ProductDetailInsertDTO;
 import com.anshinbackend.dto.Product.ProductUpdateDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
 import com.anshinbackend.entity.Product;
+import com.anshinbackend.service.DetailProductService;
 import com.anshinbackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -24,44 +26,47 @@ public class ProductController {
     ProductService _productService;
 
     @Autowired
+    DetailProductService _productDetailService;
+
+    @Autowired
     ProductDAO repo;
 
     @GetMapping("/findByPage")
     public ResponseEntity<List<ProductDTO>> findByPage(@RequestParam("currenPage") Integer currenPage,
-                                     @RequestParam("sizePage") Integer sizePage){
-        return ResponseEntity.ok().body(_productService.findAllPage(currenPage,sizePage));
+                                                       @RequestParam("sizePage") Integer sizePage) {
+        return ResponseEntity.ok().body(_productService.findAllPage(currenPage, sizePage));
     }
 
     @GetMapping("/findAll")
-    public ResponseEntity<List<ProductDTO>> findALl(){
-        return  ResponseEntity.ok().body(_productService.findAll());
+    public ResponseEntity<List<ProductDTO>> findALl() {
+        return ResponseEntity.ok().body(_productService.findAll());
     }
 
     @GetMapping("/findById/{id}")
-    public  ResponseEntity<ProductDetailDTO> showProductDetail(@PathVariable("id") Integer id){
-        return  ResponseEntity.ok().body(_productService.showDetailProduct(id));
+    public ResponseEntity<ProductDetailDTO> showProductDetail(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok().body(_productService.showDetailProduct(id));
     }
+
     @GetMapping("/findByTop")
-    public  ResponseEntity<List<ProductDTO>> findByTop(
+    public ResponseEntity<List<ProductDTO>> findByTop(
 //            @PathVariable("field")Optional<String> field
-    ){
+    ) {
 //        Sort sort = Sort.by(Sort.Direction.DESC, field.orElse("time_create"));
 //        List<ProductDTO> ls = _productService.findByTop(sort);
 //        for(ProductDTO productDTO : ls){
 //
 //        }
-        return  ResponseEntity.ok().body(_productService.findByTop());
+        return ResponseEntity.ok().body(_productService.findByTop());
     }
-
 
 
     @GetMapping("/findAllByIdCategory/{cid}")
-    public  ResponseEntity<List<ProductDTO>> findAllByIdCate(@PathVariable("cid") Integer id){
-        return  ResponseEntity.ok().body((_productService.findAllByIdCategory(id)));
+    public ResponseEntity<List<ProductDTO>> findAllByIdCate(@PathVariable("cid") Integer id) {
+        return ResponseEntity.ok().body((_productService.findAllByIdCategory(id)));
     }
 
     @GetMapping("/findAllByNameCategory/{cid}")
-    public ResponseEntity<List<ProductDTO>> findAllByNameCate(@PathVariable(name = "cid" , required = false, value = "") String name) {
+    public ResponseEntity<List<ProductDTO>> findAllByNameCate(@PathVariable(name = "cid", required = false, value = "") String name) {
         return ResponseEntity.ok().body((_productService.findAllByNameCategory(name)));
     }
 
@@ -69,47 +74,56 @@ public class ProductController {
     public ResponseEntity<List<ProductDTO>> findAllByNameCate2(@RequestBody Map product) {
 
 
-        if(product.get("name").equals("")){
+        if (product.get("name").equals("")) {
             return ResponseEntity.ok().body(_productService.findAll());
 
         }
         return ResponseEntity.ok().body(_productService.findAllByNameCategory(product.get("name").toString()));
     }
+
     @GetMapping("/findBySumTop")
-    public  ResponseEntity<List<ProductDTO>> findBySumTop(){
-        return  ResponseEntity.ok().body(_productService.findBySumTop());
+    public ResponseEntity<List<ProductDTO>> findBySumTop() {
+        return ResponseEntity.ok().body(_productService.findBySumTop());
 
     }
 
     @GetMapping("/findByColorSizePrice/{id_color}/{id_size}/{top_price}/{bottom_price}")
-    public ResponseEntity<List<?>> findByColorSizePrice(@PathVariable("id_color") Integer idColor,@PathVariable("id_size") Integer idSize
-            ,@PathVariable("top_price") Integer topPrice,@PathVariable("bottom_price") Integer bottomPrice){
-        return  ResponseEntity.ok(_productService.findByColorSizePrice(idColor, idSize, topPrice, bottomPrice));
+    public ResponseEntity<List<?>> findByColorSizePrice(@PathVariable("id_color") Integer idColor, @PathVariable("id_size") Integer idSize
+            , @PathVariable("top_price") Integer topPrice, @PathVariable("bottom_price") Integer bottomPrice) {
+        return ResponseEntity.ok(_productService.findByColorSizePrice(idColor, idSize, topPrice, bottomPrice));
     }
 
     @GetMapping("/findAllBySaleEvent")
-    public  ResponseEntity<List<ProductsssDTO>> findAllBySaleEvent() {
+    public ResponseEntity<List<ProductsssDTO>> findAllBySaleEvent() {
         return ResponseEntity.ok().body(_productService.findAllBySaleEvent());
     }
+
     @GetMapping("/findByCategoryParentId/{id}")
-    public  ResponseEntity<?> findByCategoryParentId(@PathVariable("id") Integer id){
+    public ResponseEntity<?> findByCategoryParentId(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(_productService.findByCartegoryParentID(id));
     }
 
     @GetMapping("/updateStatus/{id}")
-        public ResponseEntity<?> updateStatus(@PathVariable("id") Integer id){
+    public ResponseEntity<?> updateStatus(@PathVariable("id") Integer id) {
 
-            _productService.updateStatusProduct(id);
-            return ResponseEntity.ok("Update stt thành công");
+        _productService.updateStatusProduct(id);
+        return ResponseEntity.ok("Update stt thành công");
 
-        }
-        @PostMapping("/udpateProduct")
-    public ResponseEntity<?> updateProduct(@RequestBody ProductUpdateDTO dto){
+    }
+
+    @PostMapping("/udpateProduct")
+    public ResponseEntity<?> updateProduct(@RequestBody ProductUpdateDTO dto) {
         _productService.updateProduct(dto);
 
         return ResponseEntity.ok("update thanh cong");
 
 
+    }
 
-        }
+    @PostMapping("/insertProductDetail")
+    public ResponseEntity<?> insertProductDetail(@RequestBody ProductDetailInsertDTO dto){
+        return ResponseEntity.ok(_productDetailService.InsertProductDetail
+                (dto.getIdProduct(), dto.getIdColor(), dto.getIdSize(), dto.getQuantity(), dto.getImage()));
+
+    }
 }
