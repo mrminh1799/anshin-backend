@@ -7,15 +7,18 @@ import com.anshinbackend.dto.Customer.OrderDTO;
 import com.anshinbackend.dto.Customer.OrderDetailDTO;
 import com.anshinbackend.entity.*;
 import com.anshinbackend.service.OrderService;
-import org.springframework.beans.BeanUtils;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Column;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service
@@ -229,6 +232,7 @@ public class OrderServiceImpl implements OrderService {
        });
         newOrder.setAddress(order.getAddress());
         newOrder.setTimeCreate(new Date());
+        newOrder.setStatus(6);
         _orderDetailDAO.deleteAllByOrderId(orderOld);
         order.getListOrderDetail().forEach(x->{
             DetailProduct detailProduct= _productDetailDAO.findById(x.getDetailProduct().getId()).get();
@@ -254,6 +258,7 @@ public class OrderServiceImpl implements OrderService {
         historoyOrder.setOrder(newOrder);
         historoyOrder.setDateCreate(new Date());
         historoyOrder.setReason(reason);
+        historoyOrder.setIdCurentHistory(oldOrder.getId());
         _historyOrderDAO.save(historoyOrder);
 
 
@@ -548,6 +553,24 @@ public class OrderServiceImpl implements OrderService {
         Order order =  _orderDAO.findById(id).get();
         _orderDetailDAO.deleteAll(order.getListOrderDetail());
         _orderDAO.delete(order);
+
+    }
+
+    @Override
+    public void exportToPDFOrder(Integer idOrder) throws DocumentException {
+//        PdfReader pdfReader = new PdfReader("HelloWorld.pdf");
+//        PdfStamper pdfStamper
+//                = new PdfStamper(pdfReader, new FileOutputStream("encryptedPdf.pdf"));
+//
+//        pdfStamper.setEncryption(
+//                "userpass".getBytes(),
+//                ".getBytes(),
+//                0,
+//                PdfWriter.ENCRYPTION_AES_256
+//        );
+//
+//        pdfStamper.close();
+
 
     }
 

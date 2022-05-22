@@ -4,6 +4,7 @@ import com.anshinbackend.dao.ProductDAO;
 import com.anshinbackend.dto.Customer.ProductDTO;
 import com.anshinbackend.dto.Customer.ProductsssDTO;
 import com.anshinbackend.dto.Product.ProductDetailInsertDTO;
+import com.anshinbackend.dto.Product.ProductDetailUpdateRequestDTO;
 import com.anshinbackend.dto.Product.ProductUpdateDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
 import com.anshinbackend.entity.Product;
@@ -124,6 +125,13 @@ public class ProductController {
     public ResponseEntity<?> insertProductDetail(@RequestBody ProductDetailInsertDTO dto){
         return ResponseEntity.ok(_productDetailService.InsertProductDetail
                 (dto.getIdProduct(), dto.getIdColor(), dto.getIdSize(), dto.getQuantity(), dto.getImage()));
+    }
+
+    @PostMapping("/upateProductDetail")
+    public  ResponseEntity<?> updateProductDetail(@RequestBody ProductDetailUpdateRequestDTO dto){
+        return ResponseEntity.ok(_productDetailService.updateProductDetail(dto));
 
     }
+
+
 }

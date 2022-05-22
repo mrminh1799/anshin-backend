@@ -8,10 +8,12 @@ import com.anshinbackend.dto.OrderTableForAdmin.OrderDTO;
 import com.anshinbackend.entity.Order;
 import com.anshinbackend.entity.OrderDetail;
 import com.anshinbackend.service.OrderService;
+import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -187,6 +189,12 @@ public class OrderController {
     public ResponseEntity<?> deleteTransaction(@PathVariable("id") Integer id){
         _orderService.deleteOrderTransaction(id);
         return  ResponseEntity.ok("Xóa thành công");
+    }
+
+    @GetMapping("/exportToPDS/{id}")
+    public  void expordtOrderToPDD(@PathVariable("id") Integer idOrder) throws DocumentException {
+        _orderService.exportToPDFOrder(idOrder);
+
     }
 
 

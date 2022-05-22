@@ -7,6 +7,7 @@ import com.anshinbackend.dto.Customer.ProductDTO;
 import com.anshinbackend.dto.Customer.ShowImageProdetailDTO;
 import com.anshinbackend.dto.Customer.ImageProductDetailDTO;
 import com.anshinbackend.dto.Product.ProductDetailInsertResponseDTO;
+import com.anshinbackend.dto.Product.ProductDetailUpdateRequestDTO;
 import com.anshinbackend.dto.ProductDetailDTO;
 import com.anshinbackend.entity.Color;
 import com.anshinbackend.entity.DetailProduct;
@@ -115,5 +116,22 @@ public class DetailProductServiceImpl implements DetailProductService {
 
 
 
+    }
+
+    @Override
+    public ProductDetailInsertResponseDTO updateProductDetail(ProductDetailUpdateRequestDTO dto) {
+        DetailProduct detail = _productDetailDAO.findById(dto.getId()).get();
+        detail.setImage(dto.getImage());
+        detail.setQuantity(dto.getQuantity());
+        DetailProduct detailProduct = _productDetailDAO.save(detail);
+        ProductDetailInsertResponseDTO dtoResponse = new ProductDetailInsertResponseDTO();
+        dtoResponse.setId(detailProduct.getId());
+        dtoResponse.setIdColor(detailProduct.getColor().getId());
+        dtoResponse.setIdSize(detailProduct.getSize().getId());
+        dtoResponse.setNameColor(detailProduct.getColor().getColorName());
+        dtoResponse.setNameSize(detailProduct.getSize().getSize_name());
+        dtoResponse.setQuantity(detailProduct.getQuantity());
+        dtoResponse.setImage(detailProduct.getImage());
+        return dtoResponse;
     }
 }
