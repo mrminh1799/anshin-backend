@@ -6,12 +6,14 @@ import com.anshinbackend.dao.OrderDAO;
 import com.anshinbackend.dao.ProductDetailDAO;
 import com.anshinbackend.dto.Customer.OrderChangeReturnDTO;
 import com.anshinbackend.dto.OrderTableForAdmin.OrderDTO;
+import com.anshinbackend.dto.OrderTableForAdmin.OrderDetailDTO;
 import com.anshinbackend.entity.Order;
 import com.anshinbackend.entity.OrderDetail;
 import com.anshinbackend.service.OrderService;
 import com.anshinbackend.service.UserPDFExporter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -223,6 +225,10 @@ public class OrderController {
             e.printStackTrace();
         }
 
+    }
+    @GetMapping("/getHistoryOrder/{id}")
+    public ResponseEntity<List<OrderDetailDTO>> getHistory(@PathVariable("id") Integer id){
+        return  ResponseEntity.ok(_orderService.findHistory(id));
     }
 
 

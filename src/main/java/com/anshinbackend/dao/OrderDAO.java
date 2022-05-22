@@ -36,4 +36,6 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
     @Query("update Order o set o.fullName =?1 , o.address =?2, o.phoneNumber =?3 where  o.id=?4")
     public void setInformatinCustomer(String fullName, String address, String phoneNumber, Integer idOrder);
 
+
+
 }

@@ -10,8 +10,6 @@ import com.anshinbackend.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -254,7 +252,7 @@ public class OrderServiceImpl implements OrderService {
         historoyOrder.setOrder(newOrder);
         historoyOrder.setDateCreate(new Date());
         historoyOrder.setReason(reason);
-        historoyOrder.setIdCurentHistory(9999);
+        historoyOrder.setIdCurentHistory(oldOrder.getId());
 
         _historyOrderDAO.save(historoyOrder);
 
@@ -556,20 +554,31 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void exportToPDFOrder(Integer idOrder)  {
-//        PdfReader pdfReader = new PdfReader("HelloWorld.pdf");
-//        PdfStamper pdfStamper
-//                = new PdfStamper(pdfReader, new FileOutputStream("encryptedPdf.pdf"));
-//
-//        pdfStamper.setEncryption(
-//                "userpass".getBytes(),
-//                ".getBytes(),
-//                0,
-//                PdfWriter.ENCRYPTION_AES_256
-//        );
-//
-//        pdfStamper.close();
 
 
+    }
+
+    @Override
+    public List<com.anshinbackend.dto.OrderTableForAdmin.OrderDetailDTO> findHistory(Integer idOrder) {
+        HistoryOrder h = _historyOrderDAO.findHistory(idOrder).get(0);
+        System.out.println(h.getIdCurentHistory());
+
+        List<com.anshinbackend.dto.OrderTableForAdmin.OrderDetailDTO> list = new ArrayList<>();
+        _orderDetailDAO.findByOrderDetailId(h.getIdCurentHistory()).forEach(x->{
+            com.anshinbackend.dto.OrderTableForAdmin.OrderDetailDTO dto =
+                    new com.anshinbackend.dto.OrderTableForAdmin.OrderDetailDTO();
+            dto.setIdOrderDetail(x.getId());
+            dto.setIdProductDetail(x.getDetailProduct().getId());
+            dto.setSizeName(x.getDetailProduct().getSize().getSize_name());
+            dto.setColoName(x.getDetailProduct().getColor().getColorName());
+            dto.setPrice(x.getPrice());
+            dto.setQuantity(x.getQuantity());
+            dto.setNameProduct(x.getDetailProduct().getProduct().getProductName());
+            list.add(dto);
+        });
+
+
+        return list;
     }
 
 

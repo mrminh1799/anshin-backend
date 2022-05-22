@@ -4,12 +4,9 @@ import com.anshinbackend.dto.Admin.AdminOrderDTO;
 import com.anshinbackend.dto.Admin.OrderDetailForCreateOrderDTO;
 import com.anshinbackend.dto.Customer.OrderDTO;
 import com.anshinbackend.dto.OrderTableForAdmin.OrderDetailDTO;
-import com.anshinbackend.dto.ProductDetailDTO;
 import com.anshinbackend.entity.Order;
-import com.anshinbackend.entity.OrderDetail;
 
 import java.util.List;
-import java.util.Map;
 
 public interface OrderService {
     public void newOrder(Order order, Integer id);
@@ -31,5 +28,6 @@ public interface OrderService {
     public AdminOrderDTO createNewOrderForAdmin(String name);
     public void deleteOrderTransaction(Integer id);
     public void exportToPDFOrder(Integer idOrder);
+    public List<OrderDetailDTO> findHistory (Integer idOrder);
 
 }
